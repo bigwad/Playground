@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping cart</title>
+
+    <script src="http://juicy.github.io/object.observe/dist/object-observe.js"></script>
+    <script src="http://juicy.github.io/array.observe/array-observe.js"></script>
+
+    <script src="/sys/webcomponentsjs/webcomponents.js"></script>
+    <script>
+        window.Polymer = window.Polymer || {};
+        window.Polymer.dom = "shadow";
+    </script>
+    <link rel="import" href="/sys/polymer/polymer.html" />
+    <link rel="import" href="/sys/puppet-client/puppet-client.html" />
+    <link rel="import" href="/sys/dom-bind-notifier/dom-bind-notifier.html" />
+</head>
+<body>
+    <template is="dom-bind" id="root">
+        <fieldset>
+            <legend>Text</legend>
+            <input type="text" value="{{model.Text$::change}}" />
+        </fieldset>
+        <fieldset>
+            <legend>Button</legend>
+            <button type="button" value="{{model.Button$::click}}" onclick="++this.value">Click me</button>
+        </fieldset>
+        <p>{{model.Message}}</p>
+        <dom-bind-notifier observed-object="{{model}}" path="model" deep></dom-bind-notifier>
+    </template>
+    <script>
+        (function () {
+            var template = (document._currentScript || document.currentScript).previousElementSibling;
+        })();
+    </script>
+    <puppet-client usewebsocket="false" ref="root"></puppet-client>
+</body>
+</html>
