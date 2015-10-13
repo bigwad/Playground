@@ -3,7 +3,7 @@
 <head>
     <title>Shopping cart</title>
 
-    <script src="/sys/object.observe/dist/object-observe.js"></script>
+    <script src="http://juicy.github.io/object.observe/dist/object-observe.js"></script>
     <script src="/sys/array.observe/array-observe.js"></script>
 
     <script src="/sys/webcomponentsjs/webcomponents.js"></script>
@@ -23,7 +23,7 @@
         </fieldset>
         <fieldset>
             <legend>Button</legend>
-            <button type="button" value="{{model.Button$::click}}" onclick="++this.value">Click me</button>
+            <button type="button" value="{{model.Button$::click}}" onmousedown="++this.value">Click me</button>
         </fieldset>
         <p>{{model.Message}}</p>
         <dom-bind-notifier observed-object="{{model}}" path="model" deep></dom-bind-notifier>
