@@ -75,6 +75,9 @@
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\sys\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(StarcounterBin)\Starcounter.MsBuild.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
