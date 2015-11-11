@@ -14,6 +14,7 @@
     <link rel="import" href="/sys/polymer/polymer.html" />
     <link rel="import" href="/sys/puppet-client/puppet-client.html" />
     <link rel="import" href="/sys/dom-bind-notifier/dom-bind-notifier.html" />
+    <link rel="import" href="/sys/starcounter-include/starcounter-include.html" />
 </head>
 <body>
     <template is="dom-bind" id="root">
@@ -51,7 +52,11 @@
             </ul>
         </fieldset>
         <p>{{model.Message}}</p>
-        <dom-bind-notifier observed-object="{{model}}" path="model" deep></dom-bind-notifier>
+        <fieldset>
+            <legend>Sub page</legend>
+            <starcounter-include partial="{{model.SubPage}}"></starcounter-include>
+        </fieldset>
+        <dom-bind-notifier observed-object="{{model}}" path="model" deep id="root-notifier"></dom-bind-notifier>
     </template>
     <script>
         (function () {

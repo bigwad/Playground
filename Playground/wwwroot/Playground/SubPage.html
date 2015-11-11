@@ -1,0 +1,11 @@
+﻿<template>
+    <template is="dom-bind" id="sub">
+        <template is="dom-repeat" items="{{model.Items}}">
+            <div>{{item}}</div>
+        </template>
+        <div>
+            <button type="button" value="{{model.Remove$::click}}" onmousedown="++this.value;">Remove last item</button>
+        </div>
+        <dom-bind-notifier observed-object="{{model}}" path="model" deep id="sub-notifier"></dom-bind-notifier>
+    </template>
+</template>

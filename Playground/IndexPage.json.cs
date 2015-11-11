@@ -6,6 +6,7 @@ namespace Playground {
             base.OnData();
 
             this.Items.Add().StringValue = "Value 0";
+            this.SubPage = Self.GET("/playground/sub");
         }
 
         void Handle(Input.Button Action) {
