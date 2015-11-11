@@ -1,0 +1,17 @@
+{
+    "Html": "/Playground/RactivePage.html",
+    "Products": [
+        {
+            "Name$": "",
+            "Price$": 0.0,
+            "Delete$": 0,
+            "Select$": 0
+        }
+    ],
+    "Sub": { },
+    "SubLoaded$": false,
+    "SubLoading$": false,
+    "Click$": 0,
+    "Add$": 0,
+    "Message": "The button was not pressed yet"
+}

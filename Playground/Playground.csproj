@@ -66,12 +66,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RactivePage.json.cs">
+      <DependentUpon>RactivePage.json</DependentUpon>
+    </Compile>
+    <Compile Include="RactiveSubPage.json.cs">
+      <DependentUpon>RactiveSubPage.json</DependentUpon>
+    </Compile>
     <Compile Include="SubPage.json.cs">
       <DependentUpon>SubPage.json</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="wwwroot\Playground\IndexPage.html" />
+    <Content Include="wwwroot\Playground\RactivePage.html" />
+    <Content Include="wwwroot\Playground\RactiveSubPage.html" />
     <Content Include="wwwroot\Playground\SubPage.html" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +92,16 @@
   </ItemGroup>
   <ItemGroup>
     <TypedJSON Include="SubPage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+  </ItemGroup>
+  <ItemGroup>
+    <TypedJSON Include="RactivePage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+  </ItemGroup>
+  <ItemGroup>
+    <TypedJSON Include="RactiveSubPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
   </ItemGroup>
