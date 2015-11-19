@@ -61,6 +61,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BenchmarkPage.json.cs">
+      <DependentUpon>BenchmarkPage.json</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Cpu.cs" />
+    <Compile Include="Data\Data.cs" />
+    <Compile Include="Data\Motherboard.cs" />
+    <Compile Include="Data\MotherboardCpu.cs" />
     <Compile Include="IndexPage.json.cs">
       <DependentUpon>IndexPage.json</DependentUpon>
     </Compile>
@@ -102,6 +109,11 @@
   </ItemGroup>
   <ItemGroup>
     <TypedJSON Include="RactiveSubPage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+  </ItemGroup>
+  <ItemGroup>
+    <TypedJSON Include="BenchmarkPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
   </ItemGroup>
