@@ -17,7 +17,7 @@ namespace Playground {
 
         public string MotherboardCpuNames {
             get {
-                return string.Join(", ", this.MotherboardCpus.Select(x => x.Name).ToArray());
+                return string.Join(", ", this.MotherboardCpus.Select(x => x.Name));
             }
         }
     }

@@ -52,17 +52,17 @@ namespace Playground {
                     .Append("<br/>MotherboardCPUs: ").Append(Db.SQL("SELECT COUNT(c) FROM Playground.MotherboardCpu c").First)
                     .Append("</p>");
 
-                watch.Start();
-                for (int i = 0; i < times; i++) {
-                    var motherboards = Db.SQL<Motherboard>("SELECT m FROM Playground.Motherboard m WHERE m.MotherboardCpuNames LIKE ?", "%i7-5___").ToList();
-                }
-                watch.Stop();
-                html.Append("<p>").Append("MotherboardCpuNames LIKE: <b>").Append(watch.ElapsedMilliseconds).Append("</b> ms</p>");
+                //watch.Start();
+                //for (int i = 0; i < times; i++) {
+                //    var motherboards = Db.SQL<Motherboard>("SELECT m FROM Playground.Motherboard m WHERE m.MotherboardCpuNames LIKE ?", "%i7-5%").ToList();
+                //}
+                //watch.Stop();
+                //html.Append("<p>").Append("MotherboardCpuNames LIKE: <b>").Append(watch.ElapsedMilliseconds).Append("</b> ms</p>");
 
                 watch.Reset();
                 watch.Start();
                 for (int i = 0; i < times; i++) {
-                    var motherboards = Db.SQL<Motherboard>("SELECT c.Motherboard FROM Playground.MotherboardCpu c WHERE c.Cpu.Name LIKE ? GROUP BY c.Motherboard", "%i7-5___").ToList();
+                    var motherboards = Db.SQL<Motherboard>("SELECT c.Motherboard FROM Playground.MotherboardCpu c WHERE c.Cpu.Name LIKE ? GROUP BY c.Motherboard", "%i7-5%").ToList();
                 }
                 watch.Stop();
                 html.Append("<p>").Append("MotherboardCpu GROUP: <b>").Append(watch.ElapsedMilliseconds).Append("</b> ms</p>");
@@ -70,7 +70,7 @@ namespace Playground {
                 watch.Reset();
                 watch.Start();
                 for (int i = 0; i < times; i++) {
-                    var motherboards = Db.SQL<MotherboardCpu>("SELECT c FROM Playground.MotherboardCpu c WHERE c.Cpu.Name LIKE ?", "%i7-5___").Select(x => x.Motherboard).Distinct().ToList();
+                    var motherboards = Db.SQL<MotherboardCpu>("SELECT c FROM Playground.MotherboardCpu c WHERE c.Cpu.Name LIKE ?", "%i7-5%").Select(x => x.Motherboard).Distinct().ToList();
                 }
                 watch.Stop();
                 html.Append("<p>").Append("MotherboardCpu Distinct: <b>").Append(watch.ElapsedMilliseconds).Append("</b> ms</p>");
@@ -78,10 +78,18 @@ namespace Playground {
                 watch.Reset();
                 watch.Start();
                 for (int i = 0; i < times; i++) {
-                    var motherboards = Db.SQL<Motherboard>("SELECT m FROM Playground.Motherboard m").Where(x => x.MotherboardCpus.Any(c => c.Name.Contains(""))).ToList();
+                    var motherboards = Db.SQL<Motherboard>("SELECT c.Motherboard FROM Playground.MotherboardCpu c WHERE c.Cpu.Name LIKE ?", "%i7-5%").Distinct().ToList();
                 }
                 watch.Stop();
-                html.Append("<p>").Append("MotherboardCpu Distinct: <b>").Append(watch.ElapsedMilliseconds).Append("</b> ms</p>");
+                html.Append("<p>").Append("Motherboard Distinct: <b>").Append(watch.ElapsedMilliseconds).Append("</b> ms</p>");
+
+                //watch.Reset();
+                //watch.Start();
+                //for (int i = 0; i < times; i++) {
+                //    var motherboards = Db.SQL<Motherboard>("SELECT m FROM Playground.Motherboard m").Where(x => x.MotherboardCpus.Any(c => c.Name.Contains("i7-5"))).ToList();
+                //}
+                //watch.Stop();
+                //html.Append("<p>").Append("MotherboardCpu Any Contains: <b>").Append(watch.ElapsedMilliseconds).Append("</b> ms</p>");
 
                 return html.ToString();
             });
