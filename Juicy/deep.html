@@ -1,0 +1,25 @@
+﻿<template>
+    <template is="dom-bind" id="deep-dom-bind">
+        <div class="deep">deep.html <span>{{model.value}}</span> <button on-click="plus">++</button></div>
+        <!--<template is="imported-template" content="/playground/deep.html"></template>-->
+    </template>
+    <script id="deep-script">
+        (function () {
+            var script = document._currentScript || document.currentScript;
+            var template = script.previousElementSibling;
+
+            //if (template.getAttribute("is") != "dom-bind") {
+            //    template = template.previousElementSibling;
+            //}
+
+            template.model = {
+                value: 1
+            };
+
+            template.plus = function () {
+                template.set("model.value", template.model.value + 1);
+            };
+        })();
+        console.log("In deep.html!");
+    </script>
+</template>

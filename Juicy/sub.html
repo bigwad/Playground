@@ -1,0 +1,46 @@
+﻿<template>
+    <template is="dom-bind" id="sub-dom-bind">
+        <div class="sub">sub.html <span>{{model.value}}</span> <button on-click="plus">++</button></div>
+        <div>
+            <h5>deep.html <span>{{model.deep}}</span></h5>
+            <template is="dom-if" if="{{model.deep}}" restamp>
+                <template is="imported-template" content="/playground/deep.html"></template>
+            </template>
+            <div>
+                <button type="button" on-click="toggle">Toggle</button>
+            </div>
+        </div>
+    </template>
+    <script id="sub-script">
+        (function () {
+            var script = document._currentScript || document.currentScript;
+            var template = script.previousElementSibling;
+
+            //if (template.getAttribute("is") != "dom-bind") {
+            //    template = template.previousElementSibling;
+            //}
+
+            template.model = {
+                value: 1,
+                deep: false
+            };
+
+            template.plus = function () {
+                template.set("model.value", template.model.value + 1);
+            };
+
+            template.toggle = function () {
+                template.set("model.deep", !template.model.deep);
+            };
+
+            //console.log(script.id, template.id, template.getAttribute("is"));
+        })();
+        console.log("In sub.html!");
+    </script>
+    <style>
+        div.sub {
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</template>
