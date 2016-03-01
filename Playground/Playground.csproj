@@ -94,9 +94,7 @@
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\sys\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypedJSON Include="SubPage.json">
       <Generator>MsBuild:Compile</Generator>

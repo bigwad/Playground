@@ -3,18 +3,21 @@
 <head>
     <title>Shopping cart</title>
 
-    <script src="http://juicy.github.io/object.observe/dist/object-observe.js"></script>
-    <script src="http://juicy.github.io/array.observe/array-observe.js"></script>
+    <script src="/sys/object.observe/dist/object-observe.min.js"></script>
+    <script src="/sys/array.observe/array-observe.min.js"></script>
 
     <script src="/sys/webcomponentsjs/webcomponents.js"></script>
     <script>
         window.Polymer = window.Polymer || {};
         window.Polymer.dom = "shadow";
     </script>
-    <link rel="import" href="/sys/polymer/polymer.html" />
-    <link rel="import" href="/sys/puppet-client/puppet-client.html" />
-    <link rel="import" href="/sys/dom-bind-notifier/dom-bind-notifier.html" />
-    <link rel="import" href="/sys/starcounter-include/starcounter-include.html" />
+    <link rel="import" href="/sys/polymer/polymer.html">
+
+    <!-- Import Starcounter specific components -->
+    <link rel="import" href="/sys/starcounter.html">
+    <link rel="import" href="/sys/starcounter-include/starcounter-include.html">
+    <link rel="import" href="/sys/starcounter-debug-aid/src/starcounter-debug-aid.html">
+    <link rel="import" href="/sys/dom-bind-notifier/dom-bind-notifier.html">
 </head>
 <body>
     <template is="dom-bind" id="root">
@@ -63,6 +66,7 @@
             var template = (document._currentScript || document.currentScript).previousElementSibling;
         })();
     </script>
-    <puppet-client usewebsocket="false" ref="root"></puppet-client>
+    <puppet-client use-web-socket="false" usewebsocket="false" ref="root"></puppet-client>
+    <starcounter-debug-aid></starcounter-debug-aid>
 </body>
 </html>
