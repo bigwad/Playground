@@ -84,6 +84,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="wwwroot\Playground\ct-list.html" />
     <Content Include="wwwroot\Playground\IndexPage.html" />
     <Content Include="wwwroot\Playground\RactivePage.html" />
     <Content Include="wwwroot\Playground\RactiveSubPage.html" />

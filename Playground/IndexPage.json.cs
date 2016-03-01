@@ -5,7 +5,7 @@ namespace Playground {
         protected override void OnData() {
             base.OnData();
 
-            this.Items.Add().StringValue = "Value 0";
+            //this.Items.Add().Name = "Value 0";
             this.SubPage = Self.GET("/playground/sub");
         }
 
@@ -18,7 +18,7 @@ namespace Playground {
         }
 
         void Handle(Input.AddItem Action) {
-            this.Items.Add().StringValue = "Value " + Action.Value;
+            this.Items.Add().Name = "Value " + Action.Value;
         }
 
         void Handle(Input.RemoveItem Action) {
@@ -27,6 +27,10 @@ namespace Playground {
             }
 
             this.Items.RemoveAt(0);
+        }
+
+        [IndexPage_json.Items]
+        partial class IndexPageItem : Json {
         }
     }
 }

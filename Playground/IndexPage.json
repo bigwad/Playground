@@ -3,7 +3,7 @@
     "Message": "",
     "Button$": 0,
     "Text$": "",
-    "Items": [ "" ],
+    "Items": [ { "Name":  "" } ],
     "AddItem$": 0,
     "RemoveItem$": 0,
     "SubPage": { }

@@ -18,6 +18,8 @@
     <link rel="import" href="/sys/starcounter-include/starcounter-include.html">
     <link rel="import" href="/sys/starcounter-debug-aid/src/starcounter-debug-aid.html">
     <link rel="import" href="/sys/dom-bind-notifier/dom-bind-notifier.html">
+
+    <link rel="import" href="/Playground/ct-list.html" />
 </head>
 <body>
     <template is="dom-bind" id="root">
@@ -43,16 +45,23 @@
                 <tbody>
                     <template is="dom-repeat" items="{{model.Items}}">
                         <tr>
-                            <td>{{item}}</td>
+                            <td>{{item.Name}}</td>
                         </tr>
                     </template>
                 </tbody>
             </table>
+        </fieldset>
+        <fieldset>
+            <legend>List</legend>
             <ul>
                 <template is="dom-repeat" items="{{model.Items}}">
-                    <li>{{item}}</li>
+                    <li>{{item.Name}}</li>
                 </template>
             </ul>
+        </fieldset>
+        <fieldset>
+            <legend>Custom element</legend>
+            <ct-list list-items="{{model.Items}}"></ct-list>
         </fieldset>
         <p>{{model.Message}}</p>
         <fieldset>
