@@ -77,6 +77,10 @@
                 <button type="button" value="{{model.UnloadSubPage$::click}}" onmouseup="++this.value;" disabled="{{model.UnloadSubPage$}}">Unload sub page</button>
             </p>
         </fieldset>
+        <fieldset>
+            <legend>Link</legend>
+            <a href="/playground">Reload this page</a>
+        </fieldset>
         <dom-bind-notifier observed-object="{{model}}" path="model" deep id="root-notifier"></dom-bind-notifier>
     </template>
     <script>
