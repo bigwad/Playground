@@ -29,6 +29,24 @@ namespace Playground {
             this.Items.RemoveAt(0);
         }
 
+        void Handle(Input.AddAndRemoveItem Action) {
+            this.Items.Add().Name = "Value " + Action.Value;
+
+            if (this.Items.Count > 0) {
+                this.Items.RemoveAt(0);
+            }
+        }
+
+        void Handle(Input.LoadSubPage Action) {
+            Action.Cancel();
+            this.SubPage = Self.GET("/playground/sub");
+        }
+
+        void Handle(Input.UnloadSubPage Action) {
+            Action.Cancel();
+            this.SubPage = null;
+        }
+
         [IndexPage_json.Items]
         partial class IndexPageItem : Json {
         }

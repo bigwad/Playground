@@ -39,6 +39,7 @@
                         <th>
                             <button type="button" value="{{model.AddItem$::click}}" onmousedown="++this.value;">Add item</button>
                             <button type="button" value="{{model.RemoveItem$::click}}" onmousedown="++this.value;">Remove first item</button>
+                            <button type="button" value="{{model.AddAndRemoveItem$::click}}" onmousedown="++this.value;">Add and remove item</button>
                         </th>
                     </tr>
                 </thead>
@@ -68,6 +69,13 @@
         <fieldset>
             <legend>Sub page</legend>
             <starcounter-include partial="{{model.SubPage}}"></starcounter-include>
+            <template is="dom-if" if="{{!model.SubPage.Html}}">
+                <p>The sub page is not loaded</p>
+            </template>
+            <p>
+                <button type="button" value="{{model.LoadSubPage$::click}}" onmouseup="++this.value;" disabled="{{model.LoadSubPage$}}">Load sub page</button>
+                <button type="button" value="{{model.UnloadSubPage$::click}}" onmouseup="++this.value;" disabled="{{model.UnloadSubPage$}}">Unload sub page</button>
+            </p>
         </fieldset>
         <dom-bind-notifier observed-object="{{model}}" path="model" deep id="root-notifier"></dom-bind-notifier>
     </template>
