@@ -10,11 +10,11 @@ namespace Playground {
         }
 
         void Handle(Input.Button Action) {
-            this.Message = string.Format("Button was clicked {0} time(s)!", Action.Value);
+            this.MessageButton = string.Format("Button was clicked {0} time(s)!", Action.Value);
         }
 
         void Handle(Input.Text Action) {
-            this.Message = string.Format("Text was changed to '{0}'!", Action.Value);
+            this.MessageText = string.Format("Text was changed to '{0}'!", Action.Value);
         }
 
         void Handle(Input.AddItem Action) {

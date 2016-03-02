@@ -1,6 +1,7 @@
 {
     "Html": "/Playground/IndexPage.html",
-    "Message": "",
+    "MessageText": "",
+    "MessageButton": "",
     "Button$": 0,
     "Text$": "",
     "Items": [ { "Name":  "" } ],
