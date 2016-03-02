@@ -79,6 +79,9 @@
     <Compile Include="RactiveSubPage.json.cs">
       <DependentUpon>RactiveSubPage.json</DependentUpon>
     </Compile>
+    <Compile Include="SubDetailsPage.json.cs">
+      <DependentUpon>SubDetailsPage.json</DependentUpon>
+    </Compile>
     <Compile Include="SubPage.json.cs">
       <DependentUpon>SubPage.json</DependentUpon>
     </Compile>
@@ -88,6 +91,7 @@
     <Content Include="wwwroot\Playground\IndexPage.html" />
     <Content Include="wwwroot\Playground\RactivePage.html" />
     <Content Include="wwwroot\Playground\RactiveSubPage.html" />
+    <Content Include="wwwroot\Playground\SubDetailsPage.html" />
     <Content Include="wwwroot\Playground\SubPage.html" />
   </ItemGroup>
   <ItemGroup>
@@ -95,7 +99,11 @@
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <TypedJSON Include="SubDetailsPage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+  </ItemGroup>
   <ItemGroup>
     <TypedJSON Include="SubPage.json">
       <Generator>MsBuild:Compile</Generator>

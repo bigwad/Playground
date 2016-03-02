@@ -2,12 +2,25 @@
     <h3>SubPage.html</h3>
     <template is="dom-bind" id="sub">
         <template is="dom-repeat" items="{{model.Items}}">
-            <div>{{item}}</div>
+            <div>
+                <a href="javascript:" item="{{item}}" on-click="onItemClick">{{item}}</a>
+            </div>
         </template>
+        <starcounter-include partial="{{model.Details}}"></starcounter-include>
         <div>
             <button type="button" value="{{model.Remove$::click}}" onmousedown="++this.value;">Remove last item</button>
             <button type="button" value="{{model.Add$::click}}" onmousedown="++this.value;">Add an item</button>
         </div>
         <dom-bind-notifier observed-object="{{model}}" path="model" deep id="sub-notifier"></dom-bind-notifier>
     </template>
+    <script>
+        (function () {
+            var script = document._currentScript || document.currentScript;
+            var template = script.previousElementSibling;
+
+            template.onItemClick = function (e) {
+                template.set("model.SelectedItem$", e.currentTarget.item);
+            };
+        })();
+    </script>
 </template>

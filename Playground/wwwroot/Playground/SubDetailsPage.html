@@ -1,0 +1,9 @@
+﻿<template>
+    <template is="dom-bind" id="sub-details">
+        <div>
+            <span>Selected item:</span>
+            <b>{{model.Name}}</b>
+        </div>
+        <dom-bind-notifier observed-object="{{model}}" path="model" deep id="sub-notifier"></dom-bind-notifier>
+    </template>
+</template>

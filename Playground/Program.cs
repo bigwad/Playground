@@ -46,6 +46,10 @@ namespace Playground {
                 Data = null
             });
 
+            Handle.GET("/playground/details/{?}", (string id) => new SubDetailsPage() {
+                Data = id
+            });
+
             Handle.GET("/playground/ractive", () => new RactivePage() {
                 Session = new Session(SessionOptions.PatchVersioning),
                 Data = null
