@@ -5,8 +5,17 @@ namespace Playground {
         protected override void OnData() {
             base.OnData();
 
-            //this.Items.Add().Name = "Value 0";
+            this.MessageText = null;
+            this.MessageButton = null;
+            this.Button = 0;
+            this.Text = null;
+            this.Items.Clear();
+            this.AddItem = 0;
+            this.RemoveItem = 0;
+            this.AddAndRemoveItem = 0;
             this.SubPage = Self.GET("/playground/sub");
+            this.LoadSubPage = 0;
+            this.UnloadSubPage = 0;
         }
 
         void Handle(Input.Button Action) {

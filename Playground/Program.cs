@@ -18,11 +18,23 @@ namespace Playground {
                 };
             });
 
-            Handle.GET("/playground/index", () => {
+            Handle.GET("/playground/reset", () => {
                 if (Session.Current != null && Session.Current.Data is IndexPage) {
                     IndexPage page = Session.Current.Data as IndexPage;
 
-                    page.MessageText = "/playground/index was opened";
+                    page.Data = null;
+
+                    return page;
+                } else {
+                    return Self.GET("/playground");
+                }
+            });
+
+            Handle.GET("/playground/change", () => {
+                if (Session.Current != null && Session.Current.Data is IndexPage) {
+                    IndexPage page = Session.Current.Data as IndexPage;
+
+                    page.MessageText = "/playground/change was opened";
 
                     return page;
                 } else {
