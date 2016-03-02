@@ -7,9 +7,27 @@ using Starcounter;
 namespace Playground {
     class Program {
         static void Main() {
-            Handle.GET("/playground", () => new IndexPage() {
-                Session = new Session(SessionOptions.PatchVersioning),
-                Data = null
+            Handle.GET("/playground", () => {
+                if (Session.Current == null) {
+                    Session.Current = new Session(SessionOptions.PatchVersioning);
+                }
+
+                return new IndexPage() {
+                    Session = Session.Current,
+                    Data = null
+                };
+            });
+
+            Handle.GET("/playground/index", () => {
+                if (Session.Current != null && Session.Current.Data is IndexPage) {
+                    IndexPage page = Session.Current.Data as IndexPage;
+
+                    page.MessageText = "/playground/index was opened";
+
+                    return page;
+                } else {
+                    return Self.GET("/playground");
+                }
             });
 
             Handle.GET("/playground/sub", () => new SubPage() {
