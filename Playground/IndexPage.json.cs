@@ -2,6 +2,9 @@ using Starcounter;
 
 namespace Playground {
     partial class IndexPage : Page {
+        static IndexPage() {
+        }
+
         protected override void OnData() {
             base.OnData();
 
@@ -46,6 +49,13 @@ namespace Playground {
             }
         }
 
+        void Handle(Input.ResetItems Action) {
+            this.Items.Data = new object[] {
+                new { Name = "Reset item 0" },
+                new { Name = "Reset item 1" }
+            };
+        }
+
         void Handle(Input.LoadSubPage Action) {
             Action.Cancel();
             this.SubPage = Self.GET("/playground/sub");
@@ -54,10 +64,6 @@ namespace Playground {
         void Handle(Input.UnloadSubPage Action) {
             Action.Cancel();
             this.SubPage = null;
-        }
-
-        [IndexPage_json.Items]
-        partial class IndexPageItem : Json {
         }
     }
 }

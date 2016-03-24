@@ -32,6 +32,7 @@ namespace Playground {
         void Handle(Input.Add Action) {
             this.Items.Add().StringValue = "Item-" + counter++;
             this.SetDetails(null);
+            this.Message = "An item was added";
         }
     }
 }

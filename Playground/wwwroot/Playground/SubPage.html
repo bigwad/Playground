@@ -11,6 +11,7 @@
             <button type="button" value="{{model.Remove$::click}}" onmousedown="++this.value;">Remove last item</button>
             <button type="button" value="{{model.Add$::click}}" onmousedown="++this.value;">Add an item</button>
         </div>
+        <div>{{model.Message}}</div>
         <dom-bind-notifier observed-object="{{model}}" path="model" deep id="sub-notifier"></dom-bind-notifier>
     </template>
     <script>
