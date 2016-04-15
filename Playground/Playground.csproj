@@ -64,6 +64,7 @@
     <Compile Include="BenchmarkPage.json.cs">
       <DependentUpon>BenchmarkPage.json</DependentUpon>
     </Compile>
+    <Compile Include="Database\Item.cs" />
     <Compile Include="Data\Cpu.cs" />
     <Compile Include="Data\Data.cs" />
     <Compile Include="Data\Motherboard.cs" />

@@ -1,8 +1,10 @@
 using Starcounter;
+using Playground.Database;
 
 namespace Playground {
     partial class IndexPage : Page {
         static IndexPage() {
+            DefaultTemplate.Items.Bind = "ItemsBind";
         }
 
         protected override void OnData() {
@@ -21,16 +23,18 @@ namespace Playground {
             this.UnloadSubPage = 0;
         }
 
-        void Handle(Input.Button Action) {
-            this.MessageButton = string.Format("Button was clicked {0} time(s)!", Action.Value);
-        }
-
-        void Handle(Input.Text Action) {
-            this.MessageText = string.Format("Text was changed to '{0}'!", Action.Value);
+        public QueryResultRows<Item> ItemsBind {
+            get {
+                return Db.SQL<Item>("SELECT i FROM Playground.Database.Item i");
+            }
         }
 
         void Handle(Input.AddItem Action) {
-            this.Items.Add().Name = "Value " + Action.Value;
+            new Item() {
+                Name = "Value " + Action.Value
+            };
+
+            this.Transaction.Commit();
         }
 
         void Handle(Input.RemoveItem Action) {
@@ -38,22 +42,37 @@ namespace Playground {
                 return;
             }
 
-            this.Items.RemoveAt(0);
+            this.Items[0].Data.Delete();
+            this.Transaction.Commit();
         }
 
         void Handle(Input.AddAndRemoveItem Action) {
-            this.Items.Add().Name = "Value " + Action.Value;
-
             if (this.Items.Count > 0) {
-                this.Items.RemoveAt(0);
+                this.Items[0].Data.Delete();
             }
+
+            new Item() {
+                Name = "Value " + Action.Value
+            };
+
+            this.Transaction.Commit();
         }
 
         void Handle(Input.ResetItems Action) {
-            this.Items.Data = new object[] {
-                new { Name = "Reset item 0" },
-                new { Name = "Reset item 1" }
-            };
+            Db.SlowSQL("DELETE FROM Playground.Database.Item");
+
+            new Item() { Name = "Reset item 0" };
+            new Item() { Name = "Reset item 1" };
+
+            this.Transaction.Commit();
+        }
+
+        void Handle(Input.Button Action) {
+            this.MessageButton = string.Format("Button was clicked {0} time(s)!", Action.Value);
+        }
+
+        void Handle(Input.Text Action) {
+            this.MessageText = string.Format("Text was changed to '{0}'!", Action.Value);
         }
 
         void Handle(Input.LoadSubPage Action) {

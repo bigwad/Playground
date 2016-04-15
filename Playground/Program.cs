@@ -3,19 +3,59 @@ using System.Text;
 using System.Diagnostics;
 using System.Linq;
 using Starcounter;
+using Playground.Database;
 
 namespace Playground {
     class Program {
         static void Main() {
+            Hook<Item>.BeforeDelete += (sender, entity) => {
+                Session.ForAll((s, id) => {
+                    if (s == null || !(s.Data is IndexPage)) {
+                        return;
+                    }
+
+                    IndexPage page = s.Data as IndexPage;
+
+                    page.MessageText = "Item " + entity.Name + " removed!";
+                    s.CalculatePatchAndPushOnWebSocket();
+                });
+            };
+
+            Hook<Item>.CommitInsert += (sender, entity) => {
+                Session.ForAll((s, id) => {
+                    if (s == null || !(s.Data is IndexPage)) {
+                        return;
+                    }
+
+                    IndexPage page = s.Data as IndexPage;
+
+                    page.MessageText = "Item " + entity.Name + " inserted!";
+                    s.CalculatePatchAndPushOnWebSocket();
+                });
+            };
+
+            Hook<Item>.CommitUpdate += (sender, entity) => {
+                Session.ForAll((s, id) => {
+                    if (s == null || !(s.Data is IndexPage)) {
+                        return;
+                    }
+
+                    IndexPage page = s.Data as IndexPage;
+
+                    page.MessageText = "Item " + entity.Name + " updated!";
+                    s.CalculatePatchAndPushOnWebSocket();
+                });
+            };
+
             Handle.GET("/playground", () => {
                 if (Session.Current == null) {
                     Session.Current = new Session(SessionOptions.PatchVersioning);
                 }
 
-                return new IndexPage() {
+                return Db.Scope<IndexPage>(() => new IndexPage() {
                     Session = Session.Current,
                     Data = null
-                };
+                });
             });
 
             Handle.GET("/playground/reset", () => {
