@@ -33,8 +33,6 @@ namespace Playground {
             new Item() {
                 Name = "Value " + Action.Value
             };
-
-            this.Transaction.Commit();
         }
 
         void Handle(Input.RemoveItem Action) {
@@ -42,20 +40,23 @@ namespace Playground {
                 return;
             }
 
-            this.Items[0].Data.Delete();
-            this.Transaction.Commit();
+            var item = this.Items[0].Data;
+
+            this.Items.RemoveAt(0);
+            item.Delete();
         }
 
         void Handle(Input.AddAndRemoveItem Action) {
             if (this.Items.Count > 0) {
-                this.Items[0].Data.Delete();
+                var item = this.Items[0].Data;
+
+                this.Items.RemoveAt(0);
+                item.Delete();
             }
 
             new Item() {
                 Name = "Value " + Action.Value
             };
-
-            this.Transaction.Commit();
         }
 
         void Handle(Input.ResetItems Action) {
@@ -63,7 +64,18 @@ namespace Playground {
 
             new Item() { Name = "Reset item 0" };
             new Item() { Name = "Reset item 1" };
+        }
 
+        void Handle(Input.UpdateItem Action) {
+            if (this.Items.Count < 1) {
+                return;
+            }
+
+            this.Items[0].Name = "Update " + Action.Value;
+        }
+
+        void Handle(Input.SaveItems Action) {
+            this.MessageText = "Items saved #" + Action.Value;
             this.Transaction.Commit();
         }
 

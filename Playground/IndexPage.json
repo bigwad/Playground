@@ -9,10 +9,15 @@
       "$": { "Reuse": "Playground.ItemJson" }
     }
   ],
+  "LastItem": {
+    "$": { "Reuse": "Playground.ItemJson" }
+  },
   "AddItem$": 0,
   "RemoveItem$": 0,
   "AddAndRemoveItem$": 0,
   "ResetItems$": 0,
+  "UpdateItem$": 0,
+  "SaveItems$": 0,
   "SubPage": { },
   "LoadSubPage$": 0,
   "UnloadSubPage$": 0

@@ -21,6 +21,20 @@ namespace Playground {
                 });
             };
 
+            Hook<Item>.CommitDelete += (sender, entity) => {
+                Session.ForAll((s, id) => {
+                    if (s == null || !(s.Data is IndexPage))
+                    {
+                        return;
+                    }
+
+                    IndexPage page = s.Data as IndexPage;
+
+                    page.MessageText = "Item " + entity + " removed!";
+                    s.CalculatePatchAndPushOnWebSocket();
+                });
+            };
+
             Hook<Item>.CommitInsert += (sender, entity) => {
                 Session.ForAll((s, id) => {
                     if (s == null || !(s.Data is IndexPage)) {
@@ -30,6 +44,7 @@ namespace Playground {
                     IndexPage page = s.Data as IndexPage;
 
                     page.MessageText = "Item " + entity.Name + " inserted!";
+                    page.LastItem.Data = entity;
                     s.CalculatePatchAndPushOnWebSocket();
                 });
             };
@@ -43,6 +58,7 @@ namespace Playground {
                     IndexPage page = s.Data as IndexPage;
 
                     page.MessageText = "Item " + entity.Name + " updated!";
+                    page.LastItem.Data = entity;
                     s.CalculatePatchAndPushOnWebSocket();
                 });
             };

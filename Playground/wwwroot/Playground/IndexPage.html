@@ -23,6 +23,8 @@
 </head>
 <body>
     <template is="dom-bind" id="root">
+        <p>{{model.MessageText}}</p>
+        <p>{{model.MessageButton}}</p>
         <fieldset>
             <legend>Text</legend>
             <input type="text" value="{{model.Text$::change}}" />
@@ -41,6 +43,8 @@
                             <button type="button" value="{{model.RemoveItem$::click}}" onmousedown="++this.value;">Remove first item</button>
                             <button type="button" value="{{model.AddAndRemoveItem$::click}}" onmousedown="++this.value;">Add and remove item</button>
                             <button type="button" value="{{model.ResetItems$::click}}" onmousedown="++this.value;">Reset items</button>
+                            <button type="button" value="{{model.UpdateItem$::click}}" onmousedown="++this.value;">Update first item</button>
+                            <button type="button" value="{{model.SaveItems$::click}}" onmousedown="++this.value;">Save changes</button>
                         </th>
                     </tr>
                 </thead>
@@ -65,8 +69,10 @@
             <legend>Custom element</legend>
             <ct-list list-items="{{model.Items}}"></ct-list>
         </fieldset>
-        <p>{{model.MessageText}}</p>
-        <p>{{model.MessageButton}}</p>
+        <fieldset>
+            <legend>Last item</legend>
+            <div>{{model.LastItem.Name}}</div>
+        </fieldset>
         <fieldset>
             <legend>Sub page</legend>
             <starcounter-include partial="{{model.SubPage}}"></starcounter-include>
@@ -92,6 +98,16 @@
         })();
     </script>
     <puppet-client usewebsocket="false" ref="root"></puppet-client>
+    <script>
+        (function () {
+            var puppet = (document._currentScript || document.currentScript).previousElementSibling;
+            
+            puppet.addEventListener("connectionerror", function (e) {
+                e.detail.handled = true;
+                console.error("Connection error reload the page.");
+            });
+        })();
+    </script>
     <starcounter-debug-aid></starcounter-debug-aid>
 </body>
 </html>
