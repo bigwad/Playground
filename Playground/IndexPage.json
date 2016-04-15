@@ -1,19 +1,19 @@
 {
-    "Html": "/Playground/IndexPage.html",
-    "MessageText": "",
-    "MessageButton": "",
-    "Button$": 0,
-    "Text$": "",
-    "Items": [
-        {
-            "$": { "Reuse": "Playground.ItemJson" }
-        }
-    ],
-    "AddItem$": 0,
-    "RemoveItem$": 0,
-    "AddAndRemoveItem$": 0,
-    "ResetItems$": 0,
-    "SubPage": { },
-    "LoadSubPage$": 0,
-    "UnloadSubPage$": 0
+  "Html": "/Playground/IndexPage.html",
+  "MessageText": "",
+  "MessageButton": "",
+  "Button$": 0,
+  "Text$": "",
+  "Items": [
+    {
+      "$": { "Reuse": "Playground.ItemJson" }
+    }
+  ],
+  "AddItem$": 0,
+  "RemoveItem$": 0,
+  "AddAndRemoveItem$": 0,
+  "ResetItems$": 0,
+  "SubPage": { },
+  "LoadSubPage$": 0,
+  "UnloadSubPage$": 0
 }
