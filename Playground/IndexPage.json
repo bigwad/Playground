@@ -19,6 +19,11 @@
   "UpdateItem$": 0,
   "SaveItems$": 0,
   "SubPage": { },
+  "SubPages": [ { } ],
   "LoadSubPage$": 0,
-  "UnloadSubPage$": 0
+  "AddSubPage$": 0,
+  "ReplaceSubPage$": 0,
+  "ClearSubPages$": 0,
+  "UnloadSubPage$": 0,
+  "RedirectUrl$": ""
 }

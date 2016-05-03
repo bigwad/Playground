@@ -92,6 +92,24 @@ namespace Playground {
             this.SubPage = Self.GET("/playground/sub");
         }
 
+        void Handle(Input.AddSubPage Action) {
+            Action.Cancel();
+            this.SubPages.Add(Self.GET("/playground/sub"));
+        }
+
+        void Handle(Input.ClearSubPages Action) {
+            Action.Cancel();
+            this.SubPages.Clear();
+        }
+
+        void Handle(Input.ReplaceSubPage Action) {
+            Action.Cancel();
+
+            if (this.SubPages.Count > 0) {
+                this.SubPages[0] = Self.GET("/playground/sub");
+            }
+        }
+
         void Handle(Input.UnloadSubPage Action) {
             Action.Cancel();
             this.SubPage = null;

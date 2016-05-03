@@ -68,9 +68,19 @@ namespace Playground {
                     Session.Current = new Session(SessionOptions.PatchVersioning);
                 }
 
-                return Db.Scope<IndexPage>(() => new IndexPage() {
-                    Session = Session.Current,
-                    Data = null
+                return Db.Scope<IndexPage>(() => {
+                    IndexPage page = Session.Current.Data as IndexPage;
+
+                    if (page == null) {
+                        page = new IndexPage() {
+                            Session = Session.Current,
+                            Data = null
+                        };
+                    } else {
+                        page.Data = null;
+                    }
+
+                    return page;
                 });
             });
 
@@ -101,6 +111,8 @@ namespace Playground {
             Handle.GET("/playground/sub", () => new SubPage() {
                 Data = null
             });
+
+            UriMapping.Map("/playground/sub", UriMapping.MappingUriPrefix + "/playground-sub-page");
 
             Handle.GET("/playground/details/{?}", (string id) => new SubDetailsPage() {
                 Data = id

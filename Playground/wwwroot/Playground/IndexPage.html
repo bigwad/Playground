@@ -17,7 +17,8 @@
     <link rel="import" href="/sys/starcounter.html">
     <link rel="import" href="/sys/starcounter-include/starcounter-include.html">
     <link rel="import" href="/sys/starcounter-debug-aid/src/starcounter-debug-aid.html">
-    <link rel="import" href="/sys/dom-bind-notifier/dom-bind-notifier.html">
+
+    <link rel="import" href="/sys/puppet-redirect/puppet-redirect.html" />
 
     <link rel="import" href="/Playground/ct-list.html" />
 </head>
@@ -85,12 +86,28 @@
             </p>
         </fieldset>
         <fieldset>
+            <legend>Sub pages</legend>
+            <template is="dom-if" if="{{model.SubPages.length}}">
+                <template is="dom-repeat" items="{{model.SubPages}}">
+                    <starcounter-include partial="{{item}}"></starcounter-include>
+                </template>
+            </template>
+            <p>
+                <button type="button" value="{{model.AddSubPage$::click}}" onmouseup="++this.value;" disabled="{{model.AddSubPage$}}">Add sub page</button>
+                <button type="button" value="{{model.ReplaceSubPage$::click}}" onmouseup="++this.value;" disabled="{{model.ReplaceSubPage$}}">Replace first sub page</button>
+                <button type="button" value="{{model.ClearSubPages$::click}}" onmouseup="++this.value;" disabled="{{model.ClearSubPages$}}">Clear sub pages</button>
+            </p>
+        </fieldset>
+        <fieldset>
             <legend>Link</legend>
             <a href="/playground">Reload current model</a>
             <a href="/playground/reset">Reset values in current model</a>
             <a href="/playground/change">Change current model</a>
+            <div>
+                <input type="text" value="{{model.RedirectUrl$::change}}" placeholder="Redirect URL" />
+            </div>
         </fieldset>
-        <dom-bind-notifier observed-object="{{model}}" path="model" deep id="root-notifier"></dom-bind-notifier>
+        <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}" />
     </template>
     <script>
         (function () {
