@@ -25,5 +25,6 @@
   "ReplaceSubPage$": 0,
   "ClearSubPages$": 0,
   "UnloadSubPage$": 0,
-  "RedirectUrl$": ""
+  "RedirectUrl$": "",
+  "MatrixPage": { }
 }

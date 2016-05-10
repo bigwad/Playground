@@ -1,0 +1,13 @@
+﻿<template>
+    <template is="dom-bind">
+        <template is="dom-repeat" items="{{model.Matrix}}" as="row">
+            <table class="table table-bordered">
+                <template is="dom-repeat" items="{{row}}" as="cell">
+                    <td>
+                        <span class="label label-default">{{cell}}</span>
+                    </td>
+                </template>
+            </table>
+        </template>
+    </template>
+</template>

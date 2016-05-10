@@ -21,6 +21,7 @@ namespace Playground {
             this.SubPage = Self.GET("/playground/sub");
             this.LoadSubPage = 0;
             this.UnloadSubPage = 0;
+            this.MatrixPage = Self.GET("/playground/matrix");
         }
 
         public QueryResultRows<Item> ItemsBind {

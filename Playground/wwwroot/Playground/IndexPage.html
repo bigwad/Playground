@@ -107,6 +107,10 @@
                 <input type="text" value="{{model.RedirectUrl$::change}}" placeholder="Redirect URL" />
             </div>
         </fieldset>
+        <fieldset>
+            <legend>Array of arrays</legend>
+            <starcounter-include partial="{{model.MatrixPage}}"></starcounter-include>
+        </fieldset>
         <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}" />
     </template>
     <script>

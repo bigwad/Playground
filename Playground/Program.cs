@@ -114,6 +114,8 @@ namespace Playground {
 
             UriMapping.Map("/playground/sub", UriMapping.MappingUriPrefix + "/playground-sub-page");
 
+            Handle.GET("/playground/matrix", () => new MatrixPage() { Data = null });
+
             Handle.GET("/playground/details/{?}", (string id) => new SubDetailsPage() {
                 Data = id
             });
