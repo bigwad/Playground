@@ -77,12 +77,13 @@
         <fieldset>
             <legend>Sub page</legend>
             <starcounter-include partial="{{model.SubPage}}"></starcounter-include>
-            <template is="dom-if" if="{{!model.SubPage.Html}}">
+            <template is="dom-if" if="{{!model.SubPage.Playground.Html}}">
                 <p>The sub page is not loaded</p>
             </template>
             <p>
                 <button type="button" value="{{model.LoadSubPage$::click}}" onmouseup="++this.value;" disabled="{{model.LoadSubPage$}}">Load sub page</button>
                 <button type="button" value="{{model.UnloadSubPage$::click}}" onmouseup="++this.value;" disabled="{{model.UnloadSubPage$}}">Unload sub page</button>
+                <button type="button" value="{{model.ChangeHtmlSubPage$::click}}" onmouseup="++this.value;" disabled="{{model.ChangeHtmlSubPage$}}">Change sub HTML</button>
             </p>
         </fieldset>
         <fieldset>

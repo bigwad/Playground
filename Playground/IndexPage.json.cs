@@ -115,5 +115,26 @@ namespace Playground {
             Action.Cancel();
             this.SubPage = null;
         }
+
+        void Handle(Input.ChangeHtmlSubPage Action) {
+            Action.Cancel();
+            SubPage page = this.SubPage as SubPage;
+
+            if (page == null) {
+                return;
+            }
+
+            switch (page.Html) {
+                case "/Playground/SubPage.html":
+                    page.Html = "/Playground/SubStyledPage.html";
+                    break;
+                case "/Playground/SubStyledPage.html":
+                    page.Html = "";
+                    break;
+                case "":
+                    page.Html = "/Playground/SubPage.html";
+                    break;
+            }
+        }
     }
 }

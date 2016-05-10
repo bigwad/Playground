@@ -101,6 +101,7 @@
     <Content Include="wwwroot\Playground\RactiveSubPage.html" />
     <Content Include="wwwroot\Playground\SubDetailsPage.html" />
     <Content Include="wwwroot\Playground\SubPage.html" />
+    <Content Include="wwwroot\Playground\SubStyledPage.html" />
   </ItemGroup>
   <ItemGroup>
     <TypedJSON Include="IndexPage.json">

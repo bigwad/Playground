@@ -1,0 +1,52 @@
+﻿<template>
+    <style>
+        .sub-header {
+            border-bottom: 1px solid #C0C0C0;
+        }
+
+        .sub-list {
+            margin-bottom: 15px;
+            background-color: #C0C0C0;
+        }
+
+        .sub-list__item {
+            border-bottom: 1px solid #C0C0C0;
+            line-height: 30px;
+            font-family: Consolas;
+        }
+
+        .sub-actions {
+        }
+
+        .sub-actions__item {
+            min-width: 300px;
+            height: 35px;
+        }
+    </style>
+    <h3 class="sub-header">SubStyledPage.html</h3>
+    <template is="dom-bind" id="sub">
+        <div class="sub-list">
+            <template is="dom-repeat" items="{{model.Items}}">
+                <div>
+                    <a href="javascript:" item="{{item}}" on-click="onItemClick">{{item}}</a>
+                </div>
+            </template>
+        </div>
+        <starcounter-include partial="{{model.Details}}"></starcounter-include>
+        <div class="sub-actions">
+            <button class="sub-actions__item" type="button" value="{{model.Remove$::click}}" onmousedown="++this.value;">Remove last item</button>
+            <button class="sub-actions__item" type="button" value="{{model.Add$::click}}" onmousedown="++this.value;">Add an item</button>
+        </div>
+        <p>{{model.Message}}</p>
+    </template>
+    <script>
+        (function () {
+            var script = document._currentScript || document.currentScript;
+            var template = script.previousElementSibling;
+
+            template.onItemClick = function (e) {
+                template.set("model.SelectedItem$", e.currentTarget.item);
+            };
+        })();
+    </script>
+</template>
