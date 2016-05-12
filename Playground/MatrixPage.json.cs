@@ -13,5 +13,41 @@ namespace Playground {
                 }
             }
         }
+
+        protected void Handle(Input.RevertClick Action) {
+            Action.Cancel();
+
+            for (var x = 0; x < this.Matrix.Count; x++) {
+                var row = this.Matrix[x];
+
+                for (var y = 0; y < row.Count; y++) {
+                    row[y].IntegerValue = 9 - row[y].IntegerValue;
+                }
+            }
+        }
+
+        protected void Handle(Input.MinusClick Action) {
+            Action.Cancel();
+
+            for (var x = 0; x < this.Matrix.Count; x++) {
+                var row = this.Matrix[x];
+
+                for (var y = 0; y < row.Count; y++) {
+                    row[y].IntegerValue--;
+                }
+            }
+        }
+
+        protected void Handle(Input.PlusClick Action) {
+            Action.Cancel();
+
+            for (var x = 0; x < this.Matrix.Count; x++) {
+                var row = this.Matrix[x];
+
+                for (var y = 0; y < row.Count; y++) {
+                    row[y].IntegerValue++;
+                }
+            }
+        }
     }
 }

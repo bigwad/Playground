@@ -1,4 +1,7 @@
 {
   "Html": "/Playground/MatrixPage.html",
-  "Matrix": [ [ 0 ] ]
+  "Matrix": [ [ 0 ] ],
+  "RevertClick$": 0,
+  "PlusClick$": 0,
+  "MinusClick$": 0
 }
