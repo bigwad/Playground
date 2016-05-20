@@ -146,6 +146,17 @@ namespace Playground {
                 return "Data deleted";
             });
 
+            Handle.GET("/playground/parse-query/{?}", (Request r, string s) => {
+                var query = System.Web.HttpUtility.ParseQueryString(s);
+                StringBuilder sb = new StringBuilder();
+
+                foreach (string item in query.Keys) {
+                    sb.Append(item).Append(": ").Append(query[item]).Append(Environment.NewLine);
+                }
+
+                return sb.ToString();
+            }, new HandlerOptions() { SkipRequestFilters = true });
+
             Handle.GET("/playground/benchmark/{?}", (int times) => {
                 StringBuilder html = new StringBuilder();
                 Stopwatch watch = new Stopwatch();
