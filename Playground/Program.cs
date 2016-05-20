@@ -146,7 +146,7 @@ namespace Playground {
                 return "Data deleted";
             });
 
-            Handle.GET("/playground/parse-query/{?}", (Request r, string s) => {
+            Handle.GET("/playground/parse-query?{?}", (Request r, string s) => {
                 var query = System.Web.HttpUtility.ParseQueryString(s);
                 StringBuilder sb = new StringBuilder();
 
