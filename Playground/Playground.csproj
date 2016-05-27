@@ -74,6 +74,8 @@
     <Compile Include="Data\Data.cs" />
     <Compile Include="Data\Motherboard.cs" />
     <Compile Include="Data\MotherboardCpu.cs" />
+    <Compile Include="Data\Review.cs" />
+    <Compile Include="Data\ReviewCollection.cs" />
     <Compile Include="IndexPage.json.cs">
       <DependentUpon>IndexPage.json</DependentUpon>
     </Compile>

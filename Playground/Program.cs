@@ -211,7 +211,7 @@ namespace Playground {
             });
 
             Handle.GET("/playground/populate-json", () => {
-                string json = "[{ \"Name\": \"fx-8350\", \"Socket\": \"AM3\" }, { \"Name\": \"i7-6850k\", \"Socket\": \"2011-3\" }]";
+                string json = "[{ \"Name\": \"fx-8350\", \"Socket\": \"AM3\" }, { \"Name\": \"i7-6850k\", \"Socket\": \"2011-3\", \"Reviews\": [{ \"Name\": \"John\", \"Score\": 10 }, { \"Name\": \"Max\", \"Score\": 9 }] }]";
 
                 Db.Transact(() => {
                     List<Cpu> cpus = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Cpu>>(json);
