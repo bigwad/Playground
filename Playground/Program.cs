@@ -2,6 +2,7 @@
 using System.Text;
 using System.Diagnostics;
 using System.Linq;
+using System.Collections.Generic;
 using Starcounter;
 using Playground.Database;
 
@@ -207,6 +208,16 @@ namespace Playground {
                 //html.Append("<p>").Append("MotherboardCpu Any Contains: <b>").Append(watch.ElapsedMilliseconds).Append("</b> ms</p>");
 
                 return html.ToString();
+            });
+
+            Handle.GET("/playground/populate-json", () => {
+                string json = "[{ \"Name\": \"fx-8350\", \"Socket\": \"AM3\" }, { \"Name\": \"i7-6850k\", \"Socket\": \"2011-3\" }]";
+
+                Db.Transact(() => {
+                    List<Cpu> cpus = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Cpu>>(json);
+                });
+
+                return 200;
             });
         }
     }
