@@ -46,6 +46,9 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Starcounter.Extensions, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -69,7 +72,9 @@
     <Compile Include="BenchmarkPage.json.cs">
       <DependentUpon>BenchmarkPage.json</DependentUpon>
     </Compile>
+    <Compile Include="Database\Counter.cs" />
     <Compile Include="Database\Item.cs" />
+    <Compile Include="Database\LockCounter.cs" />
     <Compile Include="Data\Cpu.cs" />
     <Compile Include="Data\Data.cs" />
     <Compile Include="Data\Motherboard.cs" />

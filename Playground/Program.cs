@@ -221,6 +221,33 @@ namespace Playground {
             });
 
             Handle.GET("/playground/dynitems", () => new DynItemsPage() { Data = null });
+
+            Handle.GET("/playground/compare-counters/{?}", (int count) => {
+                Stopwatch watch = new Stopwatch();
+                ulong[] array = new ulong[count];
+                StringBuilder sb = new StringBuilder();
+
+                watch.Start();
+                array.AsParallel().ForAll(i => {
+                    Scheduling.ScheduleTask(() => {
+                        Counter.GetNextValue("");
+                    }, true);
+                });
+                watch.Stop();
+                sb.Append("Counter: ").Append(watch.Elapsed).Append(Environment.NewLine);
+
+                watch.Reset();
+                watch.Start();
+                array.AsParallel().ForAll(i => {
+                    Scheduling.ScheduleTask(() => {
+                        LockCounter.GetNextValue();
+                    }, true);
+                });
+                watch.Stop();
+                sb.Append("LockCounter: ").Append(watch.Elapsed).Append(Environment.NewLine);
+
+                return sb.ToString();
+            });
         }
     }
 }
