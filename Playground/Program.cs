@@ -246,6 +246,26 @@ namespace Playground {
                 watch.Stop();
                 sb.Append("LockCounter: ").Append(watch.Elapsed).Append(Environment.NewLine);
 
+                watch.Reset();
+                watch.Start();
+                array.AsParallel().ForAll(i => {
+                    Scheduling.ScheduleTask(() => {
+                        Counter.GetNextValue((i % 15).ToString());
+                    }, true);
+                });
+                watch.Stop();
+                sb.Append("Counter named: ").Append(watch.Elapsed).Append(Environment.NewLine);
+
+                watch.Reset();
+                watch.Start();
+                array.AsParallel().ForAll(i => {
+                    Scheduling.ScheduleTask(() => {
+                        LockCounter.GetNextValue((i % 15).ToString());
+                    }, true);
+                });
+                watch.Stop();
+                sb.Append("LockCounter named: ").Append(watch.Elapsed).Append(Environment.NewLine);
+
                 return sb.ToString();
             });
         }
