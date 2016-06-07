@@ -76,6 +76,9 @@
     <Compile Include="Data\MotherboardCpu.cs" />
     <Compile Include="Data\Review.cs" />
     <Compile Include="Data\ReviewCollection.cs" />
+    <Compile Include="DynItemsPage.json.cs">
+      <DependentUpon>DynItemsPage.json</DependentUpon>
+    </Compile>
     <Compile Include="IndexPage.json.cs">
       <DependentUpon>IndexPage.json</DependentUpon>
     </Compile>
@@ -102,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="wwwroot\Playground\ct-list.html" />
+    <Content Include="wwwroot\Playground\DynItemsPage.html" />
     <Content Include="wwwroot\Playground\IndexPage.html" />
     <Content Include="wwwroot\Playground\MatrixPage.html" />
     <Content Include="wwwroot\Playground\RactivePage.html" />
@@ -154,6 +158,9 @@
     </TypedJSON>
   </ItemGroup>
   <ItemGroup>
+    <TypedJSON Include="DynItemsPage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
     <None Include="packages.config" />
     <None Include="weaver.ignore">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

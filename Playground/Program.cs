@@ -219,6 +219,8 @@ namespace Playground {
 
                 return 200;
             });
+
+            Handle.GET("/playground/dynitems", () => new DynItemsPage() { Data = null });
         }
     }
 }
