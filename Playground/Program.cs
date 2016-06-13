@@ -268,6 +268,12 @@ namespace Playground {
 
                 return sb.ToString();
             });
+
+            Starcounter.Internal.JsonResponseMerger.RegisterMergeCallback(OnJsonMerge);
+        }
+
+        static Json OnJsonMerge(Request request, string callingAppName, IEnumerable<Json> partialJsons) {
+            return null;
         }
     }
 }
