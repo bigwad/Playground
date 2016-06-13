@@ -24,8 +24,7 @@ namespace Playground {
 
             Hook<Item>.CommitDelete += (sender, entity) => {
                 Session.ForAll((s, id) => {
-                    if (s == null || !(s.Data is IndexPage))
-                    {
+                    if (s == null || !(s.Data is IndexPage)) {
                         return;
                     }
 
