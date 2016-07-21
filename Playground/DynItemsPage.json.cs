@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Starcounter;
 
 namespace Playground {
-    partial class DynItemsPage : Partial {
+    partial class DynItemsPage : Json {
         protected override void OnData() {
             base.OnData();
 

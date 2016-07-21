@@ -1,6 +1,6 @@
 using Starcounter;
 
 namespace Playground {
-    partial class RactiveSubPage : Page {
+    partial class RactiveSubPage : Json {
     }
 }

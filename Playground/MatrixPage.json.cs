@@ -1,7 +1,7 @@
 using Starcounter;
 
 namespace Playground {
-    partial class MatrixPage : Page {
+    partial class MatrixPage : Json {
         protected override void OnData() {
             base.OnData();
 

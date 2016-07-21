@@ -1,7 +1,7 @@
 using Starcounter;
 
 namespace Playground {
-    partial class SubPage : Page {
+    partial class SubPage : Json {
         protected int counter = 1;
 
         protected override void OnData() {

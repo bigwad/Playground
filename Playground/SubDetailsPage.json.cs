@@ -1,7 +1,7 @@
 using Starcounter;
 
 namespace Playground {
-    partial class SubDetailsPage : Page {
+    partial class SubDetailsPage : Json {
         protected override void OnData() {
             base.OnData();
 

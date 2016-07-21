@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Starcounter;
 
 namespace Playground {
-    partial class RactivePage : Page {
+    partial class RactivePage : Json {
         protected override void OnData() {
             base.OnData();
 

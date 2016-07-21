@@ -2,7 +2,7 @@ using Starcounter;
 using Playground.Database;
 
 namespace Playground {
-    partial class IndexPage : Page {
+    partial class IndexPage : Json {
         static IndexPage() {
             DefaultTemplate.Items.Bind = "ItemsBind";
         }

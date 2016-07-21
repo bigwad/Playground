@@ -4,6 +4,9 @@ using Starcounter;
 namespace Subground {
     class Program {
         static void Main() {
+            Application.Current.Use(new HtmlFromJsonProvider());
+            Application.Current.Use(new PartialToStandaloneHtmlProvider());
+
             Hook<Simplified.Ring5.SystemUserSession>.CommitDelete += (sender, entity) => {
                 Session.ForAll((s, id) => {
                     if (s == null || !(s.Data is SubPage)) {

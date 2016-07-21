@@ -9,6 +9,9 @@ using Playground.Database;
 namespace Playground {
     class Program {
         static void Main() {
+            Application.Current.Use(new HtmlFromJsonProvider());
+            Application.Current.Use(new PartialToStandaloneHtmlProvider());
+
             Hook<Item>.BeforeDelete += (sender, entity) => {
                 Session.ForAll((s, id) => {
                     if (s == null || !(s.Data is IndexPage)) {
