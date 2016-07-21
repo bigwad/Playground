@@ -22,6 +22,7 @@ namespace Playground {
             this.LoadSubPage = 0;
             this.UnloadSubPage = 0;
             this.MatrixPage = Self.GET("/playground/matrix");
+            this.AnonymousPage = Self.GET(UriMapping.MappingUriPrefix + "/playground-anonymous-page", () => new Json());
         }
 
         public QueryResultRows<Item> ItemsBind {

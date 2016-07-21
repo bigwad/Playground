@@ -27,5 +27,6 @@
   "UnloadSubPage$": 0,
   "ChangeHtmlSubPage$": 0,
   "RedirectUrl$": "",
-  "MatrixPage": { }
+  "MatrixPage": { },
+  "AnonymousPage": { }
 }
