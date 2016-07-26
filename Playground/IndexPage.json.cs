@@ -37,6 +37,24 @@ namespace Playground {
             };
         }
 
+        void Handle(Input.AddItemDelayed Action) {
+            Starcounter.Session.ScheduleTask(Session.Current.SessionId, (s, id) => {
+                System.Threading.Thread.CurrentThread.Join(10000);
+
+                if (s == null) {
+                    return;
+                }
+
+                Session.Data.Transaction.Scope(() => {
+                    new Item() {
+                        Name = "Delayed value " + Action.Value
+                    };
+                });
+
+                Session.CalculatePatchAndPushOnWebSocket();
+            });
+        }
+
         void Handle(Input.RemoveItem Action) {
             if (this.Items.Count < 1) {
                 return;

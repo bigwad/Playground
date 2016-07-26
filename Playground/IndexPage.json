@@ -13,6 +13,7 @@
     "$": { "Reuse": "Playground.ItemJson" }
   },
   "AddItem$": 0,
+  "AddItemDelayed$": 0,
   "RemoveItem$": 0,
   "AddAndRemoveItem$": 0,
   "ResetItems$": 0,
