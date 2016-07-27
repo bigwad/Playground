@@ -115,6 +115,10 @@ namespace Playground {
                 Data = null
             });
 
+            Handle.GET("/playground/date", () => new DatePage() {
+                Data = null
+            });
+
             UriMapping.Map("/playground/sub", UriMapping.MappingUriPrefix + "/playground-sub-page");
 
             Handle.GET("/playground/matrix", () => new MatrixPage() { Data = null });

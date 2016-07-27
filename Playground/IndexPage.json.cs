@@ -18,7 +18,7 @@ namespace Playground {
             this.AddItem = 0;
             this.RemoveItem = 0;
             this.AddAndRemoveItem = 0;
-            this.SubPage = Self.GET("/playground/sub");
+            //this.SubPage = Self.GET("/playground/sub");
             this.LoadSubPage = 0;
             this.UnloadSubPage = 0;
             this.MatrixPage = Self.GET("/playground/matrix");
@@ -110,6 +110,11 @@ namespace Playground {
         void Handle(Input.LoadSubPage Action) {
             Action.Cancel();
             this.SubPage = Self.GET("/playground/sub");
+        }
+
+        void Handle(Input.LoadDatePage Action) {
+            Action.Cancel();
+            this.SubPage = Self.GET("/playground/date");
         }
 
         void Handle(Input.AddSubPage Action) {

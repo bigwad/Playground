@@ -22,6 +22,7 @@
   "SubPage": { },
   "SubPages": [ { } ],
   "LoadSubPage$": 0,
+  "LoadDatePage$": 0,
   "AddSubPage$": 0,
   "ReplaceSubPage$": 0,
   "ClearSubPages$": 0,
