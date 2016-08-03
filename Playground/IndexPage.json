@@ -30,5 +30,6 @@
   "ChangeHtmlSubPage$": 0,
   "RedirectUrl$": "",
   "MatrixPage": { },
-  "AnonymousPage": { }
+  "AnonymousPage": { },
+  "SessionForAll$": 0
 }

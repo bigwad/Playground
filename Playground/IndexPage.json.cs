@@ -1,3 +1,4 @@
+using System;
 using Starcounter;
 using Playground.Database;
 
@@ -138,6 +139,35 @@ namespace Playground {
         void Handle(Input.UnloadSubPage Action) {
             Action.Cancel();
             this.SubPage = null;
+        }
+
+        void Handle(Input.SessionForAll Action) {
+            Starcounter.Logging.LogSource log = new Starcounter.Logging.LogSource(Application.Current.Name);
+
+            Session.ForAll((s, id) => {
+                log.Debug("Session.ForAll #0");
+
+                IndexPage page = s.Data as IndexPage;
+
+                if (page == null) {
+                    return;
+                }
+
+                page.Transaction.Scope(() => new Item() { Name = "Session.ForAll #0" });
+            });
+
+            Session.ForAll((s, id) => {
+                log.Debug("Session.ForAll #1");
+
+                IndexPage page = s.Data as IndexPage;
+
+                if (page == null) {
+                    return;
+                }
+
+                page.Transaction.Scope(() => new Item() { Name = "Session.ForAll #1" });
+                s.CalculatePatchAndPushOnWebSocket();
+            });
         }
 
         void Handle(Input.ChangeHtmlSubPage Action) {
