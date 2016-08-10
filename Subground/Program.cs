@@ -78,7 +78,7 @@ namespace Subground {
                     Session.Current = new Session(SessionOptions.PatchVersioning);
                 }
 
-                SubPage page = new SubPage() {
+                AnonymousPage page = new AnonymousPage() {
                     Data = null,
                     Session = Session.Current
                 };
