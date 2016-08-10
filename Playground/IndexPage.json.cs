@@ -15,7 +15,6 @@ namespace Playground {
             this.MessageButton = null;
             this.Button = 0;
             this.Text = null;
-            this.Items.Clear();
             this.AddItem = 0;
             this.RemoveItem = 0;
             this.AddAndRemoveItem = 0;
@@ -34,7 +33,8 @@ namespace Playground {
 
         void Handle(Input.AddItem Action) {
             new Item() {
-                Name = "Value " + Action.Value
+                Name = "Value " + Action.Value,
+                Type = ItemType.Custom
             };
         }
 

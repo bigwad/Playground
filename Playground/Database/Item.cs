@@ -3,6 +3,12 @@ using System.Linq;
 using Starcounter;
 
 namespace Playground.Database {
+    public enum ItemType {
+        Default = 0,
+        Custom = 1,
+        Extended = 2
+    }
+
     [Database]
     public class Item {
         public Item() {
@@ -15,5 +21,6 @@ namespace Playground.Database {
         public DateTime Date { get; set; }
         public string Name { get; set; }
         public int Number { get; set; }
+        public ItemType Type { get; set; }
     }
 }
