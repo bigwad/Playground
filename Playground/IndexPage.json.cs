@@ -138,7 +138,7 @@ namespace Playground {
 
         void Handle(Input.UnloadSubPage Action) {
             Action.Cancel();
-            this.SubPage = null;
+            this.SubPage = new Json();
         }
 
         void Handle(Input.SessionForAll Action) {
