@@ -4,4 +4,18 @@
             <b>{{model.Date}}</b>
         </p>
     </template>
+    <script>
+        (function () {
+            var script = document._currentScript || document.currentScript;
+            var template = script.previousElementSibling;
+
+            template.observers = ["onDateChanged(model.Date)"];
+
+            template.onDateChanged = function (date) {
+                if (date == "SubPage") {
+                    console.error("The SubPage value should never get to the DatePage partial!", template, date);
+                }
+            };
+        })();
+    </script>
 </template>
