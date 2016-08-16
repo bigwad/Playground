@@ -1,9 +1,9 @@
 {
-    "Html": "/Playground/SubPage.html",
-    "Items": [ "" ],
-    "SelectedItem$": "",
-    "Details": { },
-    "Remove$": 0,
-    "Add$": 0,
-    "Message": ""
+  "Html": "/Playground/SubPage.html",
+  "Items": [ "" ],
+  "SelectedItem$": "",
+  "Details": { },
+  "Remove$": 0,
+  "Add$": 0,
+  "Message": ""
 }
