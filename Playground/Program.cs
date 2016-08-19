@@ -12,6 +12,8 @@ namespace Playground {
             Application.Current.Use(new HtmlFromJsonProvider());
             Application.Current.Use(new PartialToStandaloneHtmlProvider());
 
+            RegisterMasterChildren();
+
             Hook<Item>.BeforeDelete += (sender, entity) => {
                 Session.ForAll((s, id) => {
                     if (s == null || !(s.Data is IndexPage)) {
@@ -280,6 +282,26 @@ namespace Playground {
 
         static Json OnJsonMerge(Request request, string callingAppName, IEnumerable<Json> partialJsons) {
             return null;
+        }
+
+        static void RegisterMasterChildren() {
+            Handle.GET("/Playground/Child/{?}", (string title) => {
+                MasterPage master = Session.Current?.Data as MasterPage;
+
+                if (master == null) {
+                    master = new MasterPage() {
+                        Session = new Session(SessionOptions.PatchVersioning)
+                    };
+                }
+
+                master.CurrentPage = new ChildPage() {
+                    Data = DateTime.Now.ToString(),
+                    Title = title,
+                    SessionId = Session.Current.SessionId
+                };
+
+                return master;
+            });
         }
     }
 }

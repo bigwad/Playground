@@ -72,6 +72,9 @@
     <Compile Include="BenchmarkPage.json.cs">
       <DependentUpon>BenchmarkPage.json</DependentUpon>
     </Compile>
+    <Compile Include="ChildPage.json.cs">
+      <DependentUpon>ChildPage.json</DependentUpon>
+    </Compile>
     <Compile Include="Database\Counter.cs" />
     <Compile Include="Database\Item.cs" />
     <Compile Include="Database\LockCounter.cs" />
@@ -110,12 +113,17 @@
     <Compile Include="SubPage.json.cs">
       <DependentUpon>SubPage.json</DependentUpon>
     </Compile>
+    <Compile Include="MasterPage.json.cs">
+      <DependentUpon>MasterPage.json</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="wwwroot\Playground\ChildPage.html" />
     <Content Include="wwwroot\Playground\ct-list.html" />
     <Content Include="wwwroot\Playground\DatePage.html" />
     <Content Include="wwwroot\Playground\DynItemsPage.html" />
     <Content Include="wwwroot\Playground\IndexPage.html" />
+    <None Include="wwwroot\Playground\MasterPage.html" />
     <Content Include="wwwroot\Playground\MatrixPage.html" />
     <Content Include="wwwroot\Playground\RactivePage.html" />
     <Content Include="wwwroot\Playground\RactiveSubPage.html" />
@@ -167,10 +175,16 @@
     </TypedJSON>
   </ItemGroup>
   <ItemGroup>
+    <TypedJSON Include="MasterPage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
     <TypedJSON Include="DynItemsPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
     <TypedJSON Include="DatePage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+    <TypedJSON Include="ChildPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
     <None Include="packages.config" />
