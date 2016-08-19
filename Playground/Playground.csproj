@@ -75,6 +75,7 @@
     <Compile Include="ChildPage.json.cs">
       <DependentUpon>ChildPage.json</DependentUpon>
     </Compile>
+    <Compile Include="CustomPartialToStandaloneHtmlProvider.cs" />
     <Compile Include="Database\Counter.cs" />
     <Compile Include="Database\Item.cs" />
     <Compile Include="Database\LockCounter.cs" />

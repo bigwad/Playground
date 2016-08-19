@@ -10,7 +10,7 @@ namespace Playground {
     class Program {
         static void Main() {
             Application.Current.Use(new HtmlFromJsonProvider());
-            Application.Current.Use(new PartialToStandaloneHtmlProvider());
+            Application.Current.Use(new CustomPartialToStandaloneHtmlProvider());
 
             RegisterMasterChildren();
 

@@ -1,0 +1,40 @@
+{
+  "name": "PuppetJs",
+  "homepage": "https://github.com/PuppetJs/PuppetJs",
+  "description": "Client side library that binds Web Components or AngularJs to server side view models using JSON-Patch.",
+  "main": "src/puppet.js",
+  "keywords": [
+    "JSON-patch",
+    "web components",
+    "angularjs",
+    "websocket"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "lab/",
+    "test/",
+    "Gruntfile.js",
+    "node_modules"
+  ],
+  "dependencies": {
+    "fast-json-patch": "Starcounter-Jack/JSON-Patch#~1.0.0",
+    "json-patch-queue": "PuppetJs/JSON-Patch-Queue#gh-pages",
+    "json-patch-ot-agent": "PuppetJs/JSON-Patch-OT-agent#gh-pages",
+    "json-patch-ot": "PuppetJs/JSON-Patch-OT#gh-pages"
+  },
+  "devDependencies": {
+    "polymer": "*",
+    "puppet-bunny": "PuppetJs/puppet-bunny",
+    "dom-bind-notifier": "*"
+  },
+  "version": "2.1.0",
+  "_release": "2.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.1.0",
+    "commit": "6b01c33e96e86f4e1f1086dab04246d69821714c"
+  },
+  "_source": "https://github.com/PuppetJs/PuppetJs.git",
+  "_target": "^2.0.0",
+  "_originalSource": "PuppetJs"
+}
