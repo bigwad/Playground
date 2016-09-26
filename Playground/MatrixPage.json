@@ -3,5 +3,6 @@
   "Matrix": [ [ 0 ] ],
   "RevertClick$": 0,
   "PlusClick$": 0,
-  "MinusClick$": 0
+  "MinusClick$": 0,
+  "RemoveClick$": 0
 }

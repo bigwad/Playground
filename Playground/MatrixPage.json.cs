@@ -49,5 +49,10 @@ namespace Playground {
                 }
             }
         }
+
+        protected void Handle(Input.RemoveClick Action) {
+            Action.Cancel();
+            this.Matrix.Data = null;
+        }
     }
 }
