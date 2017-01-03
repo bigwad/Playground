@@ -90,7 +90,7 @@ namespace Playground
                     Session.Current = new Session(SessionOptions.PatchVersioning);
                 }
 
-                return Db.Scope<IndexPage>(() =>
+                IndexPage result = Db.Scope<IndexPage>(() =>
                 {
                     IndexPage page = Session.Current.Data as IndexPage;
 
@@ -109,6 +109,28 @@ namespace Playground
 
                     return page;
                 });
+
+                string sessionId = Session.Current.SessionId;
+                bool inSession = true;
+
+                System.Threading.Tasks.Task.Run(() =>
+                {
+                    while (inSession)
+                    {
+                        Starcounter.Session.ScheduleTask(sessionId, (s, id) =>
+                        {
+                            if (s == null || !result.Equals(s.Data))
+                            {
+                                inSession = false;
+                                return;
+                            }
+
+                            s.CalculatePatchAndPushOnWebSocket();
+                        }, true);
+                    }
+                });
+
+                return result;
             });
 
             Handle.GET("/playground/reset", () =>
