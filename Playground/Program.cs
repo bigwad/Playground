@@ -214,6 +214,52 @@ namespace Playground
                 return "Data deleted";
             });
 
+            Handle.GET("/playground/reference-vs-objectno/{?}", (int count) =>
+            {
+                Stopwatch watch = new Stopwatch();
+                StringBuilder sb = new StringBuilder();
+
+                Db.Transact(() =>
+                {
+                    Motherboard m = Db.SQL<Motherboard>("SELECT m FROM " + typeof(Motherboard).FullName + " m").First;
+                    ulong no = m.GetObjectNo();
+
+                    watch.Start();
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        Db.SQL<MotherboardCpu>("SELECT c FROM " + typeof(MotherboardCpu).FullName + " c WHERE c.Motherboard = ?", m).ToList();
+                    }
+
+                    watch.Stop();
+                    sb.Append("Object reference: ").Append(watch.Elapsed).Append(Environment.NewLine);
+
+                    watch.Reset();
+                    watch.Start();
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        Db.SQL<MotherboardCpu>("SELECT c FROM " + typeof(MotherboardCpu).FullName + " c WHERE c.Motherboard.ObjectNo = ?", no).ToList();
+                    }
+
+                    watch.Stop();
+                    sb.Append("Object NO: ").Append(watch.Elapsed).Append(Environment.NewLine);
+
+                    watch.Reset();
+                    watch.Start();
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        Db.SQL<MotherboardCpu>("SELECT c FROM " + typeof(MotherboardCpu).FullName + " c WHERE c.Motherboard.ObjectNo = ?", m.GetObjectNo()).ToList();
+                    }
+
+                    watch.Stop();
+                    sb.Append("Object NO (GetObjectNo): ").Append(watch.Elapsed).Append(Environment.NewLine);
+                });
+
+                return sb.ToString();
+            });
+
             Handle.GET("/playground/parse-query?{?}", (Request r, string s) =>
             {
                 var query = System.Web.HttpUtility.ParseQueryString(s);
