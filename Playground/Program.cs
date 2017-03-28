@@ -29,6 +29,7 @@ namespace Playground
 
             Handle.GET("/playground/dynamic", () =>
             {
+                List<DataItem> oldDataItems = null;
                 List<DataItem> dataItems = new List<DataItem>()
                 {
                     new DataItem() { Id = 0, Priority = 0, Name = "John", Age = 15 },
@@ -47,7 +48,18 @@ namespace Playground
 
                 itemTemplate.Add<TLong>("Id");
                 itemTemplate.Add<TLong>("Priority");
-                itemTemplate.Add<TString>("Name").SetCustomBoundAccessors(j => (j.Data as DataItem).Name, (j, s) => { });
+
+                TString nameTemplate = itemTemplate.Add<TString>("Name");
+                nameTemplate.SetCustomBoundAccessors(j => 
+                {
+                    DataItem i = (j.Data as DataItem);
+
+                    Debug.Assert(oldDataItems == null || !oldDataItems.Contains(i));
+                    Debug.Assert(dataItems.Contains(i));
+
+                    return i.Name;
+                }, (j, s) => { });
+
                 itemTemplate.Add<TLong>("Age");
                 itemsTemplate.ElementType = itemTemplate;
                 itemsTemplate.SetCustomBoundAccessors(j => { return dataItems; }, (j, d) => { });
@@ -81,6 +93,7 @@ namespace Playground
                         newItems.Insert(0, item);
                     }
 
+                    oldDataItems = dataItems;
                     dataItems = newItems;
                 });
 
