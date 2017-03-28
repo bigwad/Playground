@@ -1,0 +1,25 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+
+<template>
+    <template is="dom-bind">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template is="dom-repeat" items="{{model.Items}}">
+                    <tr>
+                        <td>{{item.Priority}}</td>
+                        <td>{{item.Name}}</td>
+                        <td>{{item.Age}}</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+        <button onmouseup="++this.value" value="{{model.SwipeRowsTrigger$::click}}" disabled="{{model.SwipeRowsTrigger$}}">Swipe rows</button>
+    </template>
+</template>
