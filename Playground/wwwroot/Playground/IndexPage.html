@@ -1,0 +1,10 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+
+<template>
+    <template is="dom-bind">
+        <h1>Testing session</h1>
+        <div>{{model.DateTime}}</div>
+        <button type="button" value="{{model.ScheduleExceptionTaskTrigger$::click}}" disabled="{{model.ScheduleExceptionTaskTrigger$}}" onmousedown="++this.value">Schedule a session task with an exception</button>
+        <button type="button" value="{{model.ScheduleDateTimeTaskTrigger$::click}}" disabled="{{model.ScheduleDateTimeTaskTrigger$}}" onmousedown="++this.value">Schedule a session task with date time update</button>
+    </template>
+</template>
