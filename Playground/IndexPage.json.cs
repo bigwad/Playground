@@ -5,21 +5,16 @@ namespace Playground
 {
     partial class IndexPage : Json
     {
-        protected void Handle(Input.ScheduleExceptionTaskTrigger action)
+        protected void Handle(Input.SaveTrigger action)
         {
             action.Cancel();
-            Session.RunTask(Session.Current.SessionId, (s, id) => { throw new Exception("ScheduleTaskTrigger"); });
+            this.Transaction.Commit();
         }
 
-        protected void Handle(Input.ScheduleDateTimeTaskTrigger action)
+        protected void Handle(Input.CancelTrigger action)
         {
             action.Cancel();
-
-            Session.RunTask(Session.Current.SessionId, (s, id) =>
-            {
-                this.DateTime = System.DateTime.Now.ToString();
-                s.CalculatePatchAndPushOnWebSocket();
-            });
+            this.Transaction.Rollback();
         }
     }
 }

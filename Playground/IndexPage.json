@@ -1,6 +1,10 @@
 {
   "Html": "/Playground/IndexPage.html",
-  "DateTime": "",
-  "ScheduleExceptionTaskTrigger$": 0,
-  "ScheduleDateTimeTaskTrigger$": 0
+  "Product": {
+    "Name$": "",
+    "Price$": 0,
+    "Quantity$": 0
+  },
+  "SaveTrigger$": 0,
+  "CancelTrigger$": 0
 }
