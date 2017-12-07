@@ -1,0 +1,11 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+
+<template>
+    <template is="dom-bind">
+        <div style="background-color: #d1f0fe; padding: 10px;">
+            <button type="button" onmousedown="++this.value;" disabled="{{model.LoadTrigger$}}" value="{{model.LoadTrigger$::click}}">Load page</button>
+            <a href="/Subground/product">B</a>
+            <starcounter-include view-model="{{model.CurrentPage}}"></starcounter-include>
+        </div>
+    </template>
+</template>

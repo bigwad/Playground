@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Text;
-using System.Diagnostics;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using Starcounter;
-using Starcounter.XSON;
-using Starcounter.Templates;
 using Playground.Database;
 
-namespace Playground
+namespace Subground
 {
     class Program
     {
@@ -17,16 +13,16 @@ namespace Playground
             Application.Current.Use(new HtmlFromJsonProvider());
             Application.Current.Use(new PartialToStandaloneHtmlProvider());
 
-            Handle.GET("/a", () =>
+            Handle.GET("/b", () =>
             {
                 MasterPage master = new MasterPage();
 
-                master.CurrentPage = Db.Scope(() => Self.GET("/a/form"));
+                master.CurrentPage = Db.Scope(() => Self.GET("/b/form"));
 
                 return master;
             });
 
-            Handle.GET("/a/form", () =>
+            Handle.GET("/b/form", () =>
             {
                 return Db.Scope(() =>
                 {
@@ -36,13 +32,13 @@ namespace Playground
                 });
             });
 
-            Handle.GET("/a/link", () =>
+            Handle.GET("/b/link", () =>
             {
                 return new LinkPage();
             });
 
-            Blender.MapUri("/a/form", $"{nameof(Playground)}.{typeof(Product).FullName}");
-            Blender.MapUri("/a/link", $"Subground.{typeof(Product).FullName}");
+            Blender.MapUri("/b/form", $"{nameof(Subground)}.{typeof(Product).FullName}");
+            Blender.MapUri("/b/link", $"Playground.{typeof(Product).FullName}");
         }
 
         static Product GetProduct()
