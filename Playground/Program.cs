@@ -4,8 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
 using Starcounter;
-using Starcounter.XSON;
-using Starcounter.Templates;
+using Starcounter.Linq;
 using Playground.Database;
 
 namespace Playground
@@ -46,8 +45,8 @@ namespace Playground
         }
 
         static Product GetProduct()
-        {
-            Product p = Db.SQL<Product>($"SELECT p FROM {typeof(Product)} p").FirstOrDefault();
+        {            
+            Product p = DbLinq.Objects<Product>().FirstOrDefault();
 
             if (p == null)
             {

@@ -49,6 +49,9 @@
     <Reference Include="Starcounter.Extensions, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
+    <Reference Include="Starcounter.Linq, Version=0.4.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\Starcounter.Linq.0.4.0\lib\net45\Starcounter.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>

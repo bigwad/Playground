@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Starcounter;
+using Starcounter.Linq;
 using Playground.Database;
 
 namespace Subground
@@ -43,7 +44,7 @@ namespace Subground
 
         static Product GetProduct()
         {
-            Product p = Db.SQL<Product>($"SELECT p FROM {typeof(Product)} p").FirstOrDefault();
+            Product p = DbLinq.Objects<Product>().FirstOrDefault();
 
             if (p == null)
             {

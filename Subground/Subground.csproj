@@ -43,6 +43,9 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Starcounter.Linq, Version=0.4.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\Starcounter.Linq.0.4.0\lib\net45\Starcounter.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -86,6 +89,7 @@
     <TypedJSON Include="MasterPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
+    <None Include="packages.config" />
     <None Include="wwwroot\Subground\_IndexPage.html" />
   </ItemGroup>
   <ItemGroup>
