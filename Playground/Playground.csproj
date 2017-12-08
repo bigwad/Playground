@@ -72,27 +72,26 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\Product.cs" />
-    <Compile Include="IndexPage.json.cs">
-      <DependentUpon>IndexPage.json</DependentUpon>
+    <Compile Include="form.json.cs">
+      <DependentUpon>form.json</DependentUpon>
     </Compile>
-    <Compile Include="LinkPage.json.cs">
-      <DependentUpon>LinkPage.json</DependentUpon>
+    <Compile Include="link.json.cs">
+      <DependentUpon>link.json</DependentUpon>
     </Compile>
-    <Compile Include="MasterPage.json.cs">
-      <DependentUpon>MasterPage.json</DependentUpon>
+    <Compile Include="mp.json.cs">
+      <DependentUpon>mp.json</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <TypedJSON Include="IndexPage.json">
+    <TypedJSON Include="form.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
-    <TypedJSON Include="MasterPage.json">
+    <TypedJSON Include="mp.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
-    <TypedJSON Include="LinkPage.json">
+    <TypedJSON Include="link.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
     <None Include="packages.config" />
@@ -104,16 +103,19 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\Playground\MasterPage.html" />
+    <None Include="wwwroot\A\A.html" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\Playground\_IndexPage.html" />
+    <None Include="wwwroot\A\link.html" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\Playground\LinkPage.html" />
+    <None Include="wwwroot\A\form.html" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\Playground\IndexPage.html" />
+    <ProjectReference Include="..\Database\Database.csproj">
+      <Project>{acbab8c3-4ee5-4ca8-bd9c-c2e7d38839e3}</Project>
+      <Name>Database</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(StarcounterBin)\Starcounter.MsBuild.targets" />

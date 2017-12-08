@@ -6,15 +6,14 @@
     <ProductVersion>9.0.20706</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectTypeGuids>{C86118D7-451E-4933-BFEE-A1EFDB162FD7};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{7F5FCF51-BFB0-48B5-908F-C90EEBD8B897}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Subground</RootNamespace>
-    <AssemblyName>Subground</AssemblyName>
+    <RootNamespace>Database</RootNamespace>
+    <AssemblyName>Database</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <StartWorkingDirectory>$(MSBuildProjectDirectory)</StartWorkingDirectory>
     <StarcounterVersionCompatibility>2.3</StarcounterVersionCompatibility>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
@@ -26,8 +25,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
@@ -38,14 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Starcounter.Linq, Version=0.4.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\Starcounter.Linq.0.4.0\lib\net45\Starcounter.Linq.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -65,46 +57,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="form.json.cs">
-      <DependentUpon>form.json</DependentUpon>
-    </Compile>
-    <Compile Include="link.json.cs">
-      <DependentUpon>link.json</DependentUpon>
-    </Compile>
-    <Compile Include="mp.json.cs">
-      <DependentUpon>mp.json</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="P.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypedJSON Include="form.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
-  </ItemGroup>
-  <ItemGroup>
-    <TypedJSON Include="link.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
-    <TypedJSON Include="mp.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="wwwroot\B\link.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="wwwroot\B\B.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="wwwroot\B\form.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Database\Database.csproj">
-      <Project>{acbab8c3-4ee5-4ca8-bd9c-c2e7d38839e3}</Project>
-      <Name>Database</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(StarcounterBin)\Starcounter.MsBuild.targets" />

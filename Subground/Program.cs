@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Starcounter;
 using Starcounter.Linq;
-using Playground.Database;
+using Database;
 
-namespace Subground
+namespace B
 {
     class Program
     {
@@ -16,41 +16,45 @@ namespace Subground
 
             Handle.GET("/b", () =>
             {
-                MasterPage master = new MasterPage();
-
-                master.CurrentPage = Db.Scope(() => Self.GET("/b/form"));
-
-                return master;
+                return Db.Scope(() =>
+                {
+                    mp json = new mp();
+                    json.cp = Self.GET("/b/form");
+                    return json;
+                });
             });
 
             Handle.GET("/b/form", () =>
             {
                 return Db.Scope(() =>
                 {
-                    IndexPage page = new IndexPage();
-                    page.Product.Data = GetProduct();
-                    return page;
+                    form json = new form();
+                    json.P.Data = GetP();
+                    return json;
                 });
             });
 
             Handle.GET("/b/link", () =>
             {
-                return new LinkPage();
+                return Db.Scope(() =>
+                {
+                    return new link();
+                });
             });
 
-            Blender.MapUri("/b/form", $"{nameof(Subground)}.{typeof(Product).FullName}");
-            Blender.MapUri("/b/link", $"Playground.{typeof(Product).FullName}");
+            Blender.MapUri("/b/form", $"B.{typeof(P).FullName}");
+            Blender.MapUri("/b/link", $"A.{typeof(P).FullName}");
         }
 
-        static Product GetProduct()
+        static P GetP()
         {
-            Product p = DbLinq.Objects<Product>().FirstOrDefault();
+            P p = DbLinq.Objects<P>().FirstOrDefault();
 
             if (p == null)
             {
                 Db.Transact(() =>
                 {
-                    p = new Product() { Name = Guid.NewGuid().ToString() };
+                    p = new P() { v = Guid.NewGuid().ToString() };
                 });
             }
 

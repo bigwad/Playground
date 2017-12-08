@@ -6,12 +6,12 @@ using Starcounter.Internal;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("A")]
+[assembly: AssemblyTitle("Database")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("A")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCompany("Starcounter")]
+[assembly: AssemblyProduct("Database")]
+[assembly: AssemblyCopyright("Copyright © Starcounter 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -21,7 +21,7 @@ using Starcounter.Internal;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("526edd06-b4f0-469f-a4d4-e95b3c94f5ac")]
+[assembly: Guid("97346845-94BB-4D8E-AC10-2B62CA324867")]
 
 // Version information for an assembly consists of the following four values:
 //
