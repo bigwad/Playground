@@ -2,6 +2,7 @@
 
 <template>
     <template is="dom-bind">
+        <p>{{model.Html}}</p>
         <table>
             <thead>
                 <tr>
@@ -10,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <template is="dom-repeat">
+                <template is="dom-repeat" items="{{model.Items}}">
                     <tr>
                         <td>{{item.Index}}</td>
                         <td>{{item.Name}}</td>
