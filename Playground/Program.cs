@@ -25,42 +25,6 @@ namespace A
                     return json;
                 });
             });
-
-            Handle.GET("/a/form", () =>
-            {
-                return Db.Scope(() =>
-                {
-                    form json = new form();
-                    json.P.Data = GetP();
-                    return json;
-                });
-            });
-
-            Handle.GET("/a/link", () =>
-            {
-                return Db.Scope(() =>
-                {
-                    return new link();
-                });
-            });
-
-            Blender.MapUri("/a/form", $"A.{typeof(P).FullName}");
-            Blender.MapUri("/a/link", $"B.{typeof(P).FullName}");
-        }
-
-        static P GetP()
-        {            
-            P p = DbLinq.Objects<P>().FirstOrDefault();
-
-            if (p == null)
-            {
-                Db.Transact(() =>
-                {
-                    p = new P() { v = Guid.NewGuid().ToString() };
-                });
-            }
-
-            return p;
         }
     }
 }
