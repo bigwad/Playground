@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subground", "Subground\Subground.csproj", "{7F5FCF51-BFB0-48B5-908F-C90EEBD8B897}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}"
 EndProject
 Global
@@ -24,10 +22,6 @@ Global
 		{7CBDA509-EDB4-4472-97B9-206A2E30F4E2}.Debug|x64.Build.0 = Debug|x64
 		{7CBDA509-EDB4-4472-97B9-206A2E30F4E2}.Release|x64.ActiveCfg = Release|x64
 		{7CBDA509-EDB4-4472-97B9-206A2E30F4E2}.Release|x64.Build.0 = Release|x64
-		{7F5FCF51-BFB0-48B5-908F-C90EEBD8B897}.Debug|x64.ActiveCfg = Debug|x64
-		{7F5FCF51-BFB0-48B5-908F-C90EEBD8B897}.Debug|x64.Build.0 = Debug|x64
-		{7F5FCF51-BFB0-48B5-908F-C90EEBD8B897}.Release|x64.ActiveCfg = Release|x64
-		{7F5FCF51-BFB0-48B5-908F-C90EEBD8B897}.Release|x64.Build.0 = Release|x64
 		{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}.Debug|x64.ActiveCfg = Debug|x64
 		{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}.Debug|x64.Build.0 = Debug|x64
 		{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}.Release|x64.ActiveCfg = Release|x64

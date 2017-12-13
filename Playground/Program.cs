@@ -7,24 +7,26 @@ using Starcounter;
 using Starcounter.Linq;
 using Database;
 
-namespace A
+namespace Playground
 {
     class Program
     {
         static void Main()
         {
+            Db.Transact(() =>
+            {
+                DbLinq.Objects<Database.Item>().DeleteAll();
+
+                for (int i = 0; i < 10; i++)
+                {
+                    new Database.Item() { Name = "Item #" + i, Index = i };
+                }
+            });
+
             Application.Current.Use(new HtmlFromJsonProvider());
             Application.Current.Use(new PartialToStandaloneHtmlProvider());
 
-            Handle.GET("/a", () =>
-            {
-                return Db.Scope(() =>
-                {
-                    mp json = new mp();
-                    json.cp = Self.GET("/a/form");
-                    return json;
-                });
-            });
+            Handle.GET("/json-linq-bind", () => new IndexPage());
         }
     }
 }

@@ -1,0 +1,22 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+
+<template>
+    <template is="dom-bind">
+        <table>
+            <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template is="dom-repeat">
+                    <tr>
+                        <td>{{item.Index}}</td>
+                        <td>{{item.Name}}</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </template>
+</template>
