@@ -18,7 +18,20 @@ namespace Playground
             Application.Current.Use(new HtmlFromJsonProvider());
             Application.Current.Use(new PartialToStandaloneHtmlProvider());
 
-            Handle.GET("/total-time/{?}/{?}/{?}", (int threads, int count, int writesPercent) =>
+            Handle.GET("/bench/{?}/{?}/{?}/{?}", (int repeats, int threads, int count, int writesPercent) =>
+            {
+                StringBuilder sb = new StringBuilder();
+
+                TotalTime(sb, repeats, threads, count, writesPercent);
+                TransactionTime(sb, repeats, threads, count, writesPercent);
+
+                return sb.ToString();
+            });
+        }
+
+        public static void TotalTime(StringBuilder sb, int repeats, int threads, int count, int writesPercent)
+        {
+            for (int repeat = 0; repeat < repeats; repeat++)
             {
                 List<Task> tasks = new List<Task>();
                 Random rand = new Random();
@@ -60,10 +73,16 @@ namespace Playground
 
                 watch.Stop();
 
-                return $"Completed in {watch.Elapsed} for {threads} thread(s), {count} item(s) per thread, {writesPercent}% writes.";
-            });
+                sb.Append($"Completed in {watch.Elapsed} for {threads} thread(s), {count} item(s) per thread, {writesPercent}% writes.");
+                sb.Append(Environment.NewLine);
 
-            Handle.GET("/transaction-time/{?}/{?}/{?}", (int threads, int count, int writesPercent) =>
+                System.Threading.Thread.CurrentThread.Join(1000);
+            }
+        }
+
+        public static void TransactionTime(StringBuilder sb, int repeats, int threads, int count, int writesPercent)
+        {
+            for (int repeat = 0; repeat < repeats; repeat++)
             {
                 List<Task> tasks = new List<Task>();
                 Random rand = new Random();
@@ -73,7 +92,7 @@ namespace Playground
                 {
                     DbLinq.Objects<Item>().DeleteAll();
                 });
-                
+
                 for (int i = 0; i < threads; i++)
                 {
                     int thread = i;
@@ -110,8 +129,11 @@ namespace Playground
 
                 long time = (long)times.Average();
 
-                return $"Completed with {time} ticks per write transaction for {threads} thread(s), {count} item(s) per thread, {writesPercent}% writes.";
-            });
+                sb.Append($"Completed with {time} ticks per write transaction for {threads} thread(s), {count} item(s) per thread, {writesPercent}% writes.");
+                sb.Append(Environment.NewLine);
+
+                System.Threading.Thread.CurrentThread.Join(1000);
+            }
         }
     }
 }
