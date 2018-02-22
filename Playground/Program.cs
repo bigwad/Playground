@@ -27,6 +27,68 @@ namespace Playground
 
                 return sb.ToString();
             });
+
+            Handle.GET("/index", () =>
+            {
+                if (Session.Current == null)
+                {
+                    Session.Current = new Session(SessionOptions.PatchVersioning);
+                }
+
+                IndexPage page = new IndexPage();
+                Session.Current.Store[nameof(IndexPage)] = page;
+
+                page.Init();
+
+                return page;
+            });
+
+            RegisterDeferredCallbacks();
+        }
+
+        public static void RegisterDeferredCallbacks()
+        {
+            Hook<Database.Item>.AfterCommitInsert += (task, no) =>
+            {
+                Session.RunTaskForAll((s, id) =>
+                {
+                    if (s == null)
+                    {
+                        return;
+                    }
+
+                    IndexPage page = s.Store[nameof(IndexPage)] as IndexPage;
+
+                    if (page == null)
+                    {
+                        return;
+                    }
+
+                    page.ItemInserted(no);
+                    s.CalculatePatchAndPushOnWebSocket();
+                });
+            };
+
+            Hook<Database.Item>.AfterCommitDelete += (task, no) =>
+            {
+                Session.RunTaskForAll((s, id) =>
+                {
+                    if (s == null || s.ActiveWebSocket == null)
+                    {
+                        return;
+                    }
+
+                    IndexPage page = s.Store[nameof(IndexPage)] as IndexPage;
+
+                    if (page == null)
+                    {
+                        return;
+                    }
+
+                    page.ItemDeleted(no);
+                    s.CalculatePatchAndPushOnWebSocket();
+                });
+            };
         }
 
         public static void TotalTime(StringBuilder sb, int repeats, int threads, int count, int writesPercent)

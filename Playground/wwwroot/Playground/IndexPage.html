@@ -1,0 +1,32 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+
+<template>
+    <template is="dom-bind">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ObjectNo</th>
+                    <th>Guid</th>
+                    <th>Date</th>
+                    <th>Thread</th>
+                    <th>Index</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template is="dom-repeat" items="{{model.Items}}">
+                    <tr>
+                        <td>{{item.ObjectNo}}</td>
+                        <td>{{item.Guid}}</td>
+                        <td>{{item.Date}}</td>
+                        <td>{{item.Thread}}</td>
+                        <td>{{item.Index}}</td>
+                        <td>{{item.Notes}}</td>
+                        <td></td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </template>
+</template>
