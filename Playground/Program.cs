@@ -52,7 +52,7 @@ namespace Playground
             {
                 Session.RunTaskForAll((s, id) =>
                 {
-                    if (s == null)
+                    if (s == null || s.ActiveWebSocket == null)
                     {
                         return;
                     }
@@ -86,6 +86,27 @@ namespace Playground
                     }
 
                     page.ItemDeleted(no);
+                    s.CalculatePatchAndPushOnWebSocket();
+                });
+            };
+
+            Hook<Database.Item>.AfterCommitUpdate += (task, no) =>
+            {
+                Session.RunTaskForAll((s, id) =>
+                {
+                    if (s == null || s.ActiveWebSocket == null)
+                    {
+                        return;
+                    }
+
+                    IndexPage page = s.Store[nameof(IndexPage)] as IndexPage;
+
+                    if (page == null)
+                    {
+                        return;
+                    }
+
+                    page.ItemUpdated(no);
                     s.CalculatePatchAndPushOnWebSocket();
                 });
             };

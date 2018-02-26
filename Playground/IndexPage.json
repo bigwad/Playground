@@ -3,11 +3,14 @@
   "Items": [
     {
       "ObjectNo": 0,
-      "Guid": "",
-      "Date": "",
-      "Thread": 0,
-      "Index": 0,
-      "Notes": ""
+      "Guid$": "",
+      "Date$": "",
+      "Thread$": 0,
+      "Index$": 0,
+      "Notes": "",
+      "DeleteTrigger$": 0,
+      "UpdateTrigger$": 0
     }
-  ]
+  ],
+  "InsertTrigger$": 0
 }

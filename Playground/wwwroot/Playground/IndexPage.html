@@ -2,6 +2,9 @@
 
 <template>
     <template is="dom-bind">
+        <p>
+            <button type="button" class="btn btn-xs btn-default" value="{{model.InsertTrigger$::click}}" disabled="{{model.InsertTrigger$}}" onmouseup="++this.value;">Insert new row</button>
+        </p>
         <table class="table">
             <thead>
                 <tr>
@@ -10,7 +13,7 @@
                     <th>Date</th>
                     <th>Thread</th>
                     <th>Index</th>
-                    <th>Notes</th>
+                    <th>Notes (transient)</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -18,12 +21,23 @@
                 <template is="dom-repeat" items="{{model.Items}}">
                     <tr>
                         <td>{{item.ObjectNo}}</td>
-                        <td>{{item.Guid}}</td>
-                        <td>{{item.Date}}</td>
-                        <td>{{item.Thread}}</td>
-                        <td>{{item.Index}}</td>
+                        <td>
+                            <input type="text" value="{{item.Guid$::input}}" class="input-sm" />
+                        </td>
+                        <td>
+                            <input type="text" value="{{item.Date$::input}}" class="input-sm" />
+                        </td>
+                        <td>
+                            <input type="number" value="{{item.Thread$::input}}" class="input-sm" />
+                        </td>
+                        <td>
+                            <input type="number" value="{{item.Index$::input}}" class="input-sm" />
+                        </td>
                         <td>{{item.Notes}}</td>
-                        <td></td>
+                        <td>
+                            <button type="button" class="btn btn-xs btn-default" value="{{item.DeleteTrigger$::click}}" disabled="{{item.DeleteTrigger$}}" onmouseup="++this.value;">Delete</button>
+                            <button type="button" class="btn btn-xs btn-default" value="{{item.UpdateTrigger$::click}}" disabled="{{item.UpdateTrigger$}}" onmouseup="++this.value;">Update</button>
+                        </td>
                     </tr>
                 </template>
             </tbody>

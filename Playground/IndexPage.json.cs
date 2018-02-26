@@ -36,9 +36,9 @@ namespace Playground
 
             if (row != null)
             {
-                //this.Items.Remove(row);
+                this.Items.Remove(row);
                 System.Threading.Interlocked.Increment(ref Counter);
-                row.Data.Notes += $" Removed: {Counter};";
+                //row.Data.Notes += $" Removed: {Counter};";
             }
         }
 
@@ -50,9 +50,33 @@ namespace Playground
             row.Data = new Database.ItemProxy(item);
         }
 
+        protected void Handle(Input.InsertTrigger action)
+        {
+            action.Cancel();
+
+            Db.Transact(() =>
+            {
+                new Database.Item()
+                {
+                    Guid = Guid.NewGuid().ToString(),
+                    Date = DateTime.Now
+                };
+            });
+        }
+
         [IndexPage_json.Items]
         partial class IndexPageItems : Json, IBound<Database.ItemProxy>
         {
+            protected void Handle(Input.DeleteTrigger action)
+            {
+                this.Data.Delete();
+            }
+
+            protected void Handle(Input.UpdateTrigger action)
+            {
+                action.Cancel();
+                this.Data.Update();
+            }
         }
     }
 }
