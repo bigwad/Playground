@@ -71,6 +71,9 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImportExport\Container.cs" />
+    <Compile Include="ImportExport\JsonDecimalConverter.cs" />
+    <Compile Include="ImportExport\JsonIntConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
