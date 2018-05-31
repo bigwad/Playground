@@ -34,7 +34,7 @@ namespace Playground
                     for (int i = 0; i < count; i++)
                     {
                         new Parent() { Index = i, Name = $"Parent {i}", ParentSibling = siblings[rand.Next(0, siblings.Count)] };
-                        new Child() { Index = i, Name = $"Child {i}", ParentSibling = siblings[rand.Next(0, siblings.Count)] };
+                        new Child() { Index = i, Name = $"Child {i}", ParentSibling = siblings[rand.Next(0, siblings.Count)], Date = DateTime.Now, Value = $"Child value {i}", ChildSibling = siblings[rand.Next(0, siblings.Count)] };
                     }
                 });
 
