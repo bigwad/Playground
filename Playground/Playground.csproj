@@ -71,16 +71,10 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IndexPage.json.cs">
-      <DependentUpon>IndexPage.json</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <TypedJSON Include="IndexPage.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
     <None Include="packages.config" />
     <None Include="weaver.ignore">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
