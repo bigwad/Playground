@@ -30,10 +30,7 @@ namespace Playground
 
             Handle.GET("/index", () =>
             {
-                if (Session.Current == null)
-                {
-                    Session.Current = new Session(SessionOptions.PatchVersioning);
-                }
+                Starcounter.Session.Ensure();
 
                 IndexPage page = new IndexPage();
                 Session.Current.Store[nameof(IndexPage)] = page;
