@@ -75,11 +75,17 @@
     <Compile Include="IndexPage.json.cs">
       <DependentUpon>IndexPage.json</DependentUpon>
     </Compile>
+    <Compile Include="ItemPage.json.cs">
+      <DependentUpon>ItemPage.json</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <TypedJSON Include="IndexPage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+    <TypedJSON Include="ItemPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
     <None Include="packages.config" />
@@ -96,7 +102,9 @@
       <Name>Database</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="wwwroot\Playground\ItemPage.html" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\Playground\IndexPage.html" />
   </ItemGroup>

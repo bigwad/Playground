@@ -5,6 +5,7 @@ namespace Database
 {
     public class ItemProxy
     {
+        public string Id { get; set; }
         public ulong ObjectNo { get; set; }
         public string Guid { get; set; }
         public DateTime Date { get; set; }
@@ -18,6 +19,7 @@ namespace Database
 
         public ItemProxy(Item source)
         {
+            this.Id = source.GetObjectID();
             this.ObjectNo = source.GetObjectNo();
             this.Guid = source.Guid;
             this.Date = source.Date;

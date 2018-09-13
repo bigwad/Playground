@@ -29,6 +29,23 @@ namespace Playground
 
                 return page;
             });
+
+            Handle.GET("/items/{?}", (string id) => 
+            {
+                return Db.Scope<Json>(() => Self.GET($"/items/partial/{id}"));
+            });
+
+            Handle.GET("/items/partial/{?}", (string id) =>
+            {
+                ItemPage page = new ItemPage();
+                Item item = Db.FromId<Item>(id);
+
+                page.Item.Data = item;
+
+                return page;
+            }, new HandlerOptions() { SelfOnly = true });
+
+            Starcounter.Advanced.Blender.MapUri<Item>("/items/partial/{?}", new string[0]);
         }
     }
 }

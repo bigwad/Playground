@@ -65,6 +65,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ItemPage.json.cs">
+      <DependentUpon>ItemPage.json</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -74,11 +77,15 @@
       <Name>Database</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <TypedJSON Include="ItemPage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="wwwroot\Subground\ItemPage.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(StarcounterBin)\Starcounter.MsBuild.targets" />
