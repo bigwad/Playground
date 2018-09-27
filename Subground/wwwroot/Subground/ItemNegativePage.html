@@ -1,0 +1,19 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+
+<template>
+    <dom-bind>
+        <template is="dom-bind">
+            <fieldset>
+                <legend>Subground - negative item</legend>
+                <p>
+                    <label>Guid:</label>
+                    <input type="text" value="{{model.Item.Guid}}" readonly />
+                </p>
+                <p>
+                    <label>Index:</label>
+                    <input type="number" value="{{model.Item.Index$::input}}" readonly />
+                </p>
+            </fieldset>
+        </template>
+    </dom-bind>
+</template>

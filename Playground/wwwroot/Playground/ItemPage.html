@@ -8,7 +8,16 @@
                 <p>
                     <a href="/index">Items</a>
                 </p>
-                <input type="text" value="{{model.Item.Guid$::input}}" />
+                <p>
+                    <label>Guid:</label>
+                    <input type="text" value="{{model.Item.Guid$::input}}" />
+                </p>
+                <p>
+                    <label>Index:</label>
+                    <input type="number" value="{{model.Item.Index$::input}}" />
+                </p>
+                <button type="button" value="{{model.SaveTrigger$::click}}" disabled="{{model.SaveTrigger$}}" onmouseup="++this.value;">Save</button>
+                <a href="/items/{{model.Item.ObjectId}}">Re Self.GET</a>
             </fieldset>
         </template>
     </dom-bind>

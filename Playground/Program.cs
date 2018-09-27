@@ -32,7 +32,27 @@ namespace Playground
 
             Handle.GET("/items/{?}", (string id) => 
             {
-                return Db.Scope<Json>(() => Self.GET($"/items/partial/{id}"));
+                Session.Ensure();
+
+                ItemPage page = Session.Current.Store[nameof(ItemPage)] as ItemPage;
+                Starcounter.XSON.IScopeContext scope = page?.AttachedScope;
+
+                if (scope != null)
+                {
+                    return scope.Scope(() =>
+                    {
+                        page = Self.GET<ItemPage>($"/items/partial/{id}");
+                        Session.Current.Store[nameof(ItemPage)] = page;
+                        return page;
+                    });
+                }
+
+                return Db.Scope<Json>(() =>
+                {
+                    page = Self.GET<ItemPage>($"/items/partial/{id}");
+                    Session.Current.Store[nameof(ItemPage)] = page;
+                    return page;
+                });
             });
 
             Handle.GET("/items/partial/{?}", (string id) =>

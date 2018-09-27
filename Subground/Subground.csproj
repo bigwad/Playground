@@ -65,6 +65,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ItemNegativePage.json.cs">
+      <DependentUpon>ItemNegativePage.json</DependentUpon>
+    </Compile>
     <Compile Include="ItemPage.json.cs">
       <DependentUpon>ItemPage.json</DependentUpon>
     </Compile>
@@ -77,9 +80,14 @@
       <Name>Database</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="wwwroot\Subground\ItemNegativePage.html" />
+  </ItemGroup>
   <ItemGroup>
     <TypedJSON Include="ItemPage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+    <TypedJSON Include="ItemNegativePage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
     <None Include="packages.config" />

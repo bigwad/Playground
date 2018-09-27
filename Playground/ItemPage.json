@@ -1,6 +1,9 @@
 {
   "Html": "/Playground/ItemPage.html",
   "Item": {
-    "Guid$": ""
-  }
+    "ObjectId": "",
+    "Guid$": "",
+    "Index$": 0
+  },
+  "SaveTrigger$": 0
 }
