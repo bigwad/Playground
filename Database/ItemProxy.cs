@@ -17,7 +17,7 @@ namespace Database
         {
         }
 
-        public ItemProxy(Item source)
+        public ItemProxy(Person source)
         {
             this.Id = source.GetObjectID();
             this.ObjectNo = source.GetObjectNo();
@@ -31,7 +31,7 @@ namespace Database
         {
             Db.Transact(() =>
             {
-                Item item = Db.FromId<Item>(this.ObjectNo);
+                Person item = Db.FromId<Person>(this.ObjectNo);
 
                 item.Guid = this.Guid;
                 item.Date = this.Date;
@@ -44,7 +44,7 @@ namespace Database
         {
             Db.Transact(() =>
             {
-                Item item = new Item();
+                Person item = new Person();
 
                 item.Guid = this.Guid;
                 item.Date = this.Date;
@@ -59,7 +59,7 @@ namespace Database
         {
             Db.Transact(() =>
             {
-                Item item = Db.FromId<Item>(this.ObjectNo);
+                Person item = Db.FromId<Person>(this.ObjectNo);
                 item.Delete();
             });
         }

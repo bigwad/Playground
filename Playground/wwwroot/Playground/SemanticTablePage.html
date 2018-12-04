@@ -1,0 +1,100 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+
+<template>
+    <dom-bind>
+        <template is="dom-bind">
+            <div style="padding: 10px 25px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Index</th>
+                            <th style="background-color: lightyellow;">
+                                <a href="javascript:" on-click="sortByGuidColumn">Playground: Title</a>
+                            </th>
+                            <th style="background-color: lightcoral;">
+                                <a href="javascript:" on-click="sortByDateColumn">Subground: Date</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template is="dom-repeat" items="[[local.Rows]]">
+                            <tr>
+                                <td>[[index]]</td>
+                                <td style="background-color: lightyellow;">[[item.Guid]]</td>
+                                <td style="background-color: lightcoral;">[[item.Date]]</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+                <p>
+                    <button type="button" on-click="renderTable">Render table</button>
+                </p>
+                <fieldset>
+                    <legend>JSON</legend>
+                    <pre style="font-family: Consolas;">[[getJsonString()]]</pre>
+                </fieldset>
+            </div>
+        </template>
+    </dom-bind>
+    <script>
+        (function () {
+            const script = document._currentScript || document.currentScript;
+            const template = Polymer.Element ? script.previousElementSibling : script.previousElementSibling.firstElementChild;
+
+            template.local = {
+                Columns: [],
+                Rows: []
+            };
+
+            template.getJsonString = function () {
+                return JSON.stringify(template.model, null, 2);
+            };
+
+            template.getCellValue = function (index, property) {
+                return template.local.Rows[index][property];
+            };
+
+            template.renderTable = function () {
+                const cols = [];
+                const rows = [];
+
+                for (let app in template.model.TableItems.Playground_0.Columns) {
+                    for (let col in template.model.TableItems.Playground_0.Columns[app].Columns) {
+                        cols.push(template.model.TableItems.Playground_0.Columns[app].Columns[col]);
+                    }
+                }
+
+                for (let i = 0; i < template.model.TableItems.Playground_0.Items.length; i++) {
+                    const item = template.model.TableItems.Playground_0.Items[i];
+                    const combinedItem = {};
+
+                    for (let app in item) {
+                        for (let property in item[app]) {
+                            combinedItem[property] = item[app][property];
+                        }
+                    }
+
+                    rows.push(combinedItem);
+                }
+
+                template.set("local.Columns", cols);
+                template.set("local.Rows", rows);
+                console.log(template, template.local, template.model, cols);
+            };
+
+            template.sortByGuidColumn = function () {
+                template.set("model.TableItems.Playground_0.Columns.Playground_0.Columns.0.SortTrigger$", 1);
+                template.set("model.TableItems.Playground_0.RefreshItemsTrigger$", 1);
+                setTimeout(template.renderTable, 1000);
+            };
+
+            template.sortByDateColumn = function () {
+                template.set("model.TableItems.Playground_0.Columns.Subground_0.Columns.0.SortTrigger$", 1);
+                template.set("model.TableItems.Playground_0.RefreshItemsTrigger$", 1);
+                setTimeout(template.renderTable, 1000);
+            };
+
+            setTimeout(template.renderTable, 1000);
+        })();
+    </script>
+</template>

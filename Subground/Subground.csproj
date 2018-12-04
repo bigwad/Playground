@@ -73,6 +73,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableColumnsItemsJson.json.cs">
+      <DependentUpon>TableColumnsItemsJson.json</DependentUpon>
+    </Compile>
+    <Compile Include="TableRowItemJson.json.cs">
+      <DependentUpon>TableRowItemJson.json</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Database\Database.csproj">
@@ -81,6 +87,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <TypedJSON Include="TableRowItemJson.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+    <TypedJSON Include="TableColumnsItemsJson.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
     <None Include="wwwroot\Subground\ItemNegativePage.html" />
   </ItemGroup>
   <ItemGroup>

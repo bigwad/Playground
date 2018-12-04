@@ -12,9 +12,9 @@ namespace Playground
 
         public void Init()
         {
-            IEnumerable<Database.Item> items = DbLinq.Objects<Database.Item>().OrderBy(x => x.Date);
+            IEnumerable<Database.Person> items = DbLinq.Objects<Database.Person>().OrderBy(x => x.Date);
 
-            foreach (Database.Item item in items)
+            foreach (Database.Person item in items)
             {
                 this.Items.Add().Data = new Database.ItemProxy(item);
             }
@@ -22,7 +22,7 @@ namespace Playground
 
         public void ItemInserted(ulong no)
         {
-            Database.Item item = Db.FromId<Database.Item>(no);
+            Database.Person item = Db.FromId<Database.Person>(no);
             Database.ItemProxy proxy = new Database.ItemProxy(item);
 
             System.Threading.Interlocked.Increment(ref Counter);
@@ -45,7 +45,7 @@ namespace Playground
         public void ItemUpdated(ulong no)
         {
             var row = this.Items.FirstOrDefault(x => x.Data.ObjectNo == no);
-            Database.Item item = Db.FromId<Database.Item>(no);
+            Database.Person item = Db.FromId<Database.Person>(no);
 
             row.Data = new Database.ItemProxy(item);
         }
@@ -56,7 +56,7 @@ namespace Playground
 
             Db.Transact(() =>
             {
-                new Database.Item()
+                new Database.Person()
                 {
                     Guid = Guid.NewGuid().ToString(),
                     Date = DateTime.Now
