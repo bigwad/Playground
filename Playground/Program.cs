@@ -17,26 +17,8 @@ namespace Playground
     {
         static void Main()
         {
-            //CultureInfo culture = CultureInfo.CreateSpecificCulture("tr-TR");
-            //Thread.CurrentThread.CurrentCulture = culture;
-            //Thread.CurrentThread.CurrentUICulture = culture;
-
             Application.Current.Use(new HtmlFromJsonProvider());
             Application.Current.Use(new PartialToStandaloneHtmlProvider());
-
-            Handle.GET("/semantic-table", () =>
-            {
-                Session.Ensure();
-                SemanticTablePage page = new SemanticTablePage();
-                return page;
-            });
-
-            Handle.GET("/playground/table-items", () => new TableItemsJson());
-            Handle.GET("/playground/table-columns-items", () => new TableColumnsItemsJson());
-            Handle.GET("/playground/table-row-item/{?}", (string id) => new TableRowItemJson(id));
-            Starcounter.Advanced.Blender.MapUri<Database.Person>("/playground/table-row-item/{?}", new string[0]);
-            Starcounter.Advanced.Blender.MapUri("/playground/table-columns-items", $"table-columns-{typeof(Database.Person)}", new string[0]);
-
             Handle.GET("/index", () =>
             {
                 Session.Ensure();
@@ -83,8 +65,6 @@ namespace Playground
 
                 return page;
             }, new HandlerOptions() { SelfOnly = true });
-
-            //Starcounter.Advanced.Blender.MapUri<Item>("/items/partial/{?}", new string[0]);
         }
     }
 }
