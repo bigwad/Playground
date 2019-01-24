@@ -12,6 +12,13 @@ namespace Playground
 
         public void Init()
         {
+            this.RefreshItems();
+        }
+
+        public void RefreshItems()
+        {
+            this.Items.Clear();
+
             IEnumerable<Database.Person> items = DbLinq.Objects<Database.Person>().OrderBy(x => x.Date);
 
             foreach (Database.Person item in items)
@@ -54,14 +61,20 @@ namespace Playground
         {
             action.Cancel();
 
+            Database.ItemProxy proxy = null;
+
             Db.Transact(() =>
             {
-                new Database.Person()
+                Database.Person item = new Database.Person()
                 {
                     Guid = Guid.NewGuid().ToString(),
                     Date = DateTime.Now
                 };
+
+                proxy = new Database.ItemProxy(item);
             });
+
+            this.Items.Add().Data = proxy;
         }
 
         [IndexPage_json.Items]
