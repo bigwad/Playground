@@ -5,6 +5,9 @@
         <template is="dom-bind">
             <p>
                 <button type="button" class="btn btn-xs btn-default" value="{{model.InsertTrigger$::click}}" disabled="{{model.InsertTrigger$}}" onmouseup="++this.value;">Insert new row</button>
+                <template is="dom-if" if="[[model.InsertedObjectNo]]">
+                    <label>Inserted item object no: <span>[[model.InsertedObjectNo]]</span></label>
+                </template>
             </p>
             <table class="table">
                 <thead>

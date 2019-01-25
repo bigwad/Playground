@@ -8,8 +8,6 @@ namespace Playground
 {
     partial class IndexPage : Json
     {
-        private static int Counter = 0;
-
         public void Init()
         {
             this.RefreshItems();
@@ -29,11 +27,16 @@ namespace Playground
 
         public void ItemInserted(ulong no)
         {
+            var row = this.Items.FirstOrDefault(x => x.Data.ObjectNo == no);
             Database.Person item = Db.FromId<Database.Person>(no);
+
+            if (item == null || row != null)
+            {
+                return;
+            }
+
             Database.ItemProxy proxy = new Database.ItemProxy(item);
 
-            System.Threading.Interlocked.Increment(ref Counter);
-            proxy.Notes = $"Inserted: {Counter};";
             this.Items.Add().Data = proxy;
         }
 
@@ -44,8 +47,6 @@ namespace Playground
             if (row != null)
             {
                 this.Items.Remove(row);
-                System.Threading.Interlocked.Increment(ref Counter);
-                //row.Data.Notes += $" Removed: {Counter};";
             }
         }
 
@@ -54,7 +55,10 @@ namespace Playground
             var row = this.Items.FirstOrDefault(x => x.Data.ObjectNo == no);
             Database.Person item = Db.FromId<Database.Person>(no);
 
-            row.Data = new Database.ItemProxy(item);
+            if (item != null)
+            {
+                row.Data = new Database.ItemProxy(item);
+            }
         }
 
         protected void Handle(Input.InsertTrigger action)
@@ -74,15 +78,19 @@ namespace Playground
                 proxy = new Database.ItemProxy(item);
             });
 
+            this.InsertedObjectNo = (long)proxy.ObjectNo;
             this.Items.Add().Data = proxy;
         }
 
         [IndexPage_json.Items]
         partial class IndexPageItems : Json, IBound<Database.ItemProxy>
         {
+            public IndexPage ParentPage => this.Parent.Parent as IndexPage;
+
             protected void Handle(Input.DeleteTrigger action)
             {
                 this.Data.Delete();
+                this.ParentPage.Items.Remove(this);
             }
 
             protected void Handle(Input.UpdateTrigger action)

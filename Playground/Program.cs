@@ -17,6 +17,8 @@ namespace Playground
     {
         static void Main()
         {
+            //RegisterDatabaseHooks();
+
             Application.Current.Use(new HtmlFromJsonProvider());
             Application.Current.Use(new PartialToStandaloneHtmlProvider());
             Handle.GET("/index", () =>
@@ -65,6 +67,57 @@ namespace Playground
 
                 return page;
             }, new HandlerOptions() { SelfOnly = true });
+        }
+
+        static void RegisterDatabaseHooks()
+        {
+            Hook<Person>.AfterCommitInsert += (sender, entityId) => Session.ForAll((s, id) =>
+            {
+                if (s == null)
+                {
+                    return;
+                }
+
+                IndexPage page = s.Store[nameof(IndexPage)] as IndexPage;
+
+                if (page != null)
+                {
+                    page.ItemInserted(entityId);
+                    s.CalculatePatchAndPushOnWebSocket();
+                }
+            });
+
+            Hook<Person>.AfterCommitUpdate += (sender, entityId) => Session.ForAll((s, id) =>
+            {
+                if (s == null)
+                {
+                    return;
+                }
+
+                IndexPage page = s.Store[nameof(IndexPage)] as IndexPage;
+
+                if (page != null)
+                {
+                    page.ItemUpdated(entityId);
+                    s.CalculatePatchAndPushOnWebSocket();
+                }
+            });
+
+            Hook<Person>.AfterCommitDelete += (sender, entityId) => Session.ForAll((s, id) =>
+            {
+                if (s == null)
+                {
+                    return;
+                }
+
+                IndexPage page = s.Store[nameof(IndexPage)] as IndexPage;
+
+                if (page != null)
+                {
+                    page.ItemDeleted(entityId);
+                    s.CalculatePatchAndPushOnWebSocket();
+                }
+            });
         }
     }
 }
