@@ -1,5 +1,3 @@
-console.log("Palindrom engine!");
-
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -65,38 +63,55 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
           return callback(null, context);
         });
       }
-    }
+    };
+  }
+  
+  if (requestSpec.updateModelFunction) {
+    return function(context, callback) {
+      ee.emit("request");
+      const timeoutMs = 1000;
+      let requestTimeout = setTimeout(function() {
+        ee.emit("error", "Failed to process request " + requestSpec.updateModelFunction + " within timeout of " + timeoutMs + "ms");
+      }, timeoutMs);
+      
+      let startedAt = process.hrtime();
+      let processFunc = self.config.processor[requestSpec.updateModelFunction];
+      
+      if (!processFunc) {
+        throw "Function " + requestSpec.updateModelFunction + " not found.";
+      }
+      
+      const originalOnRemoteChange = context.palindrom.onRemoteChange;
+      const originalClientVersion = context.palindrom.obj["/_ver#c$"];
+    
+      context.palindrom.onRemoteChange = function(sequence, results) {
+        const newClientVersion = context.palindrom.obj["/_ver#c$"];
+        
+        if (newClientVersion <= originalClientVersion) {
+            return;
+        }
+          
+        clearTimeout(requestTimeout);
+          
+        originalOnRemoteChange(sequence, results);
+        context.palindrom.onRemoteChange = originalOnRemoteChange;
+        
+        let endedAt = process.hrtime(startedAt);
+        let delta = (endedAt[0] * 1e9) + endedAt[1];
+        ee.emit("response", delta, 0, context._uid);
+        
+        callback(null, context);
+      };
+    
+      processFunc(context, ee, context.palindrom.obj);
+    };  
   }
 
-  let f = function(context, callback) {
-    ee.emit('request');
-    let startedAt = process.hrtime();
-
-    let payload = template(requestSpec.send, context);
-    if (typeof payload === 'object') {
-      payload = JSON.stringify(payload);
-    } else if (payload) {
-      payload = payload.toString();
-    }
-
-    debug('Palindrom send: %s', payload);
-
+  console.error("Not supported flow item: ", requestSpec);
+  
+  return function(context, callback) {
     return callback(null, context);
-    
-    // context.palindromWs.send(payload, function(err) {
-      // if (err) {
-        // debug(err);
-        // ee.emit('error', err);
-      // } else {
-        // let endedAt = process.hrtime(startedAt);
-        // let delta = (endedAt[0] * 1e9) + endedAt[1];
-        // ee.emit('response', delta, 0, context._uid);
-      // }
-      // return callback(err, context);
-    // });
   };
-
-  return f;
 };
 
 PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
@@ -137,11 +152,18 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
             "devToolsOpen": false,
             remoteUrl: remoteUrl.toString(),
             onStateReset: function (obj) {
+              debug("Palindrom connection established: " + remoteUrl);
               initialContext.palindrom = palindrom;
+            },
+            onSocketOpened: function() {
+              debug("WebSocket opened: " + remoteUrl);
               return callback(null, initialContext);
             },
             onError: function (err) {
-                throw err;
+              throw err;
+            },
+            onPatchSent: function () {
+              debug("onPatchSent: ", arguments);
             }
           });
       });
