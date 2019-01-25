@@ -2,13 +2,18 @@ config:
   target: "http://localhost:8080/index"
   processor: "./palindrom.js"
   phases:
-    - duration: 3
-      arrivalRate: 10
+    - duration: 30
+      arrivalRate: 50
 scenarios:
   - engine: "palindrom"
     flow:
-      - function: "logPalindromModel"
-      - function: "insertItem"
-      - function: "setLastItemGuid"
-      - function: "updateLastItem"
-      - function: "logPalindromModel"
+      # - function: "logPalindromModel"
+      - updateModelFunction: "insertItem"
+      # - function: "logPalindromModel"
+      - think: 2
+      - updateModelFunction: "setInsertedItemGuid"
+      - updateModelFunction: "updateInsertedItem"
+      # - function: "logPalindromModel"
+      - think: 2
+      - updateModelFunction: "deleteInsertedItem"
+      # - function: "logPalindromModel"
