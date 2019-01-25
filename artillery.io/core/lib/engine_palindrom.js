@@ -34,6 +34,7 @@ PalindromEngine.prototype.createScenario = function(scenarioSpec, ee) {
 
 PalindromEngine.prototype.step = function (requestSpec, ee) {
   let self = this;
+  let config = this.config;
 
   if (requestSpec.loop) {
     let steps = _.map(requestSpec.loop, function(rs) {
@@ -69,9 +70,12 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
   if (requestSpec.updateModelFunction) {
     return function(context, callback) {
       ee.emit("request");
-      const timeoutMs = 1000;
+      
+      let timeoutMs = config.timeout || _.get(config, "palindrom.timeout") || 500;
       let requestTimeout = setTimeout(function() {
-        ee.emit("error", "Failed to process request " + requestSpec.updateModelFunction + " within timeout of " + timeoutMs + "ms");
+        const err = "Failed to process request " + requestSpec.updateModelFunction + " within timeout of " + timeoutMs + "ms";
+        ee.emit("error", err);
+        callback(err, context);
       }, timeoutMs);
       
       let startedAt = process.hrtime();
@@ -134,8 +138,6 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
 
       ee.emit('started');
       
-      console.log("Trying to establish Palindrom connection from URL: " + config.target);
-      
       request({ url: config.target, headers: { Accept: "text/html" } }, function (error, response, body) {
           const regex = /[<]palindrom-client .*?remote-url=["](.*?)["].*?[<][/]palindrom-client[>]/gi;
           const regexResult = regex.exec(response.body);
@@ -152,18 +154,23 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
             "devToolsOpen": false,
             remoteUrl: remoteUrl.toString(),
             onStateReset: function (obj) {
-              debug("Palindrom connection established: " + remoteUrl);
+              debug("Palindrom.onStateReset: " + remoteUrl);
               initialContext.palindrom = palindrom;
             },
             onSocketOpened: function() {
-              debug("WebSocket opened: " + remoteUrl);
+              debug("Palindrom.onSocketOpened: " + remoteUrl);
               return callback(null, initialContext);
             },
             onError: function (err) {
-              throw err;
+              debug("Palindrom.onError: ", err);
+              ee.emit("error", err.message || err.code || err);
             },
             onPatchSent: function () {
-              debug("onPatchSent: ", arguments);
+              debug("Palindrom.onPatchSent: ", arguments);
+            },
+            onConnectionError: function (err) {
+              debug("Palindrom.onConnectionError: ", err);
+              ee.emit("error", err.message || err.code || err);
             }
           });
       });
