@@ -4,6 +4,8 @@ config:
   phases:
     - duration: 30
       arrivalRate: 50
+  palindrom:
+    timeout: 5000
 scenarios:
   - engine: "palindrom"
     flow:
