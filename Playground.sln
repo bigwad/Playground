@@ -14,6 +14,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subground", "Subground\Subg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "artillery.io", "artillery.io", "{4B1138AA-73BA-4F71-8A4B-7696D7CAFFD3}"
+	ProjectSection(SolutionItems) = preProject
+		artillery.io\palindrom.js = artillery.io\palindrom.js
+		artillery.io\palindrom.yml = artillery.io\palindrom.yml
+		artillery.io\playground.js = artillery.io\playground.js
+		artillery.io\playground.yml = artillery.io\playground.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -35,6 +43,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4B1138AA-73BA-4F71-8A4B-7696D7CAFFD3} = {4D52B32D-4314-4933-9900-F59B596469FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C96763A3-02C5-4268-B953-3F4AACE27180}
