@@ -71,15 +71,15 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
         return function (context, callback) {
             ee.emit("request");
 
-            let timeoutMs = config.timeout || _.get(config, "palindrom.timeout") || 500;
-            let requestTimeout = setTimeout(function () {
+            const timeoutMs = config.timeout || _.get(config, "palindrom.timeout") || 500;
+            const requestTimeout = setTimeout(function () {
                 const err = "Failed to process request " + requestSpec.updateModelFunction + " within timeout of " + timeoutMs + "ms";
                 ee.emit("error", err);
                 callback(err, context);
             }, timeoutMs);
 
-            let startedAt = process.hrtime();
-            let processFunc = self.config.processor[requestSpec.updateModelFunction];
+            const startedAt = process.hrtime();
+            const processFunc = self.config.processor[requestSpec.updateModelFunction];
 
             if (!processFunc) {
                 throw "Function " + requestSpec.updateModelFunction + " not found.";
@@ -100,8 +100,8 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
                 originalOnRemoteChange(sequence, results);
                 context.palindrom.onRemoteChange = originalOnRemoteChange;
 
-                let endedAt = process.hrtime(startedAt);
-                let delta = (endedAt[0] * 1e9) + endedAt[1];
+                const endedAt = process.hrtime(startedAt);
+                const delta = (endedAt[0] * 1e9) + endedAt[1];
                 ee.emit("response", delta, 0, context._uid);
 
                 callback(null, context);
