@@ -234,7 +234,11 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
                         debug("Palindrom.onPatchReceived: ", arguments);
                     },
                     onConnectionError: function (err) {
-                        debug("Palindrom.onConnectionError: ", err);
+                        if (initialContext.palindromConnectionClosed) {
+                            return;
+                        }
+
+                        debug("Palindrom.onConnectionError: ", JSON.stringify(err));
                         ee.emit("error", err.message || err.code || err);
                     }
                 });
@@ -263,8 +267,9 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
                     debug(err);
                 }
 
-                if (context && context.palindrom && context.palindrom._ws) {
-                    context.palindrom._ws.close();
+                if (context && context.palindrom && context.palindrom.network && context.palindrom.network._ws) {
+                    context.palindromConnectionClosed = true;
+                    context.palindrom.network._ws.close();
                 }
 
                 return callback(err, context);
