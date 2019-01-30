@@ -27,6 +27,7 @@ function saveInsertedItemInfo(context, events, done) {
 
     if (!item && context.vars["saveInsertedItemInfoCounter"] && context.vars["saveInsertedItemInfoCounter"] > 20) {
         done("saveInsertedItemInfo: unable find inserted item", context);
+        return;
     }
 
     if (!item) {
