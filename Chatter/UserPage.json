@@ -1,0 +1,24 @@
+{
+  "Html": "/Chatter/UserPage.html",
+  "User": {
+    "Name": ""
+  },
+  "Messages": [
+    {
+      "Sender": {
+        "Name": ""
+      },
+      "Receiver": {
+        "Name": ""
+      },
+      "DateUtcStr": "",
+      "Text": "",
+      "DeleteTrigger$": 0
+    }
+  ],
+  "Send": {
+    "Username$": "",
+    "Text$": "",
+    "SubmitTrigger$": 0
+  }
+}

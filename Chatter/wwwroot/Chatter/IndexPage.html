@@ -1,0 +1,15 @@
+﻿<link rel="import" href="/sys/palindrom-redirect/palindrom-redirect.html" />
+
+<template>
+    <dom-bind>
+        <template is="dom-bind">
+            <h1>Welcome to the demo Chatter app</h1>
+            <fieldset>
+                <legend>Enter your username and start chatting</legend>
+                <input type="text" value="{{model.Username$::change}}" />
+                <button type="button" onmouseup="++this.value;" value="{{model.SubmitTrigger$::click}}" disabled="[[model.SubmitTrigger$]]">Start chatting</button>
+            </fieldset>
+            <palindrom-redirect url="{{model.RedirectUrl$}}" history></palindrom-redirect>
+        </template>
+    </dom-bind>
+</template>

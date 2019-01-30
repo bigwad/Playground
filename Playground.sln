@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "artillery.io", "artillery.i
 		artillery.io\playground.yml = artillery.io\playground.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatter", "Chatter\Chatter.csproj", "{0B29934A-CE36-4C6E-AA75-31D89D43B3E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,10 @@ Global
 		{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}.Debug|x64.Build.0 = Debug|x64
 		{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}.Release|x64.ActiveCfg = Release|x64
 		{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}.Release|x64.Build.0 = Release|x64
+		{0B29934A-CE36-4C6E-AA75-31D89D43B3E1}.Debug|x64.ActiveCfg = Debug|x64
+		{0B29934A-CE36-4C6E-AA75-31D89D43B3E1}.Debug|x64.Build.0 = Debug|x64
+		{0B29934A-CE36-4C6E-AA75-31D89D43B3E1}.Release|x64.ActiveCfg = Release|x64
+		{0B29934A-CE36-4C6E-AA75-31D89D43B3E1}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

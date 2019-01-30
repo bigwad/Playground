@@ -1,0 +1,46 @@
+﻿<template>
+    <dom-bind>
+        <template is="dom-bind">
+            <h1>
+                <span>[[model.User.Name]]</span> hello!
+            </h1>
+            <p>This is your demo chatting page.</p>
+            <fieldset>
+                <legend>Submit a message</legend>
+                <div>
+                    <input type="text" value="{{model.Send.Username$::change}}" placeholder="Message receiver" />
+                </div>
+                <div>
+                    <textarea value="{{model.Send.Text$::change}}" placeholder="Message text"></textarea>
+                </div>
+                <div>
+                    <button type="button" onmouseup="++this.value;" value="{{model.Send.SubmitTrigger$::click}}" disabled="[[model.Send.SubmitTrigger$]]">Send message</button>
+                </div>
+            </fieldset>
+            <h3>My messages</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date UTC</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Text</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template is="dom-repeat" items="[[model.Messages]]">
+                        <tr>
+                            <td>[[item.DateUtcStr]]</td>
+                            <td>[[item.Sender.Name]]</td>
+                            <td>[[item.Receiver.Name]]</td>
+                            <td>[[item.Text]]</td>
+                            <td>
+                                <button type="button" onmouseup="++this.value;" value="{{item.DeleteTrigger$::click}}" disabled="[[item.DeleteTrigger$]]">Delete</button>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </template>
+    </dom-bind>
+</template>
