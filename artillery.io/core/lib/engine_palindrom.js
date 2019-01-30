@@ -59,10 +59,19 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
     if (requestSpec.function) {
         return function (context, callback) {
             let processFunc = self.config.processor[requestSpec.function];
-            if (processFunc) {
+
+            if (!processFunc) {
+                throw "Function " + requestSpec.function + " is not defined";
+            }
+
+            try {
                 processFunc(context, ee, function () {
-                    return callback(null, context);
+                    callback(null, context);
                 });
+            } catch (err) {
+                const message = err.message || err.code || err;
+                ee.emit("error", message);
+                callback(message, context);
             }
         };
     }
