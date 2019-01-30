@@ -17,7 +17,7 @@ namespace Playground
     {
         static void Main()
         {
-            //RegisterDatabaseHooks();
+            RegisterDatabaseHooks();
 
             Application.Current.Use(new HtmlFromJsonProvider());
             Application.Current.Use(new PartialToStandaloneHtmlProvider());
@@ -71,7 +71,7 @@ namespace Playground
 
         static void RegisterDatabaseHooks()
         {
-            Hook<Person>.AfterCommitInsert += (sender, entityId) => Session.ForAll((s, id) =>
+            Hook<Person>.AfterCommitInsert += (sender, entityId) => Session.RunTaskForAll((s, id) =>
             {
                 if (s == null || s.ActiveWebSocket == null)
                 {
@@ -87,7 +87,7 @@ namespace Playground
                 }
             });
 
-            Hook<Person>.AfterCommitUpdate += (sender, entityId) => Session.ForAll((s, id) =>
+            Hook<Person>.AfterCommitUpdate += (sender, entityId) => Session.RunTaskForAll((s, id) =>
             {
                 if (s == null || s.ActiveWebSocket == null)
                 {
@@ -103,7 +103,7 @@ namespace Playground
                 }
             });
 
-            Hook<Person>.AfterCommitDelete += (sender, entityId) => Session.ForAll((s, id) =>
+            Hook<Person>.AfterCommitDelete += (sender, entityId) => Session.RunTaskForAll((s, id) =>
             {
                 if (s == null || s.ActiveWebSocket == null)
                 {
