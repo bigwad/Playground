@@ -8,8 +8,8 @@ config:
     timeout: 10000
 scenarios:
   - engine: "palindrom"
+    weight: 99
     flow:
-      # - function: "logPalindromModel"
       - updateModelFunction: "insertItem"
       - updateModelFunction: "emptyTrigger"
       - function: "saveInsertedItemInfo"
@@ -21,6 +21,13 @@ scenarios:
       - think: 2
       - morphUrl: "/index"
       - updateModelFunction: "deleteSavedItem"
+  - engine: "palindrom"
+    weight: 1
+    flow:
+      - think: 2
+      - updateModelFunction: "emptyTrigger"
+      - function: "logState"
+
       # - function: "logPalindromModel"
       # - think: 2
       # - updateModelFunction: "setInsertedItemGuid"
