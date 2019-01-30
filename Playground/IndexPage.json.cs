@@ -55,7 +55,7 @@ namespace Playground
             var row = this.Items.FirstOrDefault(x => x.Data.ObjectNo == no);
             Database.Person item = Db.FromId<Database.Person>(no);
 
-            if (item != null)
+            if (item != null && row != null)
             {
                 row.Data = new Database.ItemProxy(item);
             }
