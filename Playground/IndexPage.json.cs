@@ -82,6 +82,11 @@ namespace Playground
             this.Items.Add().Data = proxy;
         }
 
+        protected void Handle(Input.EmptyTrigger action)
+        {
+            action.Cancel();
+        }
+
         [IndexPage_json.Items]
         partial class IndexPageItems : Json, IBound<Database.ItemProxy>
         {

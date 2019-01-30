@@ -2,16 +2,16 @@ config:
   target: "http://localhost:8080/index"
   processor: "./palindrom.js"
   phases:
-    - duration: 30
-      arrivalRate: 50
+    - duration: 10
+      arrivalRate: 30
   palindrom:
-    timeout: 5000
+    timeout: 10000
 scenarios:
   - engine: "palindrom"
     flow:
       # - function: "logPalindromModel"
       - updateModelFunction: "insertItem"
-      - think: 2
+      - updateModelFunction: "emptyTrigger"
       - function: "saveInsertedItemInfo"
       - morphUrl: "{{ EditInsertedItemUri }}"
       - updateModelFunction: "setEditedItemGuid"

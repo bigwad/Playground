@@ -1,5 +1,6 @@
 module.exports = {
     logPalindromModel: logPalindromModel,
+    emptyTrigger: emptyTrigger,
     insertItem: insertItem,
     setInsertedItemGuid: setInsertedItemGuid,
     saveInsertedItemInfo: saveInsertedItemInfo,
@@ -16,6 +17,10 @@ function logPalindromModel(context, events, done) {
     return done();
 }
 
+function emptyTrigger(context, events, obj) {
+    obj.Playground_0.EmptyTrigger$++;
+}
+
 function insertItem(context, events, obj) {
     obj.Playground_0.InsertTrigger$++;
 }
@@ -25,23 +30,10 @@ function saveInsertedItemInfo(context, events, done) {
     const no = obj.Playground_0.InsertedObjectNo;
     const item = obj.Playground_0.Items.find(x => x.ObjectNo == no);
 
-    if (!item && context.vars["saveInsertedItemInfoCounter"] && context.vars["saveInsertedItemInfoCounter"] > 20) {
-        done("saveInsertedItemInfo: unable find inserted item", context);
-        return;
-    }
-
     if (!item) {
-        context.vars["saveInsertedItemInfoCounter"] = context.vars["saveInsertedItemInfoCounter"] || 0;
-        context.vars["saveInsertedItemInfoCounter"]++;
-
-        setTimeout(function () {
-            saveInsertedItemInfo(context, events, done);
-        }, 100);
-
-        return;
+        throw "Unable to find newly inserted item, InsertedObjectNo: " + no;
     }
 
-    context.vars["saveInsertedItemInfoCounter"] = 0;
     context.vars["InsertedItemNo"] = obj.Playground_0.InsertedObjectNo;
     context.vars["InsertedItemId"] = item.Id;
     context.vars["EditInsertedItemUri"] = "/items/" + item.Id;
