@@ -1,5 +1,6 @@
 module.exports = {
     logPalindromModel: logPalindromModel,
+    logState: logState,
     emptyTrigger: emptyTrigger,
     insertItem: insertItem,
     setInsertedItemGuid: setInsertedItemGuid,
@@ -14,6 +15,11 @@ module.exports = {
 
 function logPalindromModel(context, events, done) {
     console.log("Palindrom model: " + JSON.stringify(context.palindrom.obj));
+    return done();
+}
+
+function logState(context, events, done) {
+    console.log(new Date(), "Total number of item: ", context.palindrom.obj.Playground_0.Items.length);
     return done();
 }
 
