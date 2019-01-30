@@ -73,7 +73,7 @@ namespace Playground
         {
             Hook<Person>.AfterCommitInsert += (sender, entityId) => Session.ForAll((s, id) =>
             {
-                if (s == null)
+                if (s == null || s.ActiveWebSocket == null)
                 {
                     return;
                 }
@@ -89,7 +89,7 @@ namespace Playground
 
             Hook<Person>.AfterCommitUpdate += (sender, entityId) => Session.ForAll((s, id) =>
             {
-                if (s == null)
+                if (s == null || s.ActiveWebSocket == null)
                 {
                     return;
                 }
@@ -105,7 +105,7 @@ namespace Playground
 
             Hook<Person>.AfterCommitDelete += (sender, entityId) => Session.ForAll((s, id) =>
             {
-                if (s == null)
+                if (s == null || s.ActiveWebSocket == null)
                 {
                     return;
                 }
