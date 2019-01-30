@@ -1,0 +1,33 @@
+config:
+  target: "http://localhost:8080/chatter"
+  processor: "./chatter.js"
+  phases:
+    - duration: 2
+      arrivalRate: 10
+  palindrom:
+    timeout: 1000
+scenarios:
+  - engine: "palindrom"
+    weight: 75
+    flow:
+      - updateModelFunction: "setUsername"
+      - updateModelFunction: "submitUsername"
+      - function: "saveRedirectUrl"
+      - morphUrl: "{{ redirectUrl }}"
+      - loop:
+          - updateModelFunction: "setSendUsername"
+          - updateModelFunction: "setSendMessage"
+          - updateModelFunction: "submitSend"
+          - think: 1
+        count: 10
+  - engine: "palindrom"
+    weight: 25
+    flow:
+      - updateModelFunction: "setUsername"
+      - updateModelFunction: "submitUsername"
+      - function: "saveRedirectUrl"
+      - morphUrl: "{{ redirectUrl }}"
+      - loop:
+          - updateModelFunction: "deleteLastMessage"
+          - think: 2
+        count: 5
