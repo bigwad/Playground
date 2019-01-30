@@ -86,18 +86,18 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
             }
 
             const originalOnRemoteChange = context.palindrom.onRemoteChange;
-            const originalClientVersion = context.palindrom.obj["/_ver#c$"];
+            const originalLocalVersion = context.getPalindromLocalVersion();
 
-            context.palindrom.onRemoteChange = function (sequence, results) {
-                const newClientVersion = context.palindrom.obj["/_ver#c$"];
+            context.palindrom.onRemoteChange = function (patches, results) {
+                const newLocalVersion = context.getPalindromLocalVersion();
 
-                if (newClientVersion <= originalClientVersion) {
+                if (newLocalVersion <= originalLocalVersion) {
                     return;
                 }
 
                 clearTimeout(requestTimeout);
 
-                originalOnRemoteChange(sequence, results);
+                originalOnRemoteChange(patches, results);
                 context.palindrom.onRemoteChange = originalOnRemoteChange;
 
                 const endedAt = process.hrtime(startedAt);
@@ -107,7 +107,47 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
                 callback(null, context);
             };
 
-            processFunc(context, ee, context.palindrom.obj);
+            try {
+                processFunc(context, ee, context.palindrom.obj);
+            } catch (err) {
+                const message = err.message || err.code || err;
+                ee.emit("error", message);
+                callback(message, context);
+            }
+        };
+    }
+
+    if (requestSpec.morphUrl) {
+        return function (context, callback) {
+            ee.emit("request");
+
+            const timeoutMs = config.timeout || _.get(config, "palindrom.timeout") || 500;
+            const requestTimeout = setTimeout(function () {
+                const err = "Failed to process URL morphing to " + requestSpec.morphUrl + " within timeout of " + timeoutMs + "ms";
+                ee.emit("error", err);
+                callback(err, context);
+            }, timeoutMs);
+
+            const startedAt = process.hrtime();
+            const payload = template(requestSpec.morphUrl, context);
+            const url = new URL(payload, config.target);
+            const originalOnStateReset = context.palindrom.onStateReset;
+
+            context.palindrom.onStateReset = function (newObj) {
+                clearTimeout(requestTimeout);
+
+                originalOnStateReset(newObj);
+                context.palindrom.onStateReset = originalOnStateReset;
+
+                const endedAt = process.hrtime(startedAt);
+                const delta = (endedAt[0] * 1e9) + endedAt[1];
+                ee.emit("response", delta, 0, context._uid);
+
+                callback(null, context);
+            };
+
+            debug("morphUrl: ", url);
+            context.palindrom.network.getPatchUsingHTTP(url.toString());
         };
     }
 
@@ -139,17 +179,30 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
             ee.emit('started');
 
             request({ url: config.target, headers: { Accept: "text/html" } }, function (error, response, body) {
+                if (error) {
+                    const message = error.message || error.code || error;
+                    return callback(message, initialContext);
+                }
+
                 const regex = /[<]palindrom-client .*?remote-url=["](.*?)["].*?[<][/]palindrom-client[>]/gi;
                 const regexResult = regex.exec(response.body);
+
+                if (!regexResult || regexResult.length != 2) {
+                    const message = "Unable to establish Palindrom connection, <palindrom-client> HTML element was not found";
+                    return callback(message, initialContext);
+                }
+
                 const remoteUrl = new URL(regexResult[1], config.target);
+                const localVersionPath = options.localVersionPath || '/_ver#c$';
+                const remoteVersionPath = options.remoteVersionPath || '/_ver#s';
                 const palindrom = new Palindrom({
                     "useWebSocket": true,
                     "debug": false,
-                    "localVersionPath": '/_ver#c$',
-                    "remoteVersionPath": '/_ver#s',
+                    "localVersionPath": localVersionPath,
+                    "remoteVersionPath": remoteVersionPath,
                     "ot": true,
                     "purity": false,
-                    "pingIntervalS": 60,
+                    "pingIntervalS": options.pingIntervalS || 60,
                     "path": '/',
                     "devToolsOpen": false,
                     remoteUrl: remoteUrl.toString(),
@@ -168,11 +221,22 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
                     onPatchSent: function () {
                         debug("Palindrom.onPatchSent: ", arguments);
                     },
+                    onPatchReceived: function () {
+                        debug("Palindrom.onPatchReceived: ", arguments);
+                    },
                     onConnectionError: function (err) {
                         debug("Palindrom.onConnectionError: ", err);
                         ee.emit("error", err.message || err.code || err);
                     }
                 });
+
+                initialContext.getPalindromLocalVersion = function () {
+                    return palindrom.queue.localVersion;
+                };
+
+                initialContext.getPalindromRemoteVersion = function () {
+                    return palindrom.queue.remoteVersion;
+                };
             });
         }
 
@@ -195,6 +259,7 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
                 }
 
                 return callback(err, context);
-            });
+            }
+        );
     };
 };
