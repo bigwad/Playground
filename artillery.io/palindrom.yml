@@ -11,11 +11,21 @@ scenarios:
     flow:
       # - function: "logPalindromModel"
       - updateModelFunction: "insertItem"
-      # - function: "logPalindromModel"
       - think: 2
-      - updateModelFunction: "setInsertedItemGuid"
-      - updateModelFunction: "updateInsertedItem"
-      # - function: "logPalindromModel"
+      - function: "saveInsertedItemInfo"
+      - morphUrl: "{{ EditInsertedItemUri }}"
+      - updateModelFunction: "setEditedItemGuid"
+      - updateModelFunction: "setEditedItemIndex"
       - think: 2
-      - updateModelFunction: "deleteInsertedItem"
+      - updateModelFunction: "saveEditedItem"
+      - think: 2
+      - morphUrl: "/index"
+      - updateModelFunction: "deleteSavedItem"
+      # - function: "logPalindromModel"
+      # - think: 2
+      # - updateModelFunction: "setInsertedItemGuid"
+      # - updateModelFunction: "updateInsertedItem"
+      # - function: "logPalindromModel"
+      # - think: 2
+      # - updateModelFunction: "deleteInsertedItem"
       # - function: "logPalindromModel"
