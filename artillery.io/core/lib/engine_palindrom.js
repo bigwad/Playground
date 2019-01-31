@@ -172,22 +172,15 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
 
     return function scenario(initialContext, callback) {
         function zero(callback) {
-            let tls = config.tls || {};
-            let options = _.extend(tls, config.palindrom);
-
-            let subprotocols = _.get(config, 'palindrom.subprotocols', []);
+            const tls = config.tls || {};
+            const options = _.extend(tls, config.palindrom);
             const headers = _.get(config, 'palindrom.headers', {});
-            const subprotocolHeader = _.find(headers, (value, headerName) => {
-                return headerName.toLowerCase() === 'sec-websocket-protocol';
-            });
-            if (typeof subprotocolHeader !== 'undefined') {
-                // NOTE: subprotocols defined via config.palindrom.subprotocols take precedence:
-                subprotocols = subprotocols.concat(subprotocolHeader.split(',').map(s => s.trim()));
-            }
 
             ee.emit('started');
 
-            request({ url: config.target, headers: { Accept: "text/html" } }, function (error, response, body) {
+            headers.Accept = headers.Accept || "text/html";
+
+            request({ url: config.target, headers: headers }, function (error, response, body) {
                 if (error) {
                     const message = error.message || error.code || error;
                     return callback(message, initialContext);
@@ -270,6 +263,12 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
                 if (context && context.palindrom && context.palindrom.network && context.palindrom.network._ws) {
                     context.palindromConnectionClosed = true;
                     context.palindrom.network._ws.close();
+                }
+
+                if (global.gc) {
+                    global.gc();
+                } else {
+                    console.warn("Garbage collection is not exposed. Add `--expose_gc` NodeJs flag to expose it.");
                 }
 
                 return callback(err, context);
