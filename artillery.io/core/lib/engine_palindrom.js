@@ -99,18 +99,20 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
                 throw "Function " + requestSpec.updateModelFunction + " not found.";
             }
 
-            const originalLocalVersion = context.getPalindromLocalVersion();
-
             context.palindrom.onRemoteChange = function (patches, results) {
-                const newLocalVersion = context.getPalindromLocalVersion();
+                originalOnRemoteChange(patches, results);
 
-                if (newLocalVersion <= originalLocalVersion) {
+                const localVersion = context.getPalindromLocalVersion();
+                const ackLocalVersion = context.getPalindromAckLocalVersion();
+
+                if (ackLocalVersion < localVersion) {
+					// If the remote local version is yet to reach the local
+					// version our model update is yet to be processed.
                     return;
                 }
 
                 clearTimeout(requestTimeout);
 
-                originalOnRemoteChange(patches, results);
                 context.palindrom.onRemoteChange = originalOnRemoteChange;
 
                 const endedAt = process.hrtime(startedAt);
@@ -246,6 +248,10 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
 
                 initialContext.getPalindromLocalVersion = function () {
                     return palindrom.queue.localVersion;
+                };
+
+                initialContext.getPalindromAckLocalVersion = function () {
+                    return palindrom.queue.ackLocalVersion;
                 };
 
                 initialContext.getPalindromRemoteVersion = function () {
