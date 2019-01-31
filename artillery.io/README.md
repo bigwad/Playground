@@ -34,3 +34,9 @@ Check current number of open connections - [express socket io - “connect EMFIL
 ```
 lsof | grep node | wc -l
 ```
+
+Copy `engine_palindrom.js` to the output folder.
+
+```
+sudo cp ~/Documents/GitHub/Playground/artillery.io/core/lib/engine_palindrom.js /usr/local/lib/node_modules/artillery/core/lib/engine_palindrom.js
+```
