@@ -35,6 +35,12 @@ Check current number of open connections - [express socket io - “connect EMFIL
 lsof | grep node | wc -l
 ```
 
+Check process IDs.
+
+```
+lsof -i
+```
+
 Copy `engine_palindrom.js` to the output folder.
 
 ```
