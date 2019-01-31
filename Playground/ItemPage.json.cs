@@ -4,6 +4,8 @@ namespace Playground
 {
     partial class ItemPage : Json
     {
+        public bool ItemExist => this.Item.Data != null;
+
         protected void Handle(Input.SaveTrigger action)
         {
             action.Cancel();

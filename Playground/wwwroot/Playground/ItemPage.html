@@ -8,16 +8,21 @@
                 <p>
                     <a href="/index">Items</a>
                 </p>
-                <p>
-                    <label>Guid:</label>
-                    <input type="text" value="{{model.Item.Guid$::input}}" />
-                </p>
-                <p>
-                    <label>Index:</label>
-                    <input type="number" value="{{model.Item.Index$::input}}" />
-                </p>
-                <button type="button" value="{{model.SaveTrigger$::click}}" disabled="{{model.SaveTrigger$}}" onmouseup="++this.value;">Save</button>
-                <a href="/items/{{model.Item.ObjectId}}">Re Self.GET</a>
+                <template is="dom-if" if="[[model.ItemExist]]">
+                    <p>
+                        <label>Guid:</label>
+                        <input type="text" value="{{model.Item.Guid$::input}}" />
+                    </p>
+                    <p>
+                        <label>Index:</label>
+                        <input type="number" value="{{model.Item.Index$::input}}" />
+                    </p>
+                    <button type="button" value="{{model.SaveTrigger$::click}}" disabled="{{model.SaveTrigger$}}" onmouseup="++this.value;">Save</button>
+                    <a href="/items/{{model.Item.ObjectId}}">Re Self.GET</a>
+                </template>
+                <template is="dom-if" if="[[!model.ItemExist]]">
+                    <p>This item does not exist.</p>
+                </template>
             </fieldset>
         </template>
     </dom-bind>
