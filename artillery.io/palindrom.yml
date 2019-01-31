@@ -5,9 +5,7 @@ config:
     - duration: 60
       arrivalRate: 50
   palindrom:
-    timeout: 20000
-  http:
-    pool: 256
+    timeout: 5000
 scenarios:
   - engine: "palindrom"
     name: "Insert / update / delete N items"
@@ -43,12 +41,3 @@ scenarios:
       - think: 2
       - updateModelFunction: "emptyTrigger"
       - function: "logState"
-
-      # - function: "logPalindromModel"
-      # - think: 2
-      # - updateModelFunction: "setInsertedItemGuid"
-      # - updateModelFunction: "updateInsertedItem"
-      # - function: "logPalindromModel"
-      # - think: 2
-      # - updateModelFunction: "deleteInsertedItem"
-      # - function: "logPalindromModel"
