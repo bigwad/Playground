@@ -51,6 +51,7 @@ namespace Database
                 item.Thread = this.Thread;
                 item.Index = this.Index;
 
+                this.Id = item.GetObjectID();
                 this.ObjectNo = item.GetObjectNo();
             });
         }
