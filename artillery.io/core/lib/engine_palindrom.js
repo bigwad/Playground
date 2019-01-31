@@ -265,12 +265,6 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
                     context.palindrom.network._ws.close();
                 }
 
-                if (global.gc) {
-                    global.gc();
-                } else {
-                    console.warn("Garbage collection is not exposed. Add `--expose_gc` NodeJs flag to expose it.");
-                }
-
                 return callback(err, context);
             }
         );
