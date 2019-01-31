@@ -65,18 +65,13 @@ namespace Playground
         {
             action.Cancel();
 
-            Database.ItemProxy proxy = null;
-
-            Db.Transact(() =>
+            Database.ItemProxy proxy = new Database.ItemProxy()
             {
-                Database.Person item = new Database.Person()
-                {
-                    Guid = Guid.NewGuid().ToString(),
-                    Date = DateTime.Now
-                };
+                Guid = Guid.NewGuid().ToString(),
+                Date = DateTime.Now
+            };
 
-                proxy = new Database.ItemProxy(item);
-            });
+            proxy.Insert();
 
             this.InsertedObjectNo = (long)proxy.ObjectNo;
             this.Items.Add().Data = proxy;

@@ -29,7 +29,7 @@ namespace Database
 
         public void Update()
         {
-            Db.Transact(() =>
+            Db.TransactAsync(() =>
             {
                 Person item = Db.FromId<Person>(this.ObjectNo);
 
@@ -42,7 +42,7 @@ namespace Database
 
         public void Insert()
         {
-            Db.Transact(() =>
+            Db.TransactAsync(() =>
             {
                 Person item = new Person();
 
@@ -57,7 +57,7 @@ namespace Database
 
         public void Delete()
         {
-            Db.Transact(() =>
+            Db.TransactAsync(() =>
             {
                 Person item = Db.FromId<Person>(this.ObjectNo);
                 item.Delete();
