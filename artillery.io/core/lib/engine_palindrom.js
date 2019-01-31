@@ -80,11 +80,16 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
         return function (context, callback) {
             ee.emit("request");
 
+            const originalOnRemoteChange = context.palindrom.onRemoteChange;
             const timeoutMs = config.timeout || _.get(config, "palindrom.timeout") || 500;
             const requestTimeout = setTimeout(function () {
+                context.palindrom.onRemoteChange = originalOnRemoteChange;
+
                 const err = "Failed to process request " + requestSpec.updateModelFunction + " within timeout of " + timeoutMs + "ms";
                 ee.emit("error", err);
                 callback(err, context);
+
+                context.palindrom.network._ws.close();
             }, timeoutMs);
 
             const startedAt = process.hrtime();
@@ -94,7 +99,6 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
                 throw "Function " + requestSpec.updateModelFunction + " not found.";
             }
 
-            const originalOnRemoteChange = context.palindrom.onRemoteChange;
             const originalLocalVersion = context.getPalindromLocalVersion();
 
             context.palindrom.onRemoteChange = function (patches, results) {
@@ -130,17 +134,21 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
         return function (context, callback) {
             ee.emit("request");
 
+            const originalOnStateReset = context.palindrom.onStateReset;
+            const payload = template(requestSpec.morphUrl, context);
             const timeoutMs = config.timeout || _.get(config, "palindrom.timeout") || 500;
             const requestTimeout = setTimeout(function () {
-                const err = "Failed to process URL morphing to " + requestSpec.morphUrl + " within timeout of " + timeoutMs + "ms";
+                context.palindrom.onStateReset = originalOnStateReset;
+
+                const err = "Failed to process URL morphing to " + payload + " within timeout of " + timeoutMs + "ms";
                 ee.emit("error", err);
                 callback(err, context);
+
+                context.palindrom.network._ws.close();
             }, timeoutMs);
 
             const startedAt = process.hrtime();
-            const payload = template(requestSpec.morphUrl, context);
             const url = new URL(payload, config.target);
-            const originalOnStateReset = context.palindrom.onStateReset;
 
             context.palindrom.onStateReset = function (newObj) {
                 clearTimeout(requestTimeout);
