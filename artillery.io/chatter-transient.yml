@@ -1,0 +1,17 @@
+config:
+  target: "http://localhost:8080/chatter/transient"
+  processor: "./chatter-transient.js"
+  phases:
+    - duration: 1
+      arrivalRate: 5
+  palindrom:
+    timeout: 20000
+scenarios:
+  - engine: "palindrom"
+    flow:
+      - updateModelFunction: "setUsername"
+      - loop:
+          - updateModelFunction: "setText"
+          - updateModelFunction: "sendMessage"
+          - think: 1
+        count: 10
