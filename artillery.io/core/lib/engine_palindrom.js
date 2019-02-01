@@ -106,8 +106,8 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
                 const ackLocalVersion = context.getPalindromAckLocalVersion();
 
                 if (ackLocalVersion < localVersion) {
-					// If the remote local version is yet to reach the local
-					// version our model update is yet to be processed.
+                    // If the remote local version is yet to reach the local
+                    // version our model update is yet to be processed.
                     return;
                 }
 
@@ -193,18 +193,20 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
             request({ url: config.target, headers: headers }, function (error, response, body) {
                 if (error) {
                     const message = error.message || error.code || error;
+                    ee.emit("error", message);
                     return callback(message, initialContext);
                 }
 
-                const regex = /[<]palindrom-client .*?remote-url=["](.*?)["].*?[<][/]palindrom-client[>]/gi;
+                const regex = /[<](palindrom|puppet)-client .*?remote-url=["](.*?)["].*?[<][/](palindrom|puppet)-client[>]/gi;
                 const regexResult = regex.exec(response.body);
-
-                if (!regexResult || regexResult.length != 2) {
-                    const message = "Unable to establish Palindrom connection, <palindrom-client> HTML element was not found";
+                
+                if (!regexResult || regexResult.length != 4) {
+                    const message = "Unable to establish Palindrom connection, <(palindrom|puppet)-client> HTML element was not found";
+                    ee.emit("error", message);
                     return callback(message, initialContext);
                 }
 
-                const remoteUrl = new URL(regexResult[1], config.target);
+                const remoteUrl = new URL(regexResult[2], config.target);
                 const localVersionPath = options.localVersionPath || '/_ver#c$';
                 const remoteVersionPath = options.remoteVersionPath || '/_ver#s';
                 const palindrom = new Palindrom({
@@ -227,8 +229,11 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
                         return callback(null, initialContext);
                     },
                     onError: function (err) {
-                        debug("Palindrom.onError: ", err);
-                        ee.emit("error", err.message || err.code || err);
+                        const message = error.message || error.code || error;
+                        
+                        debug("Palindrom.onError: ", message);
+                        ee.emit("error", message);
+                        return callback(message, initialContext);
                     },
                     onPatchSent: function () {
                         debug("Palindrom.onPatchSent: ", arguments);
@@ -241,8 +246,11 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
                             return;
                         }
 
+                        const message = error.message || error.code || error;
+
                         debug("Palindrom.onConnectionError: ", JSON.stringify(err));
-                        ee.emit("error", err.message || err.code || err);
+                        ee.emit("error", message);
+                        return callback(message, initialContext);
                     }
                 });
 
