@@ -20,7 +20,7 @@ namespace Playground
         }
 
         [ItemPage_json.Item]
-        partial class ItemPageItem : Json, IBound<Database.Person>
+        partial class ItemPageItem : Json, IBound<Database.Item>
         {
             public string Id => this.Data?.GetObjectID();
             public ulong ObjectNo => this.Data?.GetObjectNo() ?? 0;
