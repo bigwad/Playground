@@ -18,7 +18,6 @@
                         <input type="number" value="{{model.Item.Index$::input}}" />
                     </p>
                     <button type="button" value="{{model.SaveTrigger$::click}}" disabled="{{model.SaveTrigger$}}" onmouseup="++this.value;">Save</button>
-                    <a href="/items/{{model.Item.ObjectId}}">Re Self.GET</a>
                 </template>
                 <template is="dom-if" if="[[!model.ItemExist]]">
                     <p>This item does not exist.</p>

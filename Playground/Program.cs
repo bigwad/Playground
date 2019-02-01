@@ -17,10 +17,11 @@ namespace Playground
     {
         static void Main()
         {
-            RegisterDatabaseHooks();
+            //RegisterDatabaseHooks();
 
             Application.Current.Use(new HtmlFromJsonProvider());
             Application.Current.Use(new PartialToStandaloneHtmlProvider());
+
             Handle.GET("/index", () =>
             {
                 Session.Ensure();
@@ -37,36 +38,16 @@ namespace Playground
             {
                 Session.Ensure();
 
-                ItemPage page = Session.Current.Store[nameof(ItemPage)] as ItemPage;
-                Starcounter.XSON.IScopeContext scope = page?.AttachedScope;
-
-                if (scope != null)
-                {
-                    return scope.Scope(() =>
-                    {
-                        page = Self.GET<ItemPage>($"/items/partial/{id}");
-                        Session.Current.Store[nameof(ItemPage)] = page;
-                        return page;
-                    });
-                }
-
                 return Db.Scope<Json>(() =>
                 {
-                    page = Self.GET<ItemPage>($"/items/partial/{id}");
-                    Session.Current.Store[nameof(ItemPage)] = page;
+                    ItemPage page = new ItemPage();
+                    Person item = Db.FromId<Person>(id);
+
+                    page.Item.Data = item;
+
                     return page;
                 });
             });
-
-            Handle.GET("/items/partial/{?}", (string id) =>
-            {
-                ItemPage page = new ItemPage();
-                Person item = Db.FromId<Person>(id);
-
-                page.Item.Data = item;
-
-                return page;
-            }, new HandlerOptions() { SelfOnly = true });
         }
 
         static void RegisterDatabaseHooks()

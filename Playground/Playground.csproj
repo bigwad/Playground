@@ -43,14 +43,8 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Starcounter.Extensions, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <Private>False</Private>
-    </Reference>
-    <Reference Include="Starcounter.Linq, Version=2.2.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\Starcounter.Linq.2.2.0\lib\net461\Starcounter.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -80,37 +74,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SemanticTablePage.json.cs">
-      <DependentUpon>SemanticTablePage.json</DependentUpon>
-    </Compile>
-    <Compile Include="TableColumnsItemsJson.json.cs">
-      <DependentUpon>TableColumnsItemsJson.json</DependentUpon>
-    </Compile>
-    <Compile Include="TableItemsJson.json.cs">
-      <DependentUpon>TableItemsJson.json</DependentUpon>
-    </Compile>
-    <Compile Include="TableRowItemJson.json.cs">
-      <DependentUpon>TableRowItemJson.json</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <TypedJSON Include="IndexPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
     <TypedJSON Include="ItemPage.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
-    <None Include="packages.config" />
-    <TypedJSON Include="SemanticTablePage.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
-    <TypedJSON Include="TableItemsJson.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
-    <TypedJSON Include="TableRowItemJson.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
-    <TypedJSON Include="TableColumnsItemsJson.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
     <None Include="weaver.ignore">
@@ -133,7 +102,12 @@
     <None Include="wwwroot\Playground\IndexPage.html" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\Playground\SemanticTablePage.html" />
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>11.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Starcounter.Linq">
+      <Version>2.2.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(StarcounterBin)\Starcounter.MsBuild.targets" />
