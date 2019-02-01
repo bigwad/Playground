@@ -13,6 +13,23 @@ namespace Database
         public int Index { get; set; }
         public string Notes { get; set; }
 
+        public string DateStr
+        {
+            get
+            {
+                return this.Date.ToString();
+            }
+            set
+            {
+                DateTime date;
+
+                if (DateTime.TryParse(value, out date))
+                {
+                    this.Date = date;
+                }
+            }
+        }
+
         public ItemProxy()
         {
         }
