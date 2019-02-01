@@ -10,26 +10,29 @@
         <template is="dom-bind">
             <h4>Chatter transient demo page</h4>
             <p>
-                This page suppose to provide the same functionality as the official ASP.NET SignalR chatter example - 
+                This page suppose to provide the same functionality as the official ASP.NET SignalR chatter example -
                 <a href="https://docs.microsoft.com/en-us/aspnet/signalr/overview/getting-started/tutorial-getting-started-with-signalr" target="_blank" rel="noreferrer">Tutorial: Real-time chat with SignalR 2</a>.
             </p>
             <p>
-                <label>Username:</label>
+                <label style="min-width: 80px; display: inline-block;">Username:</label>
                 <input type="text" value="{{model.Username$::change}}" />
-                <br />
-                <label>Text:</label>
-                <input type="text" value="{{model.Text$::change}}" />
-                <br />
-                <button type="button" onmouseup="++this.value;" value="{{model.SendTrigger$:click}}" disabled="[[model.SendTrigger$]]">Send</button>
             </p>
-            <div>
+            <p>
+                <label style="min-width: 80px; display: inline-block;">Text:</label>
+                <input type="text" value="{{model.Text$::change}}" />
+            </p>
+            <p>
+                <button style="margin-left: 85px;" type="button" onmouseup="++this.value;" value="{{model.SendTrigger$::click}}" disabled="[[model.SendTrigger$]]">Send</button>
+            </p>
+            <fieldset>
+                <legend>Messages</legend>
                 <template is="dom-repeat" items="[[model.Messages]]">
                     <div>
                         <b>[[item.Username]]</b>:
                         <span>[[item.Text]]</span>
                     </div>
                 </template>
-            </div>
+            </fieldset>
         </template>
     </dom-bind>
 </template>

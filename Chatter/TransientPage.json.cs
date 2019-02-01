@@ -30,7 +30,11 @@ namespace Chatter
 
                 m.Username = username;
                 m.Text = text;
+
+                s.CalculatePatchAndPushOnWebSocket();
             });
+
+            this.Text = null;
         }
     }
 }
