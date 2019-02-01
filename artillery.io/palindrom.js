@@ -10,7 +10,8 @@ module.exports = {
     setEditedItemGuid: setEditedItemGuid,
     setEditedItemIndex: setEditedItemIndex,
     saveEditedItem: saveEditedItem,
-    deleteSavedItem: deleteSavedItem
+    deleteSavedItem: deleteSavedItem,
+    saveRundomItemInfo: saveRundomItemInfo
 };
 
 function logPalindromModel(context, events, done) {
@@ -89,4 +90,24 @@ function deleteSavedItem(context, events, obj) {
     delete context.vars["InsertedItemNo"];
     delete context.vars["InsertedItemId"];
     delete context.vars["EditInsertedItemUri"];
+}
+
+function saveRundomItemInfo(context, events, done) {
+    const obj = context.palindrom.obj;
+    const items = obj.Playground_0.Items;
+
+    if (!items.length) {
+        // No items to view - refreshing page.
+        context.vars["EditRandomItemUri"] = "/index";
+        return done();
+    }
+
+    const i = Math.floor(Math.random() * items.length);
+    const item = items[i];
+
+    // This particular item might have been already deleted.
+    // That's okay, the /items/{?} page will show "This item does not exist" message.
+    context.vars["EditRandomItemUri"] = "/items/" + item.Id;
+
+    return done();
 }

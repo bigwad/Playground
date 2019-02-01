@@ -2,37 +2,42 @@ config:
   target: "http://localhost:8080/index"
   processor: "./palindrom.js"
   phases:
-    - duration: 10
-      arrivalRate: 30
+    - duration: 60
+      arrivalRate: 50
   palindrom:
-    timeout: 10000
+    timeout: 5000
 scenarios:
   - engine: "palindrom"
-    weight: 99
+    name: "Insert / update / delete N items"
+    weight: 39
     flow:
-      - updateModelFunction: "insertItem"
-      - updateModelFunction: "emptyTrigger"
-      - function: "saveInsertedItemInfo"
-      - morphUrl: "{{ EditInsertedItemUri }}"
-      - updateModelFunction: "setEditedItemGuid"
-      - updateModelFunction: "setEditedItemIndex"
-      - think: 2
-      - updateModelFunction: "saveEditedItem"
-      - think: 2
-      - morphUrl: "/index"
-      - updateModelFunction: "deleteSavedItem"
+      - loop:
+          - updateModelFunction: "insertItem"
+          - updateModelFunction: "emptyTrigger"
+          - function: "saveInsertedItemInfo"
+          - morphUrl: "{{ EditInsertedItemUri }}"
+          - updateModelFunction: "setEditedItemGuid"
+          - updateModelFunction: "setEditedItemIndex"
+          - think: 1
+          - updateModelFunction: "saveEditedItem"
+          - think: 1
+          - morphUrl: "/index"
+          - updateModelFunction: "deleteSavedItem"
+        count: 10
   - engine: "palindrom"
-    weight: 1
+    name: "View N items"
+    weight: 59
+    flow:
+      - loop:
+          - function: "saveRundomItemInfo"
+          - morphUrl: "{{ EditRandomItemUri }}"
+          - think: 1
+          - morphUrl: "/index"
+        count: 10
+  - engine: "palindrom"
+    name: "Log current number of items"
+    weight: 2
     flow:
       - think: 2
       - updateModelFunction: "emptyTrigger"
       - function: "logState"
-
-      # - function: "logPalindromModel"
-      # - think: 2
-      # - updateModelFunction: "setInsertedItemGuid"
-      # - updateModelFunction: "updateInsertedItem"
-      # - function: "logPalindromModel"
-      # - think: 2
-      # - updateModelFunction: "deleteInsertedItem"
-      # - function: "logPalindromModel"

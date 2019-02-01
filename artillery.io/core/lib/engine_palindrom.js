@@ -80,11 +80,16 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
         return function (context, callback) {
             ee.emit("request");
 
+            const originalOnRemoteChange = context.palindrom.onRemoteChange;
             const timeoutMs = config.timeout || _.get(config, "palindrom.timeout") || 500;
             const requestTimeout = setTimeout(function () {
+                context.palindrom.onRemoteChange = originalOnRemoteChange;
+
                 const err = "Failed to process request " + requestSpec.updateModelFunction + " within timeout of " + timeoutMs + "ms";
                 ee.emit("error", err);
                 callback(err, context);
+
+                context.palindrom.network._ws.close();
             }, timeoutMs);
 
             const startedAt = process.hrtime();
@@ -94,19 +99,20 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
                 throw "Function " + requestSpec.updateModelFunction + " not found.";
             }
 
-            const originalOnRemoteChange = context.palindrom.onRemoteChange;
-            const originalLocalVersion = context.getPalindromLocalVersion();
-
             context.palindrom.onRemoteChange = function (patches, results) {
-                const newLocalVersion = context.getPalindromLocalVersion();
+                originalOnRemoteChange(patches, results);
 
-                if (newLocalVersion <= originalLocalVersion) {
+                const localVersion = context.getPalindromLocalVersion();
+                const ackLocalVersion = context.getPalindromAckLocalVersion();
+
+                if (ackLocalVersion < localVersion) {
+					// If the remote local version is yet to reach the local
+					// version our model update is yet to be processed.
                     return;
                 }
 
                 clearTimeout(requestTimeout);
 
-                originalOnRemoteChange(patches, results);
                 context.palindrom.onRemoteChange = originalOnRemoteChange;
 
                 const endedAt = process.hrtime(startedAt);
@@ -130,17 +136,21 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
         return function (context, callback) {
             ee.emit("request");
 
+            const originalOnStateReset = context.palindrom.onStateReset;
+            const payload = template(requestSpec.morphUrl, context);
             const timeoutMs = config.timeout || _.get(config, "palindrom.timeout") || 500;
             const requestTimeout = setTimeout(function () {
-                const err = "Failed to process URL morphing to " + requestSpec.morphUrl + " within timeout of " + timeoutMs + "ms";
+                context.palindrom.onStateReset = originalOnStateReset;
+
+                const err = "Failed to process URL morphing to " + payload + " within timeout of " + timeoutMs + "ms";
                 ee.emit("error", err);
                 callback(err, context);
+
+                context.palindrom.network._ws.close();
             }, timeoutMs);
 
             const startedAt = process.hrtime();
-            const payload = template(requestSpec.morphUrl, context);
             const url = new URL(payload, config.target);
-            const originalOnStateReset = context.palindrom.onStateReset;
 
             context.palindrom.onStateReset = function (newObj) {
                 clearTimeout(requestTimeout);
@@ -172,22 +182,15 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
 
     return function scenario(initialContext, callback) {
         function zero(callback) {
-            let tls = config.tls || {};
-            let options = _.extend(tls, config.palindrom);
-
-            let subprotocols = _.get(config, 'palindrom.subprotocols', []);
+            const tls = config.tls || {};
+            const options = _.extend(tls, config.palindrom);
             const headers = _.get(config, 'palindrom.headers', {});
-            const subprotocolHeader = _.find(headers, (value, headerName) => {
-                return headerName.toLowerCase() === 'sec-websocket-protocol';
-            });
-            if (typeof subprotocolHeader !== 'undefined') {
-                // NOTE: subprotocols defined via config.palindrom.subprotocols take precedence:
-                subprotocols = subprotocols.concat(subprotocolHeader.split(',').map(s => s.trim()));
-            }
 
             ee.emit('started');
 
-            request({ url: config.target, headers: { Accept: "text/html" } }, function (error, response, body) {
+            headers.Accept = headers.Accept || "text/html";
+
+            request({ url: config.target, headers: headers }, function (error, response, body) {
                 if (error) {
                     const message = error.message || error.code || error;
                     return callback(message, initialContext);
@@ -245,6 +248,10 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
 
                 initialContext.getPalindromLocalVersion = function () {
                     return palindrom.queue.localVersion;
+                };
+
+                initialContext.getPalindromAckLocalVersion = function () {
+                    return palindrom.queue.ackLocalVersion;
                 };
 
                 initialContext.getPalindromRemoteVersion = function () {
