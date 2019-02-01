@@ -38,6 +38,14 @@ namespace Chatter
                 Session.Current.Store[nameof(Json)] = page;
                 return page;
             });
+
+            Handle.GET("/chatter/transient", () =>
+            {
+                Session.Ensure();
+                TransientPage page = new TransientPage();
+                Session.Current.Store[nameof(Json)] = page;
+                return page;
+            });
         }
 
         static void EnsureIndexes()

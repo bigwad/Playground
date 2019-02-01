@@ -58,6 +58,9 @@
     <Compile Include="IndexPage.json.cs">
       <DependentUpon>IndexPage.json</DependentUpon>
     </Compile>
+    <Compile Include="TransientPage.json.cs">
+      <DependentUpon>TransientPage.json</DependentUpon>
+    </Compile>
     <Compile Include="UserPage.json.cs">
       <DependentUpon>UserPage.json</DependentUpon>
     </Compile>
@@ -71,6 +74,12 @@
     </TypedJSON>
   </ItemGroup>
   <ItemGroup>
+    <None Include="wwwroot\Chatter\TransientPage.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypedJSON Include="TransientPage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
     <None Include="wwwroot\Chatter\IndexPage.html" />
   </ItemGroup>
   <ItemGroup>
