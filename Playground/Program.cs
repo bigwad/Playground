@@ -7,6 +7,7 @@ using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using System.Globalization;
 using System.Threading;
+using Newtonsoft.Json;
 using Starcounter;
 using Starcounter.Linq;
 using Database;
@@ -18,6 +19,7 @@ namespace Playground
         static void Main()
         {
             //RegisterDatabaseHooks();
+            RegisterRestApi();
 
             Application.Current.Use(new HtmlFromJsonProvider());
             Application.Current.Use(new PartialToStandaloneHtmlProvider());
@@ -41,7 +43,7 @@ namespace Playground
                 return Db.Scope<Json>(() =>
                 {
                     ItemPage page = new ItemPage();
-                    Person item = Db.FromId<Person>(id);
+                    Item item = Db.FromId<Item>(id);
 
                     page.Item.Data = item;
 
@@ -50,9 +52,72 @@ namespace Playground
             });
         }
 
+        static void RegisterRestApi()
+        {
+            Handle.GET("/rest/list", () =>
+            {
+                ItemProxy[] items = DbLinq.Objects<Item>().OrderBy(x => x.Date).ToArray().Select(x => new ItemProxy(x)).ToArray();
+                string json = JsonConvert.SerializeObject(items);
+
+                return json;
+            });
+
+            Handle.GET("/rest/view/{?}", (ulong no) =>
+            {
+                Item item = Db.FromId<Item>(no);
+
+                if (item == null)
+                {
+                    return $"Item with no {no} does not exist.";
+                }
+
+                ItemProxy proxy = new ItemProxy(item);
+                string json = JsonConvert.SerializeObject(proxy);
+
+                return json;
+            });
+
+            Handle.POST("/rest/insert", (Request request) =>
+            {
+                ItemProxy item = JsonConvert.DeserializeObject<ItemProxy>(request.Body);
+                item.Insert();
+
+                string json = JsonConvert.SerializeObject(item);
+
+                return json;
+            });
+
+            Handle.PUT("/rest/update", (Request request) =>
+            {
+                ItemProxy item = JsonConvert.DeserializeObject<ItemProxy>(request.Body);
+                item.Update();
+
+                string json = JsonConvert.SerializeObject(item);
+
+                return json;
+            });
+
+            Handle.DELETE("/rest/delete/{?}", (ulong no) =>
+            {
+                Item item = Db.FromId<Item>(no);
+
+                if (item == null)
+                {
+                    return $"Item with no {no} does not exist.";
+                }
+
+                Db.Transact(() =>
+                {
+                    item.Delete();
+                });
+
+                return 200;
+            });
+        }
+
         static void RegisterDatabaseHooks()
         {
-            Hook<Person>.AfterCommitInsert += (sender, entityId) => Session.RunTaskForAll((s, id) =>
+            Hook<Item>.AfterCommitInsert += (sender, entityId) => Session.RunTaskForAll((s, id) =>
             {
                 if (s == null || s.ActiveWebSocket == null)
                 {
@@ -68,7 +133,7 @@ namespace Playground
                 }
             });
 
-            Hook<Person>.AfterCommitUpdate += (sender, entityId) => Session.RunTaskForAll((s, id) =>
+            Hook<Item>.AfterCommitUpdate += (sender, entityId) => Session.RunTaskForAll((s, id) =>
             {
                 if (s == null || s.ActiveWebSocket == null)
                 {
@@ -84,7 +149,7 @@ namespace Playground
                 }
             });
 
-            Hook<Person>.AfterCommitDelete += (sender, entityId) => Session.RunTaskForAll((s, id) =>
+            Hook<Item>.AfterCommitDelete += (sender, entityId) => Session.RunTaskForAll((s, id) =>
             {
                 if (s == null || s.ActiveWebSocket == null)
                 {

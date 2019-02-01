@@ -17,9 +17,9 @@ namespace Playground
         {
             this.Items.Clear();
 
-            IEnumerable<Database.Person> items = DbLinq.Objects<Database.Person>().OrderBy(x => x.Date);
+            IEnumerable<Database.Item> items = DbLinq.Objects<Database.Item>().OrderBy(x => x.Date);
 
-            foreach (Database.Person item in items)
+            foreach (Database.Item item in items)
             {
                 this.Items.Add().Data = new Database.ItemProxy(item);
             }
@@ -28,7 +28,7 @@ namespace Playground
         public void ItemInserted(ulong no)
         {
             var row = this.Items.FirstOrDefault(x => x.Data.ObjectNo == no);
-            Database.Person item = Db.FromId<Database.Person>(no);
+            Database.Item item = Db.FromId<Database.Item>(no);
 
             if (item == null || row != null)
             {
@@ -53,7 +53,7 @@ namespace Playground
         public void ItemUpdated(ulong no)
         {
             var row = this.Items.FirstOrDefault(x => x.Data.ObjectNo == no);
-            Database.Person item = Db.FromId<Database.Person>(no);
+            Database.Item item = Db.FromId<Database.Item>(no);
 
             if (item != null && row != null)
             {
