@@ -41,7 +41,7 @@ namespace Playground
                 return Db.Scope<Json>(() =>
                 {
                     ItemPage page = new ItemPage();
-                    Person item = Db.FromId<Person>(id);
+                    Item item = Db.FromId<Item>(id);
 
                     page.Item.Data = item;
 
@@ -52,7 +52,7 @@ namespace Playground
 
         static void RegisterDatabaseHooks()
         {
-            Hook<Person>.AfterCommitInsert += (sender, entityId) => Session.RunTaskForAll((s, id) =>
+            Hook<Item>.AfterCommitInsert += (sender, entityId) => Session.RunTaskForAll((s, id) =>
             {
                 if (s == null || s.ActiveWebSocket == null)
                 {
@@ -68,7 +68,7 @@ namespace Playground
                 }
             });
 
-            Hook<Person>.AfterCommitUpdate += (sender, entityId) => Session.RunTaskForAll((s, id) =>
+            Hook<Item>.AfterCommitUpdate += (sender, entityId) => Session.RunTaskForAll((s, id) =>
             {
                 if (s == null || s.ActiveWebSocket == null)
                 {
@@ -84,7 +84,7 @@ namespace Playground
                 }
             });
 
-            Hook<Person>.AfterCommitDelete += (sender, entityId) => Session.RunTaskForAll((s, id) =>
+            Hook<Item>.AfterCommitDelete += (sender, entityId) => Session.RunTaskForAll((s, id) =>
             {
                 if (s == null || s.ActiveWebSocket == null)
                 {
