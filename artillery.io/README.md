@@ -1,10 +1,21 @@
 ## Setting up
 
+1. [Download & Install](https://downloads.starcounter.com/) Starcounter `2.4.0.7134` or newer.
+2. Install NodeJs.
+3. Install [`artillery.io`](https://artillery.io/) npm package - `npm install -g artillery`.
+4. Install [`palindrom`](https://github.com/Palindrom/Palindrom) npm package - `npm install -g palindrom`.
+5. Clone [`miyconst/Playground`](https://github.com/miyconst/Playground) repository.
+6. Copy `Playground/artillery.io/core/lib/*` files into the `npm/node_modules/artillery/core/lib` folder. *Remember to backup the original files.*
+7. Start Playground app in an empty `default` database on port `8080`. [Starcounter: StarAdmin CLI](https://docs.starcounter.io/topic-guides/working-with-starcounter/staradmin-cli).
+8. Navigate to `http://localhost:8080/index` and try to insert/update/delete some items to make sure that it works.
+9. Update `Playground/artillery.io/palindrom.yml` file with `duration: 1` and `arrivalRate: 1` values.
+10. Execute `artillery run palindrom.yml` from the `Playground/artillery.io/` folder to make sure that artillery works.
+11. Update `Playground/artillery.io/palindrom.yml` with desired `duration` & `arrivalRate` values.
+12. Keep testing.
+
 ### Windows
 
-Set registry value `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\MaxUserPort` to something like `60000`.
-
-Add `--max-old-space-size=4096` parameter to `C:\Users\{Username}\AppData\Roaming\npm\artillery.cmd`, so it looks like `node --max-old-space-size=4096 "%~dp0\node_modules\artillery\bin\artillery" %*`. The value is specified in megabytes.
+NodeJs installer - [https://nodejs.org/en/download/](https://nodejs.org/en/download/).
 
 ### Ubuntu 18.04
 
@@ -20,10 +31,15 @@ sudo apt-get install -y nodejs
 
 ### Windows
 
-NodeJs (npm) package location - `C:\Users\{Username}\AppData\Roaming\npm\node_modules\artillery\`.
+NodeJs (npm) package location - `%AppData%\npm\node_modules\artillery\`.
 
 It seems like NodeJs only uses `49152 – 65535` ports range (16 thousands) for TCP connections.
 Execute `taskkill /im node.exe /f` to free up those ports.
+
+Set registry value `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\MaxUserPort` to something like `60000` to increase number of concurrently opened TCP connections.
+
+Add `--max-old-space-size=4096` parameter to `%AppData%\npm\artillery.cmd`, so it looks like `node --max-old-space-size=4096 "%~dp0\node_modules\artillery\bin\artillery" %*`, to increase the memory usage limit for NodeJs.
+The value is specified in megabytes.
 
 ### Ubuntu 18.04
 

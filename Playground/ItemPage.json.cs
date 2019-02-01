@@ -1,3 +1,4 @@
+using System;
 using Starcounter;
 
 namespace Playground
@@ -12,14 +13,37 @@ namespace Playground
             this.AttachedScope.Commit();
         }
 
+        protected void Handle(Input.CancelTrigger action)
+        {
+            action.Cancel();
+            this.AttachedScope.Rollback();
+        }
+
         [ItemPage_json.Item]
         partial class ItemPageItem : Json, IBound<Database.Person>
         {
-            public string ObjectId
+            public string Id => this.Data?.GetObjectID();
+            public ulong ObjectNo => this.Data?.GetObjectNo() ?? 0;
+
+            public string DateStr
             {
                 get
                 {
-                    return this.Data?.GetObjectID();
+                    return this.Data?.Date.ToString();
+                }
+                set
+                {
+                    if (this.Data == null)
+                    {
+                        return;
+                    }
+
+                    DateTime date;
+
+                    if (DateTime.TryParse(value, out date))
+                    {
+                        this.Data.Date = date;
+                    }
                 }
             }
         }

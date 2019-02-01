@@ -2,9 +2,13 @@
   "Html": "/Playground/ItemPage.html",
   "ItemExist": false,
   "Item": {
-    "ObjectId": "",
+    "Id": "",
+    "ObjectNo": 0,
     "Guid$": "",
+    "DateStr$": "",
+    "Thread$": 0,
     "Index$": 0
   },
-  "SaveTrigger$": 0
+  "SaveTrigger$": 0,
+  "CancelTrigger$": 0
 }

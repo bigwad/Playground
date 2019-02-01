@@ -2,8 +2,8 @@ config:
   target: "http://localhost:8080/index"
   processor: "./palindrom.js"
   phases:
-    - duration: 60
-      arrivalRate: 50
+    - duration: 1
+      arrivalRate: 1
   palindrom:
     timeout: 5000
 scenarios:

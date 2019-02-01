@@ -2,28 +2,46 @@
 
 <template>
     <dom-bind>
+        <style>
+            body {
+                padding: 20px 50px;
+            }
+        </style>
         <template is="dom-bind">
-            <fieldset>
-                <legend>Playground</legend>
+            <h4>Playground - Item details</h4>
+            <p>
+                <a href="/index">Playground - Items</a>
+            </p>
+            <template is="dom-if" if="[[model.ItemExist]]">
                 <p>
-                    <a href="/index">Items</a>
+                    <label style="min-width: 80px; display: inline-block;">ObjectNo:</label>
+                    <input type="text" value="[[model.Item.ObjectNo]]" readonly style="width: 148px;" title="Object No" />
+                    <input type="text" value="[[model.Item.Id]]" readonly style="width: 148px;" title="Encoded Object No (Object ID)" />
                 </p>
-                <template is="dom-if" if="[[model.ItemExist]]">
-                    <p>
-                        <label>Guid:</label>
-                        <input type="text" value="{{model.Item.Guid$::input}}" />
-                    </p>
-                    <p>
-                        <label>Index:</label>
-                        <input type="number" value="{{model.Item.Index$::input}}" />
-                    </p>
-                    <button type="button" value="{{model.SaveTrigger$::click}}" disabled="{{model.SaveTrigger$}}" onmouseup="++this.value;">Save</button>
-                    <a href="/items/{{model.Item.ObjectId}}">Re Self.GET</a>
-                </template>
-                <template is="dom-if" if="[[!model.ItemExist]]">
-                    <p>This item does not exist.</p>
-                </template>
-            </fieldset>
+                <p>
+                    <label style="min-width: 80px; display: inline-block;">Guid:</label>
+                    <input type="text" value="{{model.Item.Guid$::change}}" style="width: 300px;" />
+                </p>
+                <p>
+                    <label style="min-width: 80px; display: inline-block;">Date:</label>
+                    <input type="text" value="{{model.Item.DateStr$::change}}" style="width: 300px;" />
+                </p>
+                <p>
+                    <label style="min-width: 80px; display: inline-block;">Thread:</label>
+                    <input type="number" value="{{model.Item.Thread$::change}}" style="width: 300px;" />
+                </p>
+                <p>
+                    <label style="min-width: 80px; display: inline-block;">Index:</label>
+                    <input type="number" value="{{model.Item.Index$::change}}" style="width: 300px;" />
+                </p>
+                <p>
+                    <button type="button" value="{{model.SaveTrigger$::click}}" disabled="[[model.SaveTrigger$]]" onmouseup="++this.value;" style="margin-left: 85px;" title="Save changes">Save</button>
+                    <button type="button" value="{{model.CancelTrigger$::click}}" disabled="[[model.CancelTrigger$]]" onmouseup="++this.value;" title="Cancel changes">Cancel</button>
+                </p>
+            </template>
+            <template is="dom-if" if="[[!model.ItemExist]]">
+                <p>This item does not exist.</p>
+            </template>
         </template>
     </dom-bind>
 </template>

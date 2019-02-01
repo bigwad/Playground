@@ -5,10 +5,9 @@
       "Id": "",
       "ObjectNo": 0,
       "Guid$": "",
-      "Date$": "",
+      "DateStr$": "",
       "Thread$": 0,
       "Index$": 0,
-      "Notes": "",
       "DeleteTrigger$": 0,
       "UpdateTrigger$": 0
     }
