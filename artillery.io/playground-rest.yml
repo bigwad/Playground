@@ -1,0 +1,65 @@
+config:
+  target: "http://localhost:8080"
+  processor: "./playground-rest.js"
+  phases:
+    - duration: 10
+      arrivalRate: 100
+  palindrom:
+    timeout: 20000
+scenarios:
+  - name: "Insert / update / delete N items"
+    weight: 39
+    flow:
+      - loop:
+          - get:
+              url: "/rest/list"
+          - function: "setInsertItemData"
+          - post:
+              url: "/rest/insert"
+              json: "{{ InsertItem }}"
+              capture:
+                json: "$.ObjectNo"
+                as: "InsertedItemObjectNo"
+          - get: 
+              url: "/rest/view/{{ InsertedItemObjectNo }}"
+              capture: 
+                json: "$"
+                as: "ViewItem"
+          - think: 1
+          - function: "setUpdateItemData"
+          - put: 
+              url: "/rest/update"
+              json: "{{ UpdateItem }}"
+          - think: 1
+          - get:
+              url: "/rest/list"
+          - delete:
+              url: "/rest/delete/{{ InsertedItemObjectNo }}"
+        count: 20
+  - name: "View N items"
+    weight: 59
+    flow:
+      - loop:
+          - get: 
+              url: "/rest/list"
+              capture:
+                - json: "$"
+                  as: "Items"
+          - function: "setRandomItemObjectNo"
+          - get:
+              url: "/rest/view/{{ RandomItemObjectNo }}"
+          - think: 1
+          - get:
+              url: "/rest/list"
+        count: 20
+  - name: "Log current number of items"
+    weight: 2
+    flow:
+      - think: 2
+      - get:
+          url: "/rest/list"
+          capture: 
+            json: "$"
+            as: "Items"
+      - function: "setItemsLength"
+      - log: "Total number of item: {{ ItemsLength }}"

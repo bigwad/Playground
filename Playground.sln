@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "artillery.io", "artillery.i
 		artillery.io\core\lib\engine_palindrom.js = artillery.io\core\lib\engine_palindrom.js
 		artillery.io\palindrom.js = artillery.io\palindrom.js
 		artillery.io\palindrom.yml = artillery.io\palindrom.yml
+		artillery.io\playground-rest.js = artillery.io\playground-rest.js
+		artillery.io\playground-rest.yml = artillery.io\playground-rest.yml
 		artillery.io\README.md = artillery.io\README.md
 	EndProjectSection
 EndProject
