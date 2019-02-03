@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "artillery.io", "artillery.i
 		artillery.io\playground-rest.js = artillery.io\playground-rest.js
 		artillery.io\playground-rest.yml = artillery.io\playground-rest.yml
 		artillery.io\playground.js = artillery.io\playground.js
+		artillery.io\playground.mvc.js = artillery.io\playground.mvc.js
+		artillery.io\playground.mvc.yml = artillery.io\playground.mvc.yml
 		artillery.io\playground.yml = artillery.io\playground.yml
 		artillery.io\README.md = artillery.io\README.md
 	EndProjectSection

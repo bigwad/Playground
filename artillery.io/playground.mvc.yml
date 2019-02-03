@@ -1,0 +1,89 @@
+config:
+  target: "http://localhost:50053/"
+  processor: "./playground.mvc.js"
+  phases:
+    - duration: 10
+      arrivalRate: 10
+  palindrom:
+    timeout: 5000
+scenarios:
+  - name: "Insert / update / delete N items"
+    weight: 39
+    flow:
+      - loop:
+          - get:
+              url: "/home/index"
+          - get:
+              headers:
+                Accept: "application/json"
+              url: "/api/items"
+          - function: "setInsertItemData"
+          - post:
+              url: "/api/items"
+              json: "{{ InsertItem }}"
+              capture:
+                - json: "$"
+                  as: "InsertedItem"
+          - function: "setInsertedItemId"
+          - get:
+              url: "/home/item/{{ InsertedItemId }}"
+          - get:
+              url: "/api/items/{{ InsertedItemId }}"
+              headers:
+                Accept: "application/json"
+          - think: 1
+          - function: "setUpdateItemData"
+          - put:
+              url: "/api/items"
+              json: "{{ UpdateItem }}"
+          - think: 1
+          - get:
+              url: "/home/index"
+          - get: 
+              url: "/api/items"
+              headers:
+                Accept: "application/json"
+          - delete:
+              url: "/api/items/{{ InsertedItemId }}"
+        count: 10
+  - name: "View N items"
+    weight: 59
+    flow:
+      - loop:
+          - get:
+              url: "/home/index"
+          - get:
+              url: "/api/items"
+              headers:
+                Accept: "application/json"
+              capture:
+                - json: "$"
+                  as: "Items"
+          - function: "saveRundomItemInfo"
+          - get:
+              url: "/home/item/{{ EditRandomItemId }}"
+          - get:
+              url: "/api/items/{{ EditRandomItemId }}"
+              headers:
+                Accept: "application/json"
+          - think: 1
+          - get:
+              url: "/home/index"
+          - get:
+              url: "/api/items"
+              headers:
+                Accept: "application/json"
+        count: 10
+  - name: "Log current number of items"
+    weight: 2
+    flow:
+      - think: 2
+      - get:
+          url: "/api/items"
+          headers:
+            Accept: "application/json"
+          capture:
+            - json: "$"
+              as: "Items"
+      - function: "setItemsLength"
+      - log: "Total number of item: {{ ItemsLength }}"
