@@ -11,12 +11,12 @@
             <h4>Playground - Items</h4>
             <p>
                 <button type="button" class="btn btn-xs btn-default" value="{{model.InsertTrigger$::click}}" disabled="{{model.InsertTrigger$}}" onmouseup="++this.value;">Insert new row</button>
-                <template is="dom-if" if="[[model.InsertedObjectNo]]">
-                    <p style="padding: 0px 5px;">
-                        <label>Inserted item object no: <b>[[model.InsertedObjectNo]]</b></label>
-                    </p>
-                </template>
             </p>
+            <template is="dom-if" if="[[model.InsertedObjectNo]]">
+                <p style="padding: 0px 5px;">
+                    <label>Inserted item object no: <b>[[model.InsertedObjectNo]]</b></label>
+                </p>
+            </template>
             <table class="table">
                 <thead>
                     <tr>
