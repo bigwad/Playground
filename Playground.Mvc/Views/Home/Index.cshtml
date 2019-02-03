@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Items";
+}
+
+<h4>Playground - Items</h4>
+<p>
+    <button type="button" class="btn btn-xs btn-default" data-bind="click: $root.insertItem">Insert new row</button>
+</p>
+<p style="padding: 0px 5px;" data-bind="visible: $root.insertedItemId">
+    <label>Inserted item object no: <b data-bind="text: $root.insertedItemId"></b></label>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ObjectNo</th>
+            <th>Guid</th>
+            <th>Date ↓</th>
+            <th>Thread</th>
+            <th>Index</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: $root.items">
+        <tr>
+            <td>
+                <a data-bind="text: $data.Id, attr: { href: '/home/item/' + $data.Id }" title="Edit item"></a>
+            </td>
+            <td>
+                <input type="text" data-bind="value: $data.Guid" class="input-sm" style="width: 100%;" />
+            </td>
+            <td>
+                <input type="text" data-bind="value: $data.DateStr" class="input-sm" />
+            </td>
+            <td>
+                <input type="number" data-bind="value: $data.Thread" class="input-sm" />
+            </td>
+            <td>
+                <input type="number" data-bind="value: $data.Index" class="input-sm" />
+            </td>
+            <td>
+                <a data-bind="attr: { href: '/home/item/' + $data.Id }" title="Edit item" style="vertical-align: middle;">Edit</a>
+                <button type="button" class="btn btn-xs btn-default" data-bind="click: $root.deleteItem, itemId: $data.Id" style="padding: 0px 13px; min-width: 0px; margin-left: 7px; vertical-align: middle;" title="Delete item">Delete</button>
+                <button type="button" class="btn btn-xs btn-default" data-bind="click: $root.updateItem, itemId: $data.Id" onmouseup="++this.value;" style="padding: 0px 13px; min-width: 0px; margin-left: 7px; vertical-align: middle;" title="Update current item into database">Update</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            const koModel = {
+                items: ko.observableArray([]),
+                insertedItemId: ko.observable(0)
+            };
+
+            $.getJSON("/api/items", function (data) {
+                koModel.items(data);
+            });
+
+            koModel.insertItem = function () {
+                const item = {
+                    Guid: null,
+                    Date: new Date(),
+                    Index: 0,
+                    Thread: 0
+                };
+
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "/api/items",
+                    data: item,
+                    success: function (data) {
+                        koModel.items.push(data);
+                        koModel.insertedItemId(data.Id);
+                    }
+                });
+            };
+
+            koModel.deleteItem = function (item) {
+                $.ajax({
+                    type: "DELETE",
+                    url: "/api/items/" + item.Id,
+                    success: function () {
+                        koModel.items.remove(item);
+                    }
+                });
+            };
+
+            koModel.updateItem = function (item) {
+                $.ajax({
+                    type: "PUT",
+                    dataType: "json",
+                    url: "/api/items",
+                    data: item,
+                    success: function (data) {
+                        koModel.items.replace(item, data);
+                    }
+                });
+            };
+
+            ko.applyBindings(koModel);
+        });
+    </script>
+}

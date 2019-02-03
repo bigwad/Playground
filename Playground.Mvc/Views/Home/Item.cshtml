@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Item details";
+}
+
+<h4>Playground - Item details</h4>
+<p>
+    <a href="/home/index">Playground - Items</a>
+</p>
+<div data-bind="visible: $root.item() && $root.item().Id">
+    <div data-bind="with: $root.item">
+        <p>
+            <label style="min-width: 80px; display: inline-block;">Id:</label>
+            <input type="text" data-bind="value: Id" readonly style="width: 148px;" title="Object No" />
+        </p>
+        <p>
+            <label style="min-width: 80px; display: inline-block;">Guid:</label>
+            <input type="text" data-bind="value: Guid" style="width: 300px;" />
+        </p>
+        <p>
+            <label style="min-width: 80px; display: inline-block;">Date:</label>
+            <input type="text" data-bind="value: DateStr" style="width: 300px;" />
+        </p>
+        <p>
+            <label style="min-width: 80px; display: inline-block;">Thread:</label>
+            <input type="number" data-bind="value: Thread" style="width: 300px;" />
+        </p>
+        <p>
+            <label style="min-width: 80px; display: inline-block;">Index:</label>
+            <input type="number" data-bind="value: Index" style="width: 300px;" />
+        </p>
+        <p>
+            <button type="button" value="{{model.SaveTrigger$::click}}" data-bind="click: $root.saveChanges" onmouseup="++this.value;" style="margin-left: 85px;" title="Save changes">Save</button>
+            <button type="button" value="{{model.CancelTrigger$::click}}" data-bind="click: $root.cancelChanges" onmouseup="++this.value;" title="Cancel changes">Cancel</button>
+        </p>
+    </div>
+</div>
+<p data-bind="visible: !$root.item() || !$root.item().Id">This item does not exist.</p>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            const itemId = @ViewBag.ItemId;
+            const koModel = {
+                item: ko.observable()
+            };
+
+            koModel.saveChanges = function () {
+                $.ajax({
+                    type: "PUT",
+                    dataType: "json",
+                    url: "/api/items",
+                    data: koModel.item(),
+                    success: function (data) {
+                        koModel.item(data);
+                    }
+                });
+            };
+
+            koModel.cancelChanges = function () {
+                $.getJSON("/api/items/" + itemId, function (data) {
+                    koModel.item(data);
+                });
+            };
+
+            koModel.cancelChanges();
+
+            ko.applyBindings(koModel);
+        });
+    </script>
+}

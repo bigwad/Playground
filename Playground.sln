@@ -15,27 +15,43 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "artillery.io", "artillery.io", "{4B1138AA-73BA-4F71-8A4B-7696D7CAFFD3}"
 	ProjectSection(SolutionItems) = preProject
 		artillery.io\core\lib\engine_palindrom.js = artillery.io\core\lib\engine_palindrom.js
-		artillery.io\palindrom.js = artillery.io\palindrom.js
-		artillery.io\palindrom.yml = artillery.io\palindrom.yml
 		artillery.io\playground-rest.js = artillery.io\playground-rest.js
 		artillery.io\playground-rest.yml = artillery.io\playground-rest.yml
+		artillery.io\playground.js = artillery.io\playground.js
+		artillery.io\playground.yml = artillery.io\playground.yml
 		artillery.io\README.md = artillery.io\README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground.Mvc", "Playground.Mvc\Playground.Mvc.csproj", "{FD0C65BD-D9A4-4482-98E7-6A5DFE68A8A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7CBDA509-EDB4-4472-97B9-206A2E30F4E2}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{7CBDA509-EDB4-4472-97B9-206A2E30F4E2}.Debug|x64.ActiveCfg = Debug|x64
 		{7CBDA509-EDB4-4472-97B9-206A2E30F4E2}.Debug|x64.Build.0 = Debug|x64
+		{7CBDA509-EDB4-4472-97B9-206A2E30F4E2}.Release|Any CPU.ActiveCfg = Release|x64
 		{7CBDA509-EDB4-4472-97B9-206A2E30F4E2}.Release|x64.ActiveCfg = Release|x64
 		{7CBDA509-EDB4-4472-97B9-206A2E30F4E2}.Release|x64.Build.0 = Release|x64
+		{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}.Debug|x64.ActiveCfg = Debug|x64
 		{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}.Debug|x64.Build.0 = Debug|x64
+		{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}.Release|Any CPU.ActiveCfg = Release|x64
 		{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}.Release|x64.ActiveCfg = Release|x64
 		{ACBAB8C3-4EE5-4CA8-BD9C-C2E7D38839E3}.Release|x64.Build.0 = Release|x64
+		{FD0C65BD-D9A4-4482-98E7-6A5DFE68A8A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD0C65BD-D9A4-4482-98E7-6A5DFE68A8A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD0C65BD-D9A4-4482-98E7-6A5DFE68A8A5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FD0C65BD-D9A4-4482-98E7-6A5DFE68A8A5}.Debug|x64.Build.0 = Debug|Any CPU
+		{FD0C65BD-D9A4-4482-98E7-6A5DFE68A8A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD0C65BD-D9A4-4482-98E7-6A5DFE68A8A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD0C65BD-D9A4-4482-98E7-6A5DFE68A8A5}.Release|x64.ActiveCfg = Release|Any CPU
+		{FD0C65BD-D9A4-4482-98E7-6A5DFE68A8A5}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
