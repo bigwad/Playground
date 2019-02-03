@@ -8,7 +8,7 @@ namespace Playground.Mvc.Models
     public class ItemProxy
     {
         public long Id { get; set; }
-        public Guid? Guid { get; set; }
+        public string Guid { get; set; }
         public DateTime Date { get; set; }
         public int Thread { get; set; }
         public int Index { get; set; }

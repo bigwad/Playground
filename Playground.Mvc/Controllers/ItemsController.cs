@@ -40,7 +40,7 @@ namespace Playground.Mvc.Controllers
         {
             if (value.Guid == null)
             {
-                value.Guid = Guid.NewGuid();
+                value.Guid = Guid.NewGuid().ToString();
             }
 
             value.Date = DateTime.Now;

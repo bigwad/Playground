@@ -4,13 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PlaygroundModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PlaygroundModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Items">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Guid" Type="uniqueidentifier" />
+          <Property Name="Guid" Type="nvarchar(max)" />
           <Property Name="Date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Thread" Type="int" Nullable="false" />
           <Property Name="Index" Type="int" Nullable="false" />
@@ -18,24 +18,23 @@
         <EntityContainer Name="PlaygroundModelStoreContainer">
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PlaygroundModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PlaygroundEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Items" EntityType="PlaygroundModel.Item" />
+        </EntityContainer>
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Guid" Type="Guid" />
+          <Property Name="Guid" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Thread" Type="Int32" Nullable="false" />
           <Property Name="Index" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="PlaygroundEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Items" EntityType="Self.Item" />
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -45,11 +44,11 @@
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="PlaygroundModel.Item">
               <MappingFragment StoreEntitySet="Items">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Guid" ColumnName="Guid" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Thread" ColumnName="Thread" />
                 <ScalarProperty Name="Index" ColumnName="Index" />
+                <ScalarProperty Name="Thread" ColumnName="Thread" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -15,7 +15,7 @@ namespace Playground.Mvc.Models
     public partial class Item
     {
         public long Id { get; set; }
-        public Nullable<System.Guid> Guid { get; set; }
+        public string Guid { get; set; }
         public System.DateTime Date { get; set; }
         public int Thread { get; set; }
         public int Index { get; set; }
