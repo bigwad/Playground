@@ -3,15 +3,16 @@
 1. [Download & Install](https://downloads.starcounter.com/) Starcounter `2.4.0.7134` or newer.
 2. Install NodeJs.
 3. Install [`artillery.io`](https://artillery.io/) npm package - `npm install -g artillery`.
-4. Install [`palindrom`](https://github.com/Palindrom/Palindrom) npm package - `npm install -g palindrom`.
-5. Clone [`miyconst/Playground`](https://github.com/miyconst/Playground) repository.
-6. Copy `Playground/artillery.io/core/lib/*` files into the `npm/node_modules/artillery/core/lib` folder. *Remember to backup the original files.*
-7. Start Playground app in an empty `default` database on port `8080`. [Starcounter: StarAdmin CLI](https://docs.starcounter.io/topic-guides/working-with-starcounter/staradmin-cli).
-8. Navigate to `http://localhost:8080/index` and try to insert/update/delete some items to make sure that it works.
-9. Update `Playground/artillery.io/playground.yml` file with `duration: 1` and `arrivalRate: 1` values.
-10. Execute `artillery run playground.yml` from the `Playground/artillery.io/` folder to make sure that artillery works.
-11. Update `Playground/artillery.io/playground.yml` with desired `duration` & `arrivalRate` values.
-12. Keep testing.
+4. Install [Expectations and Assertions (HTTP)](https://artillery.io/docs/plugin-expectations-assertions/) artillery.io extension - `npm install -g artillery-plugin-expect`.
+5. Install [`palindrom`](https://github.com/Palindrom/Palindrom) npm package - `npm install -g palindrom`.
+6. Clone [`miyconst/Playground`](https://github.com/miyconst/Playground) repository.
+7. Copy `Playground/artillery.io/core/lib/*` files into the `npm/node_modules/artillery/core/lib` folder. *Remember to backup the original files.*
+8. Start Playground app in an empty `default` database on port `8080`. [Starcounter: StarAdmin CLI](https://docs.starcounter.io/topic-guides/working-with-starcounter/staradmin-cli).
+9. Navigate to `http://localhost:8080/index` and try to insert/update/delete some items to make sure that it works.
+10. Update `Playground/artillery.io/playground.yml` file with `duration: 1` and `arrivalRate: 1` values.
+11. Execute `artillery run playground.yml` from the `Playground/artillery.io/` folder to make sure that artillery works.
+12. Update `Playground/artillery.io/playground.yml` with desired `duration` & `arrivalRate` values.
+13. Keep testing.
 
 ### Windows
 
