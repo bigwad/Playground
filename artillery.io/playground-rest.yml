@@ -4,8 +4,8 @@ config:
   phases:
     - duration: 10
       arrivalRate: 100
-  palindrom:
-    timeout: 20000
+  http:
+    timeout: 20
 scenarios:
   - name: "Insert / update / delete N items"
     weight: 39
