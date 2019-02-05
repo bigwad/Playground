@@ -2,8 +2,13 @@ config:
   target: "http://localhost:8080/index"
   processor: "./playground.js"
   phases:
-    - duration: 1
-      arrivalRate: 1
+    - duration: 30
+      arrivalRate: 10
+      rampTo: 50
+      name: "Warm up the application"
+    - duration: 30
+      arrivalRate: 100
+      name: "Increased load"
   palindrom:
     timeout: 5000
 scenarios:
@@ -13,7 +18,7 @@ scenarios:
     flow:
       - loop:
           - updateModelFunction: "insertItem"
-          - updateModelFunction: "emptyTrigger"
+          #- updateModelFunction: "emptyTrigger"
           - function: "saveInsertedItemInfo"
           - morphUrl: "{{ EditInsertedItemUri }}"
           - updateModelFunction: "setEditedItemGuid"
@@ -39,5 +44,5 @@ scenarios:
     weight: 2
     flow:
       - think: 2
-      - updateModelFunction: "emptyTrigger"
+      #- updateModelFunction: "emptyTrigger"
       - function: "logState"

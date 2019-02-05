@@ -36,10 +36,15 @@ function setUpdateItemData(context, events, done) {
 
 function saveRundomItemInfo(context, events, done) {
     const items = context.vars["Items"];
-    const i = Math.floor(Math.random() * items.length);
-    const randomItem = items[i];
+    if (items.length > 0) {
+        const i = Math.floor(Math.random() * items.length);
+        const randomItem = items[i];
 
-    context.vars["EditRandomItemId"] = randomItem.Id;
+        context.vars["EditRandomItemId"] = randomItem.Id;
+    }
+    else {
+        context.vars["EditRandomItemId"] = '#';
+    }
 
     return done();
 }

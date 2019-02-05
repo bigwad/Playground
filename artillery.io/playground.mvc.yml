@@ -4,8 +4,13 @@ config:
     expect: {}
   processor: "./playground.mvc.js"
   phases:
-    - duration: 10
-      arrivalRate: 100
+    - duration: 60
+      arrivalRate: 20
+      rampTo: 100
+      name: "Warm up the application"
+    - duration: 60
+      arrivalRate: 300
+      name: "Increased load"
   http:
     timeout: 20
 scenarios:
@@ -17,12 +22,12 @@ scenarios:
           expect:
             - statusCode: 200
       - loop:
-          - get:
-              headers:
-                Accept: "application/json"
-              url: "/api/items"
-              expect:
-                - statusCode: 200
+          #- get:
+          #    headers:
+          #      Accept: "application/json"
+          #    url: "/api/items"
+          #    expect:
+          #      - statusCode: 200
           - function: "setInsertItemData"
           - post:
               url: "/api/items"
@@ -55,7 +60,7 @@ scenarios:
                 Accept: "application/json"
           - delete:
               url: "/api/items/{{ InsertedItemId }}"
-        count: 20
+        count: 10
   - name: "View N items"
     weight: 59
     flow:
@@ -81,13 +86,13 @@ scenarios:
               headers:
                 Accept: "application/json"
           - think: 1
-          - get:
-              url: "/api/items"
-              expect:
-                - statusCode: 200
-              headers:
-                Accept: "application/json"
-        count: 20
+          #- get:
+          #    url: "/api/items"
+          #    expect:
+          #      - statusCode: 200
+          #    headers:
+          #      Accept: "application/json"
+        count: 10
   - name: "Log current number of items"
     weight: 2
     flow:
