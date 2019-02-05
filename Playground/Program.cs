@@ -56,7 +56,8 @@ namespace Playground
         {
             Handle.GET("/rest/list", () =>
             {
-                ItemProxy[] items = DbLinq.Objects<Item>().OrderBy(x => x.Date).ToArray().Select(x => new ItemProxy(x)).ToArray();
+                //ItemProxy[] items = DbLinq.Objects<Item>().OrderBy(x => x.Date).ToArray().Select(x => new ItemProxy(x)).ToArray();
+                ItemProxy[] items = Db.SQL<Item>("SELECT i FROM Database.Item i ORDER BY i.\"Date\"").Select(x => new ItemProxy(x)).ToArray();
                 string json = JsonConvert.SerializeObject(items);
 
                 return json;
