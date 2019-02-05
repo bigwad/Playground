@@ -3,6 +3,7 @@
 1. [Download & Install](https://downloads.starcounter.com/) Starcounter `2.4.0.7134` or newer.
 2. Install NodeJs.
 3. Install [`artillery.io`](https://artillery.io/) npm package - `npm install -g artillery`.
+3. Install [`json-path`](https://github.com/flitbit/json-path) npm package - `npm install -g json-path`.
 4. Install [Expectations and Assertions (HTTP)](https://artillery.io/docs/plugin-expectations-assertions/) artillery.io extension - `npm install -g artillery-plugin-expect`.
 5. Install [`palindrom`](https://github.com/Palindrom/Palindrom) npm package - `npm install -g palindrom`.
 6. Clone [`miyconst/Playground`](https://github.com/miyconst/Playground) repository.
@@ -13,6 +14,12 @@
 11. Execute `artillery run playground.yml` from the `Playground/artillery.io/` folder to make sure that artillery works.
 12. Update `Playground/artillery.io/playground.yml` with desired `duration` & `arrivalRate` values.
 13. Keep testing.
+
+### Debugging
+
+Open the code in VS Code
+Make sure that the absolute path to `program` attribute is set correctly in the `.vscode/launsh.json` file.
+Click on `Start debugging` icon
 
 ### Windows
 

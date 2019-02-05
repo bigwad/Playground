@@ -13,6 +13,7 @@ const debugRequests = require('debug')('http:request');
 const engineUtil = require('./engine_util');
 const template = engineUtil.template;
 const Palindrom = require('palindrom');
+var jpath = require('json-path');
 
 module.exports = PalindromEngine;
 
@@ -124,6 +125,37 @@ PalindromEngine.prototype.step = function (requestSpec, ee) {
 
             try {
                 processFunc(context, ee, context.palindrom.obj);
+            } catch (err) {
+                const message = err.message || err.code || err;
+                ee.emit("error", message);
+                callback(message, context);
+            }
+        };
+    }
+
+    if (requestSpec.trigger) {
+        return function (context, callback) {
+            ee.emit("request");
+
+            const processFunc = waitForResponse(context, config, requestSpec.trigger, ee, callback, self);
+
+            let query = requestSpec.trigger;
+
+            console.log(query)
+            try {
+                let queryPart = query.substr(0, query.lastIndexOf("/"));
+                let variablePart = query.substr(query.lastIndexOf("/") + 1);
+
+                let currentViewModel = context.palindrom.obj;
+                console.log(JSON.stringify(currentViewModel))
+
+                let matchingArray = jpath.resolve(currentViewModel, queryPart);
+                if (matchingArray && matchingArray.length > 0) {
+                    matchingArray[0][variablePart]++;
+                }
+                else {
+                    throw "Invalid selector exception: can't find `" + query + "` in Json: " + JSON.stringify(currentViewModel);
+                }
             } catch (err) {
                 const message = err.message || err.code || err;
                 ee.emit("error", message);
@@ -292,3 +324,35 @@ PalindromEngine.prototype.compile = function (tasks, scenarioSpec, ee) {
         );
     };
 };
+function waitForResponse(context, config, action, ee, callback, self) {
+    const originalOnRemoteChange = context.palindrom.onRemoteChange;
+    const timeoutMs = config.timeout || _.get(config, "palindrom.timeout") || 500;
+    const requestTimeout = setTimeout(function () {
+        context.palindrom.onRemoteChange = originalOnRemoteChange;
+        const err = "Failed to process request " + action + " within timeout of " + timeoutMs + "ms";
+        ee.emit("error", err);
+        callback(err, context);
+        context.palindrom.network._ws.close();
+    }, timeoutMs);
+    const startedAt = process.hrtime();
+    const processAction = typeof action === "function" ? self.config.processor[action] : action;
+    if (!processAction) {
+        throw action + " not found.";
+    }
+
+    const originalLocalVersion = context.getPalindromLocalVersion();
+    context.palindrom.onRemoteChange = function (patches, results) {
+        const newLocalVersion = context.getPalindromLocalVersion();
+        if (newLocalVersion <= originalLocalVersion) {
+            return;
+        }
+        clearTimeout(requestTimeout);
+        originalOnRemoteChange(patches, results);
+        context.palindrom.onRemoteChange = originalOnRemoteChange;
+        const endedAt = process.hrtime(startedAt);
+        const delta = (endedAt[0] * 1e9) + endedAt[1];
+        ee.emit("response", delta, 0, context._uid);
+        callback(null, context);
+    };
+    return processAction;
+}
