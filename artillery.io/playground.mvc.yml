@@ -59,10 +59,10 @@ scenarios:
   - name: "View N items"
     weight: 59
     flow:
-      - get:
-          url: "/home/index"
-          expect:
-            - statusCode: 200
+      # - get:
+      #    url: "/home/index"
+      #    expect:
+      #      - statusCode: 200
       - loop:
           - get:
               url: "/api/items"
