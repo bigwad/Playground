@@ -17,9 +17,9 @@
 
 ### Debugging
 
-Open the code in VS Code
-Make sure that the absolute path to `program` attribute is set correctly in the `.vscode/launsh.json` file.
-Click on `Start debugging` icon
+1. Open the code in VS Code
+2. Make sure that the absolute path to `program` attribute is set correctly in the `.vscode/launsh.json` file.
+3. Click on `Start debugging` icon
 
 ### Windows
 
