@@ -12,10 +12,10 @@ scenarios:
   - name: "Insert / update / delete N items"
     weight: 39
     flow:
-      - get:
-          url: "/home/index"
-          expect:
-            - statusCode: 200
+      # - get:
+      #    url: "/home/index"
+      #    expect:
+      #      - statusCode: 200
       - loop:
           - get:
               headers:
