@@ -1,5 +1,5 @@
 {
   "scripts": {
-    "start": "artillery run palindrom.yml"
+    "start": "artillery run playground.yml"
   }
 }
