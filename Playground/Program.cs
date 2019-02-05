@@ -106,7 +106,7 @@ namespace Playground
                     return $"Item with no {no} does not exist.";
                 }
 
-                Db.Transact(() =>
+                Db.TransactAsync(() =>
                 {
                     item.Delete();
                 });
