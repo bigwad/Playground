@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Threading.Tasks;
 
 namespace Playground.Mvc.Models
 {
@@ -44,7 +45,7 @@ namespace Playground.Mvc.Models
             this.Index = source.Index;
         }
 
-        public void Update(PlaygroundEntities db)
+        public async Task Update(PlaygroundEntities db)
         {
             Item item = db.Items.FirstOrDefault(x => x.Id == this.Id);
 
@@ -58,10 +59,10 @@ namespace Playground.Mvc.Models
             item.Thread = this.Thread;
             item.Index = this.Index;
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
-        public void Insert(PlaygroundEntities db)
+        public async Task Insert(PlaygroundEntities db)
         {
             Item item = new Item();
 
@@ -71,12 +72,12 @@ namespace Playground.Mvc.Models
             item.Index = this.Index;
 
             db.Items.Add(item);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             this.Id = item.Id;
         }
 
-        public void Delete(PlaygroundEntities db)
+        public async Task Delete(PlaygroundEntities db)
         {
             Item item = db.Items.FirstOrDefault(x => x.Id == this.Id);
 
@@ -86,7 +87,7 @@ namespace Playground.Mvc.Models
             }
 
             db.Items.Remove(item);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
     }
 }
