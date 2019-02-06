@@ -4,7 +4,7 @@ config:
     expect: {}
   processor: "./playground.mvc.js"
   phases:
-    - duration: 10
+    - duration: 20
       arrivalRate: 100
   http:
     timeout: 20

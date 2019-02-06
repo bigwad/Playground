@@ -2,10 +2,12 @@ config:
   target: "http://localhost:8080/index"
   processor: "./playground.js"
   phases:
-    - duration: 1
-      arrivalRate: 1
+    - duration: 20
+      arrivalRate: 100
+  http:
+    timeout: 20
   palindrom:
-    timeout: 5000
+    timeout: 20000
 scenarios:
   - engine: "palindrom"
     name: "Insert / update / delete N items"
@@ -23,7 +25,7 @@ scenarios:
           - think: 1
           - morphUrl: "/index"
           - updateModelFunction: "deleteSavedItem"
-        count: 10
+        count: 20
   - engine: "palindrom"
     name: "View N items"
     weight: 59
@@ -33,7 +35,7 @@ scenarios:
           - morphUrl: "{{ EditRandomItemUri }}"
           - think: 1
           - morphUrl: "/index"
-        count: 10
+        count: 20
   - engine: "palindrom"
     name: "Log current number of items"
     weight: 2

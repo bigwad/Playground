@@ -1,3 +1,5 @@
+process.env.UV_THREADPOOL_SIZE = 128;
+
 module.exports = {
     setInsertItemData: setInsertItemData,
     setUpdateItemData: setUpdateItemData,
