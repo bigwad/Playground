@@ -1,49 +1,40 @@
 module.exports = {
     setInsertItemData: setInsertItemData,
-    setInsertedItemId: setInsertedItemId,
     setUpdateItemData: setUpdateItemData,
-    saveRundomItemInfo: saveRundomItemInfo,
+    setRandomItemObjectNo: setRandomItemObjectNo,
     setItemsLength: setItemsLength
 };
 
 function setInsertItemData(context, events, done) {
-    const item = {
-        Guid: null,
-        Date: new Date(),
-        Thread: 0,
-        Index: Math.random() * 1000
+    context.vars["InsertItem"] = {
+        "Guid": "artillery.io",
+        "DateStr": new Date().toISOString().slice(0, 10),
+        "Thread": 0,
+        "Index": 0
     };
-
-    context.vars["InsertItem"] = item;
-
-    return done();
-}
-
-function setInsertedItemId(context, events, done) {
-    context.vars["InsertedItemId"] = context.vars["InsertedItem"].Id;
 
     return done();
 }
 
 function setUpdateItemData(context, events, done) {
-    const item = context.vars["InsertedItem"];
+    const viewItem = context.vars["ViewItem"];
 
-    item.Guid = "artillery.io - " + new Date().toString();
-    context.vars["UpdateItem"] = item;
+    viewItem.Guid = "artillery.io - " + new Date().toString();
+    context.vars["UpdateItem"] = viewItem;
 
     return done();
 }
 
-function saveRundomItemInfo(context, events, done) {
+function setRandomItemObjectNo(context, events, done) {
     const items = context.vars["Items"];
     if (items.length > 0) {
         const i = Math.floor(Math.random() * items.length);
         const randomItem = items[i];
 
-        context.vars["EditRandomItemId"] = randomItem.Id;
+        context.vars["RandomItemObjectNo"] = randomItem.Oid;
     }
     else {
-        context.vars["EditRandomItemId"] = '#';
+        context.vars["EditRandomItemId"] = '0';
     }
 
     return done();
