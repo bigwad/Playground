@@ -3,11 +3,11 @@ config:
   processor: "./playground.js"
   phases:
     - duration: 30
-      arrivalRate: 10
-      rampTo: 50
+      arrivalRate: 20
+      rampTo: 100
       name: "Warm up the application"
     - duration: 30
-      arrivalRate: 100
+      arrivalRate: 300
       name: "Increased load"
   palindrom:
     timeout: 5000
@@ -44,5 +44,5 @@ scenarios:
     weight: 2
     flow:
       - think: 2
-      #- updateModelFunction: "emptyTrigger"
+      - updateModelFunction: "emptyTrigger"
       - function: "logState"
