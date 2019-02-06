@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Playground.Mvc.Models;
 
@@ -36,7 +36,7 @@ namespace Playground.Mvc.Controllers
         }
 
         // POST api/<controller>
-        public ItemProxy Post([FromBody]ItemProxy value)
+        public async Task<ItemProxy> Post([FromBody]ItemProxy value)
         {
             if (value.Guid == null)
             {
@@ -44,20 +44,20 @@ namespace Playground.Mvc.Controllers
             }
 
             value.Date = DateTime.Now;
-            value.Insert(db);
+            await value.Insert(db);
 
             return value;
         }
 
         // PUT api/<controller>
-        public ItemProxy Put([FromBody]ItemProxy value)
+        public async Task<ItemProxy> Put([FromBody]ItemProxy value)
         {
-            value.Update(db);
+            await value.Update(db);
             return value;
         }
 
         // DELETE api/<controller>/5
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             Item item = db.Items.FirstOrDefault(x => x.Id == id);
 
@@ -67,7 +67,7 @@ namespace Playground.Mvc.Controllers
             }
 
             ItemProxy proxy = new ItemProxy(item);
-            proxy.Delete(db);
+            await proxy.Delete(db);
 
             return true;
         }
