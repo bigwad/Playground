@@ -15,11 +15,11 @@ namespace Playground.Nova.Controllers
     {
         // GET api/<controller>
         [HttpGet]
-        public IEnumerable<ItemProxy> Get()
+        public async Task<IEnumerable<ItemProxy>> Get()
         {
             ItemProxy[] items = null;
 
-            Db.TransactAsync(() =>
+            await Db.TransactAsync(() =>
             {
                 items = items = Db.SQL<Item>("SELECT i FROM Playground.Nova.Database.Item i ORDER BY i.\"Date\"").Select(x => new ItemProxy(x)).ToArray();
             });
@@ -29,11 +29,11 @@ namespace Playground.Nova.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public ItemProxy Get(ulong id)
+        public async Task<ItemProxy> Get(ulong id)
         {
             ItemProxy proxy = null;
 
-            Db.TransactAsync(() =>
+            await Db.TransactAsync(() =>
             {
                 Item item = Db.Get<Item>(id);
 
@@ -52,7 +52,7 @@ namespace Playground.Nova.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public ItemProxy Post([FromBody]ItemProxy value)
+        public async Task<ItemProxy> Post([FromBody]ItemProxy value)
         {
             if (value.Guid == null)
             {
@@ -60,26 +60,26 @@ namespace Playground.Nova.Controllers
             }
 
             value.Date = DateTime.Now;
-            value.Insert();
+            await value.InsertAsync();
 
             return value;
         }
 
         // PUT api/<controller>
         [HttpPut]
-        public ItemProxy Put([FromBody]ItemProxy value)
+        public async Task<ItemProxy> Put([FromBody]ItemProxy value)
         {
-            value.Update();
+            await value.UpdateAsync();
             return value;
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public bool Delete(ulong id)
+        public async Task<bool> Delete(ulong id)
         {
             bool result = false;
 
-            Db.TransactAsync(() =>
+            await Db.TransactAsync(() =>
             {
                 Item item = Db.Get<Item>(id);
 

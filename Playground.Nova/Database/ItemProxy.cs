@@ -45,9 +45,9 @@ namespace Playground.Nova.Database
             this.Index = source.Index;
         }
 
-        public void Update()
+        public async Task UpdateAsync()
         {
-            Db.TransactAsync(() =>
+            await Db.TransactAsync(() =>
             {
                 Item item = Db.Get<Item>(this.Oid);
 
@@ -58,9 +58,9 @@ namespace Playground.Nova.Database
             });
         }
 
-        public void Insert()
+        public async Task InsertAsync()
         {
-            Db.TransactAsync(() =>
+            await Db.TransactAsync(() =>
             {
                 Item item = Db.Insert<Item>();
 
@@ -73,9 +73,9 @@ namespace Playground.Nova.Database
             });
         }
 
-        public void Delete()
+        public async Task DeleteAsync()
         {
-            Db.TransactAsync(() =>
+            await Db.TransactAsync(() =>
             {
                 Item item = Db.Get<Item>(this.Oid);
                 Db.Delete(item);
