@@ -9,7 +9,7 @@ using Playground.Mvc.Models;
 
 namespace Playground.Mvc.Controllers
 {
-    public class ItemsController : ApiController
+    public class AsyncItemsController : ApiController
     {
         protected PlaygroundEntities db = new PlaygroundEntities();
 
