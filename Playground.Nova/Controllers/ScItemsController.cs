@@ -11,7 +11,7 @@ using Playground.Nova.Database;
 namespace Playground.Nova.Controllers
 {
     [Route("api/[controller]")]
-    public class ItemsController : Controller
+    public class ScItemsController : Controller
     {
         // GET api/<controller>
         [HttpGet]
