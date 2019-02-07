@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -12,13 +13,14 @@ namespace Playground.Nova.Controllers
     [Route("api/[controller]")]
     public class MsItemsController : Controller
     {
-        protected PlaygroundContext db = new PlaygroundContext();
+        private static int Counter = 0;
+        private static ConcurrentDictionary<long, ItemProxy> Items = new ConcurrentDictionary<long, ItemProxy>();
 
         // GET: api/<controller>
         [HttpGet]
         public IEnumerable<ItemProxy> Get()
         {
-            IEnumerable<ItemProxy> items = db.Items.OrderBy(x => x.Date).ToArray().Select(x => new ItemProxy(x));
+            IEnumerable<ItemProxy> items = Items.Select(x => x.Value).OrderBy(x => x.Date);
             return items;
         }
 
@@ -26,66 +28,48 @@ namespace Playground.Nova.Controllers
         [HttpGet("{id}")]
         public ItemProxy Get(int id)
         {
-            Item item = db.Items.FirstOrDefault(x => x.Id == id);
-
-            if (item == null)
-            {
-                return new ItemProxy();
-            }
-
-            ItemProxy proxy = new ItemProxy(item);
+            ItemProxy proxy = null;
+            Items.TryGetValue(id, out proxy);
 
             return proxy;
         }
 
         // POST api/<controller>
         [HttpPost]
-        public async Task<ItemProxy> Post([FromBody]ItemProxy value)
+        public ItemProxy Post([FromBody]ItemProxy value)
         {
             if (value.Guid == null)
             {
                 value.Guid = Guid.NewGuid().ToString();
             }
 
-            value.Date = DateTime.Now;
-            await value.InsertAsync(db);
+            long id = System.Threading.Interlocked.Increment(ref Counter);
+            value.Id = id;
+            Items.TryAdd(id, value);
 
             return value;
         }
 
         // PUT api/<controller>/5
         [HttpPut]
-        public async Task<ItemProxy> Put([FromBody]ItemProxy value)
+        public ItemProxy Put([FromBody]ItemProxy value)
         {
-            await value.UpdateAsync(db);
+            if (Items.TryGetValue(value.Id, out ItemProxy proxy))
+            {
+                proxy.Guid = value.Guid;
+                proxy.Date = value.Date;
+                proxy.Thread = value.Thread;
+                proxy.Index = value.Index;
+            }
+
             return value;
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
+        public bool Delete(int id)
         {
-            Item item = db.Items.FirstOrDefault(x => x.Id == id);
-
-            if (item == null)
-            {
-                return false;
-            }
-
-            ItemProxy proxy = new ItemProxy(item);
-            await proxy.DeleteAsync(db);
-
-            return true;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                this.db.Dispose();
-            }
-
-            base.Dispose(disposing);
+            return Items.TryRemove(id, out ItemProxy _);
         }
     }
 }
