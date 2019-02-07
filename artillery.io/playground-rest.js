@@ -30,6 +30,11 @@ function setUpdateItemData(context, events, done) {
 
 function setRandomItemObjectNo(context, events, done) {
     const items = context.vars["Items"];
+
+    if (!items.length) {
+        return 0;
+    }
+
     const i = Math.floor(Math.random() * items.length);
     const randomItem = items[i];
 
