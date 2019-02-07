@@ -8,6 +8,7 @@ namespace Playground.Nova.Models
     {
         public PlaygroundContext()
         {
+            Database.SetCommandTimeout(TimeSpan.FromMinutes(1));
         }
 
         public PlaygroundContext(DbContextOptions<PlaygroundContext> options)
@@ -21,7 +22,11 @@ namespace Playground.Nova.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                throw new InvalidOperationException($"DbContext is not configured. Use DbContextOptionsBuilder.UseSqlServer method to configure connection.");
+                optionsBuilder.UseSqlServer("data source=localhost;initial catalog=Playground;persist security info=True;user id=sa;password=*****;Connection Timeout=30;Min Pool Size=30;Max Pool Size=512;", x =>
+                {
+                    x.EnableRetryOnFailure();
+                    x.CommandTimeout(60);
+                });
             }
         }
 

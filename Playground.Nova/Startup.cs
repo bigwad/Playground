@@ -47,9 +47,6 @@ namespace Playground.Nova
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            string cn = "data source=192.168.1.73;initial catalog=Playground;persist security info=True;user id=sa;password=*****;Connection Timeout=30;";
-            services.AddDbContext<PlaygroundContext>(options => options.UseSqlServer(cn));
-
             this.ConfigureStarcounterDatabase(services);
         }
 
