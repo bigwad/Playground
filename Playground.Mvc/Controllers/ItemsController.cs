@@ -44,7 +44,7 @@ namespace Playground.Mvc.Controllers
             }
 
             value.Date = DateTime.Now;
-            await value.Insert(db);
+            await value.InsertAsync(db);
 
             return value;
         }
@@ -52,7 +52,7 @@ namespace Playground.Mvc.Controllers
         // PUT api/<controller>
         public async Task<ItemProxy> Put([FromBody]ItemProxy value)
         {
-            await value.Update(db);
+            await value.UpdateAsync(db);
             return value;
         }
 
@@ -67,7 +67,7 @@ namespace Playground.Mvc.Controllers
             }
 
             ItemProxy proxy = new ItemProxy(item);
-            await proxy.Delete(db);
+            await proxy.DeleteAsync(db);
 
             return true;
         }

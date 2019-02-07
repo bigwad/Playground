@@ -45,7 +45,7 @@ namespace Playground.Mvc.Models
             this.Index = source.Index;
         }
 
-        public async Task Update(PlaygroundEntities db)
+        public async Task UpdateAsync(PlaygroundEntities db)
         {
             Item item = db.Items.FirstOrDefault(x => x.Id == this.Id);
 
@@ -62,7 +62,7 @@ namespace Playground.Mvc.Models
             await db.SaveChangesAsync();
         }
 
-        public async Task Insert(PlaygroundEntities db)
+        public async Task InsertAsync(PlaygroundEntities db)
         {
             Item item = new Item();
 
@@ -77,7 +77,7 @@ namespace Playground.Mvc.Models
             this.Id = item.Id;
         }
 
-        public async Task Delete(PlaygroundEntities db)
+        public async Task DeleteAsync(PlaygroundEntities db)
         {
             Item item = db.Items.FirstOrDefault(x => x.Id == this.Id);
 
