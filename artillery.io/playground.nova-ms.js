@@ -1,16 +1,19 @@
+process.env.UV_THREADPOOL_SIZE = 128;
+
 module.exports = {
     setInsertItemData: setInsertItemData,
     setUpdateItemData: setUpdateItemData,
-    setRandomItemObjectNo: setRandomItemObjectNo,
+    setRandomItemId: setRandomItemId,
     setItemsLength: setItemsLength
 };
 
 function setInsertItemData(context, events, done) {
     context.vars["InsertItem"] = {
         "Guid": "artillery.io",
-        "DateStr": new Date().toISOString().slice(0, 10),
+        "Date": new Date(),
         "Thread": 0,
-        "Index": 0
+        "Index": 0,
+        "Notes": null
     };
 
     return done();
@@ -25,17 +28,12 @@ function setUpdateItemData(context, events, done) {
     return done();
 }
 
-function setRandomItemObjectNo(context, events, done) {
+function setRandomItemId(context, events, done) {
     const items = context.vars["Items"];
-    if (items.length > 0) {
-        const i = Math.floor(Math.random() * items.length);
-        const randomItem = items[i];
+    const i = Math.floor(Math.random() * items.length);
+    const randomItem = items[i];
 
-        context.vars["RandomItemObjectNo"] = randomItem.Oid;
-    }
-    else {
-        context.vars["EditRandomItemId"] = '0';
-    }
+    context.vars["RandomItemId"] = randomItem.Id;
 
     return done();
 }

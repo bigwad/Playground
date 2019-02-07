@@ -1,8 +1,8 @@
 config:
-  target: "http://localhost:52799"
-  processor: "./playground-nova-rest.js"
+  target: "http://localhost:8080"
+  processor: "./playground.nova-ms.js"
   phases:
-    - duration: 10
+    - duration: 20
       arrivalRate: 100
   http:
     timeout: 20
@@ -12,52 +12,52 @@ scenarios:
     flow:
       - loop:
           - get:
-              url: "/api/items"
+              url: "/api/scitems"
           - function: "setInsertItemData"
           - post:
-              url: "/api/items"
+              url: "/api/scitems"
               json: "{{ InsertItem }}"
               capture:
-                json: "$.Oid"
-                as: "InsertedItemObjectNo"
+                json: "$.Id"
+                as: "InsertedItemId"
           - get: 
-              url: "/api/items/{{ InsertedItemObjectNo }}"
+              url: "/api/scitems/{{ InsertedItemId }}"
               capture: 
                 json: "$"
                 as: "ViewItem"
           - think: 1
           - function: "setUpdateItemData"
           - put: 
-              url: "/api/items"
+              url: "/api/scitems"
               json: "{{ UpdateItem }}"
           - think: 1
           - get:
-              url: "/api/items"
+              url: "/api/scitems"
           - delete:
-              url: "/api/items/{{ InsertedItemObjectNo }}"
+              url: "/api/scitems/{{ InsertedItemId }}"
         count: 20
   - name: "View N items"
     weight: 59
     flow:
       - loop:
           - get: 
-              url: "/api/items"
+              url: "/api/scitems"
               capture:
                 - json: "$"
                   as: "Items"
-          - function: "setRandomItemObjectNo"
+          - function: "setRandomItemId"
           - get:
-              url: "/api/items/{{ RandomItemObjectNo }}"
+              url: "/api/scitems/{{ RandomItemId }}"
           - think: 1
           - get:
-              url: "/api/items"
+              url: "/api/scitems"
         count: 20
   - name: "Log current number of items"
     weight: 2
     flow:
       - think: 2
       - get:
-          url: "/api/items"
+          url: "/api/scitems"
           capture: 
             json: "$"
             as: "Items"
