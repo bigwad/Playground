@@ -46,7 +46,7 @@ namespace Database
 
         public void Update()
         {
-            Db.TransactAsync(() =>
+            Db.Transact(() =>
             {
                 Item item = Db.FromId<Item>(this.ObjectNo);
 
@@ -59,7 +59,7 @@ namespace Database
 
         public void Insert()
         {
-            Db.TransactAsync(() =>
+            Db.Transact(() =>
             {
                 Item item = new Item();
 
@@ -75,7 +75,7 @@ namespace Database
 
         public void Delete()
         {
-            Db.TransactAsync(() =>
+            Db.Transact(() =>
             {
                 Item item = Db.FromId<Item>(this.ObjectNo);
                 item.Delete();

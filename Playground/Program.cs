@@ -20,7 +20,11 @@ namespace Playground
         {
             //RegisterDatabaseHooks();
             RegisterRestApi();
+            //RegisterUi();
+        }
 
+        static void RegisterUi()
+        {
             Application.Current.Use(new HtmlFromJsonProvider());
             Application.Current.Use(new PartialToStandaloneHtmlProvider());
 
@@ -36,7 +40,7 @@ namespace Playground
                 return page;
             });
 
-            Handle.GET("/items/{?}", (string id) => 
+            Handle.GET("/items/{?}", (string id) =>
             {
                 Session.Ensure();
 
@@ -107,7 +111,7 @@ namespace Playground
                     return $"Item with no {no} does not exist.";
                 }
 
-                Db.TransactAsync(() =>
+                Db.Transact(() =>
                 {
                     item.Delete();
                 });
