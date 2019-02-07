@@ -14,7 +14,21 @@ namespace Playground.Nova
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            CreateWebHostBuilder(args)
+                .ConfigureKestrel((context, options) =>
+                {
+                    options.Limits.MaxConcurrentConnections = null;
+                    options.Limits.MaxConcurrentUpgradedConnections = null;
+                    options.Limits.MaxRequestBodySize = 10 * 1024;
+                    options.ListenAnyIP(8080);
+                })
+                .ConfigureLogging(builder => 
+                {
+                    builder.AddFilter("Microsoft", LogLevel.Warning)
+                        .AddFilter("System", LogLevel.Warning)
+                        .AddConsole();
+                })
+                .Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
