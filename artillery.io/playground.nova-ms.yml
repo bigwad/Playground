@@ -1,5 +1,7 @@
 config:
   target: "http://localhost:8080"
+  plugins:
+    expect: {}
   processor: "./playground.nova-ms.js"
   phases:
     - duration: 20
@@ -12,52 +14,84 @@ scenarios:
     flow:
       - loop:
           - get:
-              url: "/api/scitems"
+              url: "/api/msitems"
+              expect:
+                - statusCode: 200
+              headers:
+                Accept: "application/json"
           - function: "setInsertItemData"
           - post:
-              url: "/api/scitems"
+              url: "/api/msitems"
+              expect:
+                - statusCode: 200
               json: "{{ InsertItem }}"
               capture:
                 json: "$.Id"
                 as: "InsertedItemId"
           - get: 
-              url: "/api/scitems/{{ InsertedItemId }}"
+              url: "/api/msitems/{{ InsertedItemId }}"
+              expect:
+                - statusCode: 200
+              headers:
+                Accept: "application/json"
               capture: 
                 json: "$"
                 as: "ViewItem"
           - think: 1
           - function: "setUpdateItemData"
           - put: 
-              url: "/api/scitems"
+              url: "/api/msitems"
+              expect:
+                - statusCode: 200
               json: "{{ UpdateItem }}"
           - think: 1
           - get:
-              url: "/api/scitems"
+              url: "/api/msitems"
+              expect:
+                - statusCode: 200
+              headers:
+                Accept: "application/json"
           - delete:
-              url: "/api/scitems/{{ InsertedItemId }}"
+              url: "/api/msitems/{{ InsertedItemId }}"
         count: 20
   - name: "View N items"
     weight: 59
     flow:
       - loop:
           - get: 
-              url: "/api/scitems"
+              url: "/api/msitems"
+              expect:
+                - statusCode: 200
+              headers:
+                Accept: "application/json"
               capture:
                 - json: "$"
                   as: "Items"
           - function: "setRandomItemId"
           - get:
-              url: "/api/scitems/{{ RandomItemId }}"
+              url: "/api/msitems/{{ RandomItemId }}"
+              expect:
+                - statusCode: 200
+              headers:
+                Accept: "application/json"
           - think: 1
           - get:
-              url: "/api/scitems"
+              url: "/api/msitems"
+              expect:
+                - statusCode: 200
+              headers:
+                Accept: "application/json"
         count: 20
   - name: "Log current number of items"
     weight: 2
     flow:
       - think: 2
       - get:
-          url: "/api/scitems"
+          url: "/api/msitems"
+          expect:
+            - statusCode: 200
+          headers:
+            Accept: "application/json"
           capture: 
             json: "$"
             as: "Items"
