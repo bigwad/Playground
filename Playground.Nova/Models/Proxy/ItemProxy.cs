@@ -44,7 +44,7 @@ namespace Playground.Nova.Models
             this.Index = source.Index;
         }
 
-        public async Task Update(PlaygroundContext db)
+        public async Task UpdateAsync(PlaygroundContext db)
         {
             Item item = db.Items.FirstOrDefault(x => x.Id == this.Id);
 
@@ -61,7 +61,7 @@ namespace Playground.Nova.Models
             await db.SaveChangesAsync();
         }
 
-        public async Task Insert(PlaygroundContext db)
+        public async Task InsertAsync(PlaygroundContext db)
         {
             Item item = new Item();
 
@@ -76,7 +76,7 @@ namespace Playground.Nova.Models
             this.Id = item.Id;
         }
 
-        public async Task Delete(PlaygroundContext db)
+        public async Task DeleteAsync(PlaygroundContext db)
         {
             Item item = db.Items.FirstOrDefault(x => x.Id == this.Id);
 
