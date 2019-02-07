@@ -12,12 +12,7 @@ namespace Playground.Nova.Controllers
     [Route("api/[controller]")]
     public class MsItemsController : Controller
     {
-        protected PlaygroundContext db;
-
-        public MsItemsController(PlaygroundContext db)
-        {
-            this.db = db ?? throw new NotImplementedException(nameof(db));
-        }
+        protected PlaygroundContext db = new PlaygroundContext();
 
         // GET: api/<controller>
         [HttpGet]
@@ -81,6 +76,16 @@ namespace Playground.Nova.Controllers
             await proxy.Delete(db);
 
             return true;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.db.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }
