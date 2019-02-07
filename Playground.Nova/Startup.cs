@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 using Starcounter.Nova;
 using Starcounter.Nova.Hosting;
@@ -17,6 +18,7 @@ using Starcounter.Nova.Extensions.DependencyInjection;
 using Starcounter.Nova.Bluestar;
 using Starcounter.Nova.Hosting.BindingExtensions;
 using Starcounter.Nova.Abstractions;
+using Playground.Nova.Models;
 
 namespace Playground.Nova
 {
@@ -44,6 +46,9 @@ namespace Playground.Nova
             services.AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            string cn = "data source=192.168.1.73;initial catalog=Playground;persist security info=True;user id=sa;password=*****;";
+            services.AddDbContext<PlaygroundContext>(options => options.UseSqlServer(cn));
 
             this.ConfigureStarcounterDatabase(services);
         }
