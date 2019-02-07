@@ -1,0 +1,131 @@
+{
+	"info": {
+		"_postman_id": "c663f814-49d9-4b9d-a160-900635d0037e",
+		"name": "Playground",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View item",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/view/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"view",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update item",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Id\":\"B\",\"ObjectNo\":1,\"Guid\":\"PostMan test\",\"Date\":\"2019-02-01T20:55:29.1813752\",\"Thread\":0,\"Index\":0,\"Notes\":null,\"DateStr\":\"2/1/2019 8:55:29 PM\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Guid\":\"PostMan insert test\",\"Date\":\"2019-02-01T20:55:29.1813752\",\"Thread\":0,\"Index\":0,\"Notes\":null,\"DateStr\":\"2/1/2019 8:55:29 PM\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/insert",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"insert"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete item",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/delete/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"delete",
+						"4"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
