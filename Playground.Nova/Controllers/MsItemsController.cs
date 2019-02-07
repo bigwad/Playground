@@ -59,7 +59,7 @@ namespace Playground.Nova.Controllers
         }
 
         // PUT api/<controller>/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<ItemProxy> Put([FromBody]ItemProxy value)
         {
             await value.Update(db);
