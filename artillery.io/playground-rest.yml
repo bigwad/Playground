@@ -1,5 +1,7 @@
 config:
   target: "http://localhost:8080"
+  plugins:
+    expect: {}
   processor: "./playground-rest.js"
   phases:
     - duration: 20
@@ -13,15 +15,21 @@ scenarios:
       - loop:
           - get:
               url: "/rest/list"
+              expect:
+                - statusCode: 200
           - function: "setInsertItemData"
           - post:
               url: "/rest/insert"
+              expect:
+                - statusCode: 200
               json: "{{ InsertItem }}"
               capture:
                 json: "$.ObjectNo"
                 as: "InsertedItemObjectNo"
           - get: 
               url: "/rest/view/{{ InsertedItemObjectNo }}"
+              expect:
+                - statusCode: 200
               capture: 
                 json: "$"
                 as: "ViewItem"
@@ -29,10 +37,14 @@ scenarios:
           - function: "setUpdateItemData"
           - put: 
               url: "/rest/update"
+              expect:
+                - statusCode: 200
               json: "{{ UpdateItem }}"
           - think: 1
           - get:
               url: "/rest/list"
+              expect:
+                - statusCode: 200
           - delete:
               url: "/rest/delete/{{ InsertedItemObjectNo }}"
         count: 20
@@ -42,15 +54,21 @@ scenarios:
       - loop:
           - get: 
               url: "/rest/list"
+              expect:
+                - statusCode: 200
               capture:
                 - json: "$"
                   as: "Items"
           - function: "setRandomItemObjectNo"
           - get:
               url: "/rest/view/{{ RandomItemObjectNo }}"
+              expect:
+                - statusCode: 200
           - think: 1
           - get:
               url: "/rest/list"
+              expect:
+                - statusCode: 200
         count: 20
   - name: "Log current number of items"
     weight: 2
@@ -58,6 +76,8 @@ scenarios:
       - think: 2
       - get:
           url: "/rest/list"
+          expect:
+            - statusCode: 200
           capture: 
             json: "$"
             as: "Items"
