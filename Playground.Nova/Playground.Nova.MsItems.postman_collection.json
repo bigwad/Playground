@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "b2c88e16-54d3-4cad-a61f-5f168d0c3d86",
-		"name": "Playground.Nova",
+		"_postman_id": "b2c88e16-54d3-4cad-a61f-5f168d0c3d87",
+		"name": "Playground.Nova.MsItems",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -15,15 +15,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:52799/api/items",
+					"raw": "http://localhost:8080/api/msitems",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "52799",
+					"port": "8080",
 					"path": [
 						"api",
-						"items"
+						"msitems"
 					]
 				}
 			},
@@ -50,15 +50,15 @@
 					"raw": "{\r\n    \"Guid\": null,\r\n    \"DateStr\": \"2019-02-05\",\r\n    \"Thread\": 0,\r\n    \"Index\": 0\r\n}"
 				},
 				"url": {
-					"raw": "http://localhost:52799/api/items",
+					"raw": "http://localhost:8080/api/msitems",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "52799",
+					"port": "8080",
 					"path": [
 						"api",
-						"items"
+						"msitems"
 					]
 				}
 			},
@@ -82,18 +82,18 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"Oid\": 1,\n    \"Guid\": \"cd25f1e0-4fb1-461b-b899-b37a1564cca1\",\n    \"DateStr\": \"2019-02-16T11:56:33.076666+01:00\",\n    \"Thread\": 0,\n    \"Index\": 0,\n    \"Notes\": null\n}"
+					"raw": "{\n    \"Id\": 1,\n    \"Guid\": \"cd25f1e0-4fb1-461b-b899-b37a1564cca1\",\n    \"DateStr\": \"2019-02-16T11:56:33.076666+01:00\",\n    \"Thread\": 0,\n    \"Index\": 0,\n    \"Notes\": null\n}"
 				},
 				"url": {
-					"raw": "http://localhost:52799/api/items",
+					"raw": "http://localhost:8080/api/msitems",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "52799",
+					"port": "8080",
 					"path": [
 						"api",
-						"items"
+						"msitems"
 					]
 				}
 			},
@@ -115,15 +115,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:52799/api/items/1",
+					"raw": "http://localhost:8080/api/msitems/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "52799",
+					"port": "8080",
 					"path": [
 						"api",
-						"items",
+						"msitems",
 						"1"
 					]
 				}
@@ -140,15 +140,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:52799/api/items/1",
+					"raw": "http://localhost:8080/api/msitems/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "52799",
+					"port": "8080",
 					"path": [
 						"api",
-						"items",
+						"msitems",
 						"1"
 					]
 				}
