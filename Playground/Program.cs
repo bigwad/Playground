@@ -114,6 +114,48 @@ namespace Playground
 
                 return 200;
             });
+
+            Handle.GET("/rest/empty", () =>
+            {
+                return PerformAction(() =>
+                {
+                    Db.Transact(() => DbLinq.Objects<Item>().DeleteAll());
+                });
+            });
+
+            Handle.GET("/rest/generate/{?}", (int count) =>
+            {
+                return PerformAction(() =>
+                {
+                    Db.Transact(() =>
+                    {
+                        for (int i = 0; i < count; i++)
+                        {
+                            new Item()
+                            {
+                                Guid = Guid.NewGuid().ToString(),
+                                Date = new DateTime(),
+                                Index = i,
+                                Thread = i
+                            };
+                        }
+                    });
+                });
+            });
+        }
+
+        internal class TimeDuration
+        {
+            public string ElapsedTime;
+        }
+
+        static string PerformAction(Action operation)
+        {
+            var watch = Stopwatch.StartNew();
+            operation();
+            watch.Stop();
+
+            return JsonConvert.SerializeObject(new TimeDuration { ElapsedTime = $"{watch.ElapsedMilliseconds} miliseconds" });
         }
 
         static void RegisterDatabaseHooks()
