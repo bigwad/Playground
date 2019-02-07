@@ -13,15 +13,21 @@ scenarios:
       - loop:
           - get:
               url: "/api/scitems"
+              expect:
+                - statusCode: 200
           - function: "setInsertItemData"
           - post:
               url: "/api/scitems"
+              expect:
+                - statusCode: 200
               json: "{{ InsertItem }}"
               capture:
                 json: "$.Oid"
                 as: "InsertedItemOid"
           - get: 
               url: "/api/scitems/{{ InsertedItemOid }}"
+              expect:
+                - statusCode: 200
               capture: 
                 json: "$"
                 as: "ViewItem"
@@ -29,12 +35,18 @@ scenarios:
           - function: "setUpdateItemData"
           - put: 
               url: "/api/scitems"
+              expect:
+                - statusCode: 200
               json: "{{ UpdateItem }}"
           - think: 1
           - get:
               url: "/api/scitems"
+              expect:
+                - statusCode: 200
           - delete:
               url: "/api/scitems/{{ InsertedItemOid }}"
+              expect:
+                - statusCode: 200
         count: 20
   - name: "View N items"
     weight: 59
@@ -42,15 +54,21 @@ scenarios:
       - loop:
           - get: 
               url: "/api/scitems"
+              expect:
+                - statusCode: 200
               capture:
                 - json: "$"
                   as: "Items"
           - function: "setRandomItemOid"
           - get:
               url: "/api/scitems/{{ RandomItemOid }}"
+              expect:
+                - statusCode: 200
           - think: 1
           - get:
               url: "/api/scitems"
+              expect:
+                - statusCode: 200
         count: 20
   - name: "Log current number of items"
     weight: 2
@@ -58,6 +76,8 @@ scenarios:
       - think: 2
       - get:
           url: "/api/scitems"
+          expect:
+            - statusCode: 200
           capture: 
             json: "$"
             as: "Items"
