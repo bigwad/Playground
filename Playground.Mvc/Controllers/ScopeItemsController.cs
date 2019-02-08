@@ -17,13 +17,11 @@ namespace Playground.Mvc.Controllers
         // GET api/<controller>
         public IEnumerable<ItemProxy> Get()
         {
-            ItemProxy[] items;
+            List<ItemProxy> items;
 
             using (var db = new PlaygroundEntities())
             {
-                TransactionScope scope = this.CreateTransactionScope();
-                items = db.Items.OrderBy(x => x.Date).ToArray().Select(x => new ItemProxy(x)).ToArray();
-                scope.Dispose();
+                items = db.Items.OrderBy(x => x.Date).AsEnumerable().Select(x => new ItemProxy(x)).ToList();
             }
 
             return items;
@@ -36,7 +34,6 @@ namespace Playground.Mvc.Controllers
 
             using (var db = new PlaygroundEntities())
             {
-                TransactionScope scope = this.CreateTransactionScope();
                 Item item = db.Items.FirstOrDefault(x => x.Id == id);
 
                 if (item == null)
@@ -45,7 +42,6 @@ namespace Playground.Mvc.Controllers
                 }
 
                 proxy = new ItemProxy(item);
-                scope.Dispose();
             }
 
             return proxy;
@@ -63,11 +59,11 @@ namespace Playground.Mvc.Controllers
 
             using (var db = new PlaygroundEntities())
             {
-                TransactionScope scope = this.CreateTransactionScope();
-
-                value.Insert(db);
-                scope.Complete();
-                scope.Dispose();
+                using (TransactionScope scope = this.CreateTransactionScope())
+                {
+                    value.Insert(db);
+                    scope.Complete();
+                }
             }
 
             return value;
@@ -78,11 +74,11 @@ namespace Playground.Mvc.Controllers
         {
             using (var db = new PlaygroundEntities())
             {
-                TransactionScope scope = this.CreateTransactionScope();
-
-                value.Update(db);
-                scope.Complete();
-                scope.Dispose();
+                using (TransactionScope scope = this.CreateTransactionScope())
+                {
+                    value.Update(db);
+                    scope.Complete();
+                }
             }
 
             return value;
@@ -93,19 +89,19 @@ namespace Playground.Mvc.Controllers
         {
             using (var db = new PlaygroundEntities())
             {
-                TransactionScope scope = this.CreateTransactionScope();
-                Item item = db.Items.FirstOrDefault(x => x.Id == id);
-
-                if (item == null)
+                using (TransactionScope scope = this.CreateTransactionScope())
                 {
-                    scope.Dispose();
-                    return false;
-                }
+                    Item item = db.Items.FirstOrDefault(x => x.Id == id);
 
-                ItemProxy proxy = new ItemProxy(item);
-                proxy.Delete(db);
-                scope.Complete();
-                scope.Dispose();
+                    if (item == null)
+                    {
+                        return false;
+                    }
+
+                    ItemProxy proxy = new ItemProxy(item);
+                    proxy.Delete(db);
+                    scope.Complete();
+                }
             }
 
             return true;
