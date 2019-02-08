@@ -16,7 +16,7 @@ namespace Playground.Mvc.Controllers
         // GET api/<controller>
         public IEnumerable<ItemProxy> Get()
         {
-            IEnumerable<ItemProxy> items = db.Items.OrderBy(x => x.Date).ToArray().Select(x => new ItemProxy(x));
+            IEnumerable<ItemProxy> items = db.Items.OrderBy(x => x.Date).AsEnumerable().Select(x => new ItemProxy(x));
             return items;
         }
 
