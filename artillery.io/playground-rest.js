@@ -32,7 +32,8 @@ function setRandomItemObjectNo(context, events, done) {
     const items = context.vars["Items"];
 
     if (!items.length) {
-        return 0;
+        context.vars["RandomItemObjectNo"] = 0;
+        return done();
     }
 
     const i = Math.floor(Math.random() * items.length);
