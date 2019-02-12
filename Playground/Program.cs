@@ -16,8 +16,18 @@ namespace Playground
 {
     class Program
     {
+        static public void CreateIndex(string index_name, string query)
+        {
+            bool index_exist = false;
+            Db.Transact(() => index_exist = Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", index_name).Any());
+            if (!index_exist)
+                Db.SQL(query);
+        }
+
         static void Main()
         {
+            CreateIndex("Item_Date", $"CREATE INDEX Item_Date ON {nameof(Database.Item)} ({nameof(Database.Item.Date)})");
+
             //RegisterDatabaseHooks();
             RegisterRestApi();
             //RegisterUi();
